@@ -46,16 +46,12 @@ export default function Dashboard() {
         onReactorChange={handleReactorChange} 
       />
       
-      <main className="container mx-auto px-4 pb-8">
+      <main className="container mx-auto px-4 pb-8 mt-24">
         <div className="flex flex-col space-y-6 h-screen">
-          {/* Top section: Chart and Form side by side */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
-            {/* Left side: Chart */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <BioreactorChart expenses={expenses} />
             </div>
-            
-            {/* Right side: Form */}
             <div>
               <ParameterForm 
                 onUpdate={handleCostsUpdate} 

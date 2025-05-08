@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  --logo-color: #41932B;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -17,4 +18,30 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.loader {
+  height: 100px;
+  aspect-ratio: 1;
+  padding: 15px;
+  border-radius: 20px;
+  box-sizing: border-box;
+  position: relative;
+  mask: conic-gradient(#000 0 0) content-box exclude, conic-gradient(#000 0 0);
+  filter: blur(12px);
+}
+
+.loader:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(#0000 0 5%, var(--logo-color), #0000 20% 50%);
+  animation: l3 1.5s linear infinite;
+}
+
+@keyframes l3 {
+  to {
+    rotate: 1turn
+  }
 }

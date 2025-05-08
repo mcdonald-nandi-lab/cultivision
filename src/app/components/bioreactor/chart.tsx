@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
 
-// Register required Chart.js components
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 interface BioreactorChartProps {
@@ -22,7 +21,6 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  // Format number with commas
   const formatNumber = (num: number): string => {
     return num.toLocaleString();
   };
@@ -30,7 +28,6 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
   useEffect(() => {
     if (!chartRef.current) return;
 
-    // Cleanup previous chart instance if it exists
     if (chartInstance.current) {
       chartInstance.current.destroy();
     }
