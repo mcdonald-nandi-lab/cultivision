@@ -14,8 +14,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cultivision",
-  description: "Cultivated Meat Dashboard",
+  title: "Cultivision | Cultivated Meat Insights & Analytics",
+  description:
+    "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance.",
+  authors: {
+    url: 'https://aunsh.dev',
+    name: 'Aunsh Bandivadekar'
+  },
+  keywords: ['cultivated', 'meat', 'dashboard', 'ucdavis', 'nextjs'],
+  openGraph: {
+    title: "Cultivision",
+    description: "Track cultivated meat production and sustainability data.",
+    url: "https://aunshx.github.io/cultivision/",
+    siteName: "Cultivision",
+    images: [
+      {
+        url: "https://i.postimg.cc/bJw4jzv1/cultivision-Dashboard.png",
+        width: 1200,
+        height: 630,
+        alt: "Cultivated Meat Dashboard",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cultivision",
+    description: "Interactive dashboard for cultivated meat production.",
+    images: ["https://i.postimg.cc/bJw4jzv1/cultivision-Dashboard.png"],
+  },
 };
 
 export default function RootLayout({

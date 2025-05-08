@@ -102,12 +102,12 @@ export default function Navbar() {
           </button>
 
           {isOpen && (
-            <div className='absolute right-0 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10'>
+            <div className='absolute top-10 right-20 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10'>
               {bioreactors.map((reactor) => (
                 <button
                   key={reactor.id}
                   onClick={() => handleSelect(reactor.id)}
-                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm ${
+                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer ${
                     activeReactorId === reactor.id
                       ? "bg-blue-50 font-medium"
                       : ""
