@@ -21,7 +21,7 @@ export default function FlowDiagram({
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full border border-gray-200 rounded-lg'>
       {showTitle && (
         <h2 className='text-xl font-semibold text-slate-700 mb-4'>
           Flow Diagram: {bioreactor.name}

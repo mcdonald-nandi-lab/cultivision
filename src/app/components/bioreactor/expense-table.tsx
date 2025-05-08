@@ -9,7 +9,6 @@ interface ExpenseTableProps {
 export default function ExpenseTable({ expenses }: ExpenseTableProps) {
   const chartData = expenses.chartData;
 
-  // Calculate percentages
   const total = Object.values(chartData).reduce((sum, value) => sum + value, 0);
 
   const expenseItems = [
@@ -30,10 +29,8 @@ export default function ExpenseTable({ expenses }: ExpenseTableProps) {
     { name: "Utilities", value: chartData.utilities, color: "#56cfe1" },
   ];
 
-  // Sort expenses by value (highest to lowest)
   expenseItems.sort((a, b) => b.value - a.value);
 
-  // Format currency
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -60,13 +57,13 @@ export default function ExpenseTable({ expenses }: ExpenseTableProps) {
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-center'
               >
                 Cost
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Percentage
               </th>

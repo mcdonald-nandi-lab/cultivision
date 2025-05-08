@@ -13,7 +13,6 @@ import {
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
 
-// Register required Chart.js components
 Chart.register(
   BarController,
   BarElement,
@@ -142,7 +141,6 @@ export default function BioreactorBarChart({
     };
   }, [expenses]);
 
-  // Calculate total operating expenses
   const totalExpense =
     Object.values(expenses.chartData).reduce((sum, value) => sum + value, 0) /
     1000000;

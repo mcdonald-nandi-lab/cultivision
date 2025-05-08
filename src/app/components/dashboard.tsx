@@ -68,8 +68,11 @@ export default function Dashboard() {
         onReactorChange={handleReactorChange}
       />
 
-      <div className='flex h-[calc(100vh-64px)] pt-16' style={{ border: '1px solid' }} >
-        <div className='w-full lg:w-1/4 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-0 lg:top-16 lg:bottom-0'>
+      <div className='flex h-full pt-20 mx-8'>
+        <div
+          className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18'
+          style={{ border: "1px solid red" }}
+        >
           <div className='flex flex-col gap-6'>
             <div className='bg-white rounded-lg shadow-sm p-4'>
               <ParameterForm
@@ -78,8 +81,8 @@ export default function Dashboard() {
               />
             </div>
 
-            <div className='bg-white rounded-lg shadow-sm p-4'>
-              <h3 className='text-lg font-semibold text-slate-700 mb-2'>
+            <div className='bg-white rounded-lg shadow-sm p-4 mb-16 flex flex-col gap-y-2'>
+              <h3 className='text-lg font-semibold text-slate-700 text-center'>
                 Bioreactor View
               </h3>
               <div
@@ -91,38 +94,30 @@ export default function Dashboard() {
                   height='200px'
                   showTitle={false}
                 />
-                <div className='text-center text-sm mt-2 text-blue-600'>
-                  Click to enlarge
-                </div>
+              </div>
+              <div className='text-center text-sm text-blue-600'>
+                Click to enlarge
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right column - scrollable content */}
         <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
           <div className='flex flex-col gap-6'>
-            {/* First row: Chart and Expense Table */}
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-              {/* Pie chart */}
               <div className='bg-white rounded-lg shadow-sm p-6'>
-                <BioreactorChart expenses={expenses} />
+                <BioreactorBarChart expenses={expenses} />
               </div>
-
-              {/* Expense Table */}
               <div className='bg-white rounded-lg shadow-sm p-6 h-full'>
                 <ExpenseTable expenses={expenses} />
               </div>
             </div>
 
-            {/* Second row: Bar Chart and Metrics Table */}
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-              {/* Bar Chart */}
               <div className='bg-white rounded-lg shadow-sm p-6'>
-                <BioreactorBarChart expenses={expenses} />
+                <BioreactorChart expenses={expenses} />
               </div>
 
-              {/* Metrics Table */}
               <div className='bg-white rounded-lg shadow-sm p-6 h-full'>
                 <MetricsTable expenses={expenses} />
               </div>

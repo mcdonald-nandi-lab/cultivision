@@ -21,33 +21,30 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  // Format currency
-  const formatCurrency = (value: number): string => {
+  const formatCurrency = (value: number, digits: number = 0): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
     }).format(value);
   };
 
-  // Calculate percentages
-  const calculatePercentages = (chartData: any) => {
+  const calculatePercentages = (chartData: Record<string, number>) => {
     const total = Object.values(chartData).reduce(
-      (sum: number, value: any) => sum + value,
+      (sum, value) => sum + value,
       0
     );
-    return Object.entries(chartData).reduce(
-      (acc: any, [key, value]: [string, any]) => {
-        acc[key] = (value / total) * 100;
-        return acc;
-      },
-      {}
+    return Object.fromEntries(
+      Object.entries(chartData).map(([key, value]) => [
+        key,
+        (value / total) * 100,
+      ])
     );
   };
 
   useEffect(() => {
-    if (!chartRef.current) return;
+    if (!chartRef.current || !expenses?.chartData) return;
 
     if (chartInstance.current) {
       chartInstance.current.destroy();
@@ -56,7 +53,7 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     const ctx = chartRef.current.getContext("2d");
     if (!ctx) return;
 
-    const chartData = expenses.chartData;
+    const chartData = expenses.chartData as unknown as Record<string, number>;
     const percentages = calculatePercentages(chartData);
 
     const data = {
@@ -102,30 +99,30 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        cutout: "60%",
+        layout: {
+          padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 10,
+          },
+        },
         plugins: {
           legend: {
             position: "right",
+            align: "center",
             labels: {
-              boxWidth: 10,
               padding: 10,
+              boxWidth: 12,
               font: {
                 size: 11,
-              },
-            },
-          },
-          tooltip: {
-            callbacks: {
-              label: function (context) {
-                const label = context.label || "";
-                const value = context.raw as number;
-                return `${label.split(" (")[0]}: ${formatCurrency(value)}`;
               },
             },
           },
         },
       },
     };
+
 
     chartInstance.current = new Chart(ctx, config);
 
@@ -136,8 +133,7 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     };
   }, [expenses]);
 
-  // Calculate total expenses
-  const totalExpenses = Object.values(expenses.chartData).reduce(
+  const totalExpenses = Object.values(expenses.chartData || {}).reduce(
     (sum, value) => sum + value,
     0
   );
@@ -156,7 +152,7 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
       </div>
 
       <div className='flex-1 relative' style={{ minHeight: "300px" }}>
-        <canvas ref={chartRef} className='w-full h-full'></canvas>
+        <canvas ref={chartRef} className='w-full h-full' />
       </div>
 
       <div className='text-center text-sm mt-2 text-slate-500'>
