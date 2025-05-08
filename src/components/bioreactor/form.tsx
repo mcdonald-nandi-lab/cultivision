@@ -4,32 +4,7 @@ import { useEffect, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 
-export default function ParameterForm() {
-  const { costs, setCosts } = useCalculations();
-  const [localCosts, setLocalCosts] = useState(costs);
-
-  useEffect(() => {
-    setLocalCosts(costs);
-  }, [costs]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setLocalCosts((prev) => ({
-      ...prev,
-      [id]: parseFloat(value) || 0,
-    }));
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setCosts(localCosts);
-  };
-
-  const handleReset = () => {
-    setLocalCosts(defaultProductionCosts);
-  };
-
-  const parameterInputs = [
+const parameterInputs = [
     { id: "mediaCost", label: "Media Cost", unit: "$/L", step: "0.1" },
     { id: "laborCost", label: "Labor Cost Change", unit: "%", step: "1" },
     {
@@ -51,24 +26,95 @@ export default function ParameterForm() {
       unit: "$/MT",
       step: "0.01",
     },
-  ];
+];
+
+export default function ParameterForm() {
+  const { costs, setCosts } = useCalculations();
+  const [localCosts, setLocalCosts] = useState(costs);
+  const [realTimeUpdates, setRealTimeUpdates] = useState(false);
+
+  useEffect(() => {
+    setLocalCosts(costs);
+  }, [costs]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    const newCosts = {
+      ...localCosts,
+      [id]: parseFloat(value) || 0,
+    };
+
+    setLocalCosts(newCosts);
+
+    if (realTimeUpdates) {
+      setCosts(newCosts);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setCosts(localCosts);
+  };
+
+  const handleReset = () => {
+    const defaultCosts = defaultProductionCosts;
+    setLocalCosts(defaultCosts);
+    setCosts(defaultCosts);
+  };
+
+  const toggleRealTimeUpdates = () => {
+    setRealTimeUpdates(!realTimeUpdates);
+    if (!realTimeUpdates) {
+      setCosts(localCosts);
+    }
+  };
 
   return (
-    <div className='h-full flex flex-col'>
-      <div className='flex justify-between items-center mb-3'>
-        <h2 className='text-xl font-semibold text-slate-700'>
-          Cost Parameters
-        </h2>
-        <button
-          type='button'
-          onClick={handleReset}
-          className='text-xs text-green-600 hover:text-blue-800 cursor-pointer'
-        >
-          Reset
-        </button>
+    <div className='h-full flex flex-col gap-y-3'>
+      <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
+        <div className='flex justify-between items-center'>
+          <h2 className='text-lg font-semibold text-slate-700'>
+            Cost Parameters
+          </h2>
+          <button
+            type='button'
+            onClick={handleReset}
+            className='flex items-center gap-x-1 text-xs font-medium text-slate-600 hover:text-green-600 transition cursor-pointer'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-3 w-3'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
+              />
+            </svg>
+            Reset
+          </button>
+          <div className='flex items-center gap-x-2 bg-gray-100 px-2 py-1 rounded-md text-slate-600'>
+            <span className='text-xs font-medium'>
+              {realTimeUpdates ? "Real-time" : "Manual"}
+            </span>
+            <label className='relative inline-flex items-center cursor-pointer'>
+              <input
+                type='checkbox'
+                className='sr-only peer'
+                checked={realTimeUpdates}
+                onChange={toggleRealTimeUpdates}
+              />
+              <div className="w-8 h-4 bg-gray-300 peer-focus:ring-1 peer-focus:ring-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-600"></div>
+            </label>
+          </div>
+        </div>
       </div>
 
-      <form onSubmit={handleSubmit} className='flex-1 flex flex-col'>
+      <form onSubmit={handleSubmit} className='flex-1 flex flex-col gap-y-6'>
         <div className='flex-1 space-y-3'>
           {parameterInputs.map((param) => (
             <div key={param.id} className='form-group'>
@@ -97,14 +143,16 @@ export default function ParameterForm() {
           ))}
         </div>
 
-        <div className='mt-4'>
-          <button
-            type='submit'
-            className={`w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800`}
-          >
-            Update Calculations
-          </button>
-        </div>
+        {!realTimeUpdates && (
+          <div className=''>
+            <button
+              type='submit'
+              className='w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800 cursor-pointer'
+            >
+              Run Calculation
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -27,13 +27,22 @@ interface BioreactorBarChartProps {
   expenses: CalculatedExpenses;
 }
 
+const labels = [
+  "Media",
+  "Raw Materials",
+  "Labor",
+  "Waste",
+  "Facility",
+  "Consumables",
+  "Utilities",
+];
+
 export default function BioreactorBarChart({
   expenses,
 }: BioreactorBarChartProps) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  // Format currency
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -64,16 +73,6 @@ export default function BioreactorBarChart({
       chartData.facility / 1000000,
       chartData.consumables / 1000000,
       chartData.utilities / 1000000,
-    ];
-
-    const labels = [
-      "Media",
-      "Raw Materials",
-      "Labor",
-      "Waste",
-      "Facility",
-      "Consumables",
-      "Utilities",
     ];
 
     const data = {
@@ -140,7 +139,7 @@ export default function BioreactorBarChart({
 
   return (
     <div className='h-full flex flex-col'>
-      <div className='flex justify-between items-center mb-3'>
+      <div className='flex items-start justify-between items-center mb-3'>
         <h2 className='text-xl font-semibold text-slate-700'>Cost Breakdown</h2>
         <div className='text-right'>
           <div className='text-lg font-semibold text-slate-700'>

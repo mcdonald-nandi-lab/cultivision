@@ -56,23 +56,23 @@ export default function Home() {
 
         <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
           <div className='flex flex-col gap-4'>
-            <Container className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-              <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+              <Container>
                 <BioreactorBarChart expenses={expenses} />
-              </div>
-              <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 h-full'>
+              </Container>
+              <Container>
                 <ExpenseTable expenses={expenses} />
-              </div>
-            </Container>
+              </Container>
+            </div>
 
-            <Container className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-              <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+              <Container>
                 <BioreactorChart expenses={expenses} />
-              </div>
-              <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 h-full'>
+              </Container>
+              <Container className='h-full'>
                 <MetricsTable expenses={expenses} />
-              </div>
-            </Container>
+              </Container>
+            </div>
           </div>
         </div>
       </div>
