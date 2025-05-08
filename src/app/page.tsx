@@ -2,14 +2,14 @@
 
 import { useCalculations } from "@/context/calculation-context";
 import { useState } from "react";
-import Navbar from "@/app/components/navbar";
-import ParameterForm from "@/app/components/bioreactor/form";
-import FlowDiagram from "@/app/components/bioreactor/flow-diagram";
-import BioreactorBarChart from "@/app/components/bioreactor/bar-chart";
-import ExpenseTable from "@/app/components/bioreactor/expense-table";
-import BioreactorChart from "@/app/components/bioreactor/chart";
-import MetricsTable from "@/app/components/bioreactor/metrics-table";
-import ImageModal from "@/app/components/bioreactor/image-modal";
+import Navbar from "@/components/navbar";
+import ParameterForm from "@/components/bioreactor/form";
+import FlowDiagram from "@/components/bioreactor/flow-diagram";
+import BioreactorBarChart from "@/components/bioreactor/bar-chart";
+import ExpenseTable from "@/components/bioreactor/expense-table";
+import BioreactorChart from "@/components/bioreactor/chart";
+import MetricsTable from "@/components/bioreactor/metrics-table";
+import ImageModal from "@/components/bioreactor/image-modal";
 import Loading from "./loading";
 
 export default function Home() {
