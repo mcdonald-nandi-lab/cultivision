@@ -44,7 +44,7 @@ const Container = ({
   }, [movement]);
 
   return (
-    <div className={cn(`${movement || ""} ${className}`)} ref={containerRef}>
+    <div className={cn(`bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 ${movement ?? ""} ${className}`)} ref={containerRef}>
       {children}
     </div>
   );
