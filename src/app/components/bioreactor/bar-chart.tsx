@@ -12,6 +12,7 @@ import {
   Legend,
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
+import { BRAND_COLOR_ORDER } from "@/lib/constants";
 
 Chart.register(
   BarController,
@@ -81,15 +82,7 @@ export default function BioreactorBarChart({
         {
           label: "Expense ($ Million)",
           data: dataInMillions,
-          backgroundColor: [
-            "#4361ee",
-            "#3a0ca3",
-            "#7209b7",
-            "#f72585",
-            "#4cc9f0",
-            "#4895ef",
-            "#56cfe1",
-          ],
+          backgroundColor: BRAND_COLOR_ORDER,
           borderWidth: 1,
           borderRadius: 4,
         },

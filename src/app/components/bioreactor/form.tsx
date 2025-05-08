@@ -7,11 +7,9 @@ import { defaultProductionCosts } from "@/lib/bioreactors";
 export default function ParameterForm() {
   const { costs, setCosts } = useCalculations();
   const [localCosts, setLocalCosts] = useState(costs);
-  const [isDirty, setIsDirty] = useState(false);
 
   useEffect(() => {
     setLocalCosts(costs);
-    setIsDirty(false);
   }, [costs]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,18 +18,15 @@ export default function ParameterForm() {
       ...prev,
       [id]: parseFloat(value) || 0,
     }));
-    setIsDirty(true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setCosts(localCosts);
-    setIsDirty(false);
   };
 
   const handleReset = () => {
     setLocalCosts(defaultProductionCosts);
-    setIsDirty(true);
   };
 
   const parameterInputs = [
@@ -105,12 +100,7 @@ export default function ParameterForm() {
         <div className='mt-4'>
           <button
             type='submit'
-            disabled={!isDirty}
-            className={`w-full py-1.5 rounded-md text-sm font-medium ${
-              isDirty
-                ? "bg-slate-700 text-white hover:bg-slate-800"
-                : "bg-gray-200 text-gray-500 cursor-not-allowed"
-            }`}
+            className={`w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800`}
           >
             Update Calculations
           </button>

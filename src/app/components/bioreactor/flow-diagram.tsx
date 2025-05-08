@@ -32,9 +32,8 @@ export default function FlowDiagram({
           src={bioreactor.image}
           alt={`${bioreactor.name} Flow Diagram`}
           fill
-          style={{ objectFit: "contain" }}
           priority
-          className='rounded-lg'
+          className='rounded-lg object-contain'
         />
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { BRAND_COLORS } from "@/lib/constants";
 import { CalculatedExpenses } from "@/types";
 
 interface ExpenseTableProps {
@@ -12,21 +13,33 @@ export default function ExpenseTable({ expenses }: ExpenseTableProps) {
   const total = Object.values(chartData).reduce((sum, value) => sum + value, 0);
 
   const expenseItems = [
-    { name: "Media", value: chartData.media, color: "#4361ee" },
+    { name: "Media", value: chartData.media, color: BRAND_COLORS.media },
     {
       name: "Other Raw Materials",
       value: chartData.otherMaterials,
-      color: "#3a0ca3",
+      color: BRAND_COLORS.rawMaterials,
     },
-    { name: "Labor", value: chartData.labor, color: "#7209b7" },
-    { name: "Waste Treatment", value: chartData.waste, color: "#f72585" },
+    { name: "Labor", value: chartData.labor, color: BRAND_COLORS.labor },
+    {
+      name: "Waste Treatment",
+      value: chartData.waste,
+      color: BRAND_COLORS.waste,
+    },
     {
       name: "Facility Dependent Cost",
       value: chartData.facility,
-      color: "#4cc9f0",
+      color: BRAND_COLORS.facility,
     },
-    { name: "Consumables", value: chartData.consumables, color: "#4895ef" },
-    { name: "Utilities", value: chartData.utilities, color: "#56cfe1" },
+    {
+      name: "Consumables",
+      value: chartData.consumables,
+      color: BRAND_COLORS.consumables,
+    },
+    {
+      name: "Utilities",
+      value: chartData.utilities,
+      color: BRAND_COLORS.utilities,
+    },
   ];
 
   expenseItems.sort((a, b) => b.value - a.value);

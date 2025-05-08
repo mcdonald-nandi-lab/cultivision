@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getBioreactorById } from "@/lib/bioreactors";
+import cn from "classnames";
 import Image from "next/image";
 
 interface ImageModalProps {
@@ -11,9 +12,11 @@ interface ImageModalProps {
 
 export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [transformOrigin, setTransformOrigin] = useState("center center");
+  const [isZoomed, setIsZoomed] = useState(false);
   const bioreactor = getBioreactorById(bioreactorId);
 
-  // Close modal when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -32,8 +35,6 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
 
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscapeKey);
-
-    // Prevent scrolling on body
     document.body.style.overflow = "hidden";
 
     return () => {
@@ -45,8 +46,23 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
 
   if (!bioreactor) return null;
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (!imageRef.current) return;
+
+    const { left, top, width, height } =
+      imageRef.current.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100;
+    const y = ((e.clientY - top) / height) * 100;
+    setTransformOrigin(`${x}% ${y}%`);
+    setIsZoomed(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsZoomed(false);
+  };
+
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70'>
+    <div className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30'>
       <div
         ref={modalRef}
         className='relative bg-white rounded-lg max-w-4xl w-11/12 h-5/6 flex flex-col'
@@ -57,7 +73,7 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
           </h3>
           <button
             onClick={onClose}
-            className='text-gray-500 hover:text-gray-700 focus:outline-none'
+            className='text-gray-500 hover:text-gray-700 focus:outline-none cursor-pointer'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -77,14 +93,26 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
         </div>
 
         <div className='flex-1 relative overflow-hidden p-4'>
-          <Image
-            src={bioreactor.image}
-            alt={`${bioreactor.name} Flow Diagram`}
-            fill
-            style={{ objectFit: "contain" }}
-            priority
-            className='p-4'
-          />
+          <div
+            ref={imageRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className='w-full h-full relative'
+          >
+            <Image
+              src={bioreactor.image}
+              alt={`${bioreactor.name} Flow Diagram`}
+              fill
+              className={cn(
+                "transition-transform duration-200 ease-out scale-100 object-contain",
+                { "scale-200 cursor-zoom-in": isZoomed }
+              )}
+              style={{
+                transformOrigin,
+              }}
+              priority
+            />
+          </div>
         </div>
 
         <div className='p-4 border-t'>
@@ -97,7 +125,7 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
             </div>
             <div className='flex flex-col'>
               <span className='font-medium text-slate-600'>Media Volume:</span>
-              <span>{(bioreactor.mediaVolume / 1000000).toFixed(1)}M L</span>
+              <span>{(bioreactor.mediaVolume / 1_000_000).toFixed(1)}M L</span>
             </div>
           </div>
         </div>

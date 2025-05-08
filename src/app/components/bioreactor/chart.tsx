@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
+import { BRAND_COLOR_ORDER } from "@/lib/constants";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -77,15 +78,7 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
             chartData.consumables,
             chartData.utilities,
           ],
-          backgroundColor: [
-            "#4361ee",
-            "#3a0ca3",
-            "#7209b7",
-            "#f72585",
-            "#4cc9f0",
-            "#4895ef",
-            "#56cfe1",
-          ],
+          backgroundColor: BRAND_COLOR_ORDER,
           borderWidth: 1,
           borderColor: "#ffffff",
           hoverOffset: 6,
