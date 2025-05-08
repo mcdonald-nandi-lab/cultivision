@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
+import { BRAND_COLOR_ORDER } from "@/lib/constants";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -21,12 +22,30 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  const formatNumber = (num: number): string => {
-    return num.toLocaleString();
+  const formatCurrency = (value: number, digits: number = 0): string => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    }).format(value);
+  };
+
+  const calculatePercentages = (chartData: Record<string, number>) => {
+    const total = Object.values(chartData).reduce(
+      (sum, value) => sum + value,
+      0
+    );
+    return Object.fromEntries(
+      Object.entries(chartData).map(([key, value]) => [
+        key,
+        (value / total) * 100,
+      ])
+    );
   };
 
   useEffect(() => {
-    if (!chartRef.current) return;
+    if (!chartRef.current || !expenses?.chartData) return;
 
     if (chartInstance.current) {
       chartInstance.current.destroy();
@@ -35,17 +54,18 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     const ctx = chartRef.current.getContext("2d");
     if (!ctx) return;
 
-    const chartData = expenses.chartData;
+    const chartData = expenses.chartData as unknown as Record<string, number>;
+    const percentages = calculatePercentages(chartData);
 
     const data = {
       labels: [
-        "Media",
-        "Other Raw Materials",
-        "Labor",
-        "Waste Treatment",
-        "Facility Dependent Cost",
-        "Consumables",
-        "Utilities",
+        `Media (${percentages.media.toFixed(1)}%)`,
+        `Raw Materials (${percentages.otherMaterials.toFixed(1)}%)`,
+        `Labor (${percentages.labor.toFixed(1)}%)`,
+        `Waste (${percentages.waste.toFixed(1)}%)`,
+        `Facility (${percentages.facility.toFixed(1)}%)`,
+        `Consumables (${percentages.consumables.toFixed(1)}%)`,
+        `Utilities (${percentages.utilities.toFixed(1)}%)`,
       ],
       datasets: [
         {
@@ -58,16 +78,10 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
             chartData.consumables,
             chartData.utilities,
           ],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4CAF50",
-            "#9966FF",
-            "#FFA07A",
-            "#808080",
-          ],
-          hoverOffset: 4,
+          backgroundColor: BRAND_COLOR_ORDER,
+          borderWidth: 1,
+          borderColor: "#ffffff",
+          hoverOffset: 6,
         },
       ],
     };
@@ -78,13 +92,30 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 10,
+          },
+        },
         plugins: {
           legend: {
-            position: "bottom",
+            position: "right",
+            align: "center",
+            labels: {
+              padding: 10,
+              boxWidth: 12,
+              font: {
+                size: 11,
+              },
+            },
           },
         },
       },
     };
+
 
     chartInstance.current = new Chart(ctx, config);
 
@@ -95,56 +126,30 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     };
   }, [expenses]);
 
+  const totalExpenses = Object.values(expenses.chartData || {}).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+
   return (
     <div className='h-full flex flex-col'>
-      <h2 className='text-xl font-semibold text-gray-800 mb-3'>
-        Expense Breakdown
-      </h2>
-      <p className='text-gray-600 mb-4'>
-        {expenses.facilitiesNeeded} facilities needed to reach 100,000,000 kg/yr
-      </p>
-
-      <div className='flex-1 relative min-h-[300px]'>
-        <canvas ref={chartRef} className='w-full h-full'></canvas>
-      </div>
-
-      <div className='mt-4 space-y-2'>
-        <div className='grid grid-cols-2 gap-2'>
-          <div className='text-sm font-medium text-gray-700'>
-            Annual Production:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {formatNumber(expenses.annualProduction)} kg/yr
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            Capital Expenses:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.capitalExpenses.toFixed(1)} million USD
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            Operating Expenses:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.operatingExpenses.toFixed(1)} million USD/yr
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            COGS (with Depreciation):
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.cogsWithDepreciation.toFixed(2)} USD/kg
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            COGS (without Depreciation):
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.cogsWithoutDepreciation.toFixed(2)} USD/kg
+      <div className='flex justify-between items-center mb-3'>
+        <h2 className='text-xl font-semibold text-slate-700'>
+          Cost Distribution
+        </h2>
+        <div className='text-right'>
+          <div className='text-sm font-semibold text-slate-700'>
+            COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
           </div>
         </div>
+      </div>
+
+      <div className='flex-1 relative' style={{ minHeight: "300px" }}>
+        <canvas ref={chartRef} className='w-full h-full' />
+      </div>
+
+      <div className='text-center text-sm mt-2 text-slate-500'>
+        Total Operating Expenses: {formatCurrency(totalExpenses)}
       </div>
     </div>
   );

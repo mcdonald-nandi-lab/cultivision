@@ -3,7 +3,7 @@ import { Bioreactor, ProductionCosts, CalculatedExpenses } from "@/types";
 export const bioreactors: Bioreactor[] = [
   {
     id: "40K_STR",
-    name: "42,000 L Stirred Tank Bioreactor",
+    name: "42,000 L Stirred Tank",
     image: "/images/40K_STR.png",
     annualProduction: 4003226,
     mediaVolume: 40732424,
@@ -21,7 +21,7 @@ export const bioreactors: Bioreactor[] = [
   },
   {
     id: "210K_STR",
-    name: "211,000 L Stirred Tank Bioreactor",
+    name: "211,000 L Stirred Tank",
     image: "/images/210K_STR.png",
     annualProduction: 20170140,
     mediaVolume: 205220306,
@@ -39,7 +39,7 @@ export const bioreactors: Bioreactor[] = [
   },
   {
     id: "260K_ALR",
-    name: "262,000 L Airlift Bioreactor",
+    name: "262,000 L Airlift",
     image: "/images/260K_ALR.png",
     annualProduction: 25000000,
     mediaVolume: 253758783,
