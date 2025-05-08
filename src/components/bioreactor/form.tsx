@@ -62,7 +62,7 @@ export default function ParameterForm() {
         <button
           type='button'
           onClick={handleReset}
-          className='text-xs text-blue-600 hover:text-blue-800'
+          className='text-xs text-green-600 hover:text-blue-800 cursor-pointer'
         >
           Reset
         </button>

@@ -11,6 +11,7 @@ import BioreactorChart from "@/components/bioreactor/chart";
 import MetricsTable from "@/components/bioreactor/metrics-table";
 import ImageModal from "@/components/bioreactor/image-modal";
 import Loading from "./loading";
+import Container from "@/components/container";
 
 export default function Home() {
   const { activeReactorId, expenses } = useCalculations();
@@ -46,7 +47,7 @@ export default function Home() {
                   showTitle={false}
                 />
               </div>
-              <div className='text-center text-sm text-blue-600'>
+              <div className='text-center text-sm text-green-600 hover:text-blue-500'>
                 Click to enlarge
               </div>
             </div>
@@ -55,23 +56,23 @@ export default function Home() {
 
         <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
           <div className='flex flex-col gap-4'>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+            <Container className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
               <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
                 <BioreactorBarChart expenses={expenses} />
               </div>
               <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 h-full'>
                 <ExpenseTable expenses={expenses} />
               </div>
-            </div>
+            </Container>
 
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+            <Container className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
               <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
                 <BioreactorChart expenses={expenses} />
               </div>
               <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 h-full'>
                 <MetricsTable expenses={expenses} />
               </div>
-            </div>
+            </Container>
           </div>
         </div>
       </div>
