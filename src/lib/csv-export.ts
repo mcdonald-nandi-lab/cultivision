@@ -67,7 +67,7 @@ export function exportToCsv(
 
   const metricsRows = [
     ["Metric", "Value", "Unit"],
-    ["Annual Production", expenses.annualProduction.toLocaleString(), "kg/yr"],
+    ["Annual Production", expenses.annualProduction, "kg/yr"],
     [
       "Facilities Needed for 100M kg/yr",
       expenses.facilitiesNeeded.toFixed(0),
@@ -91,8 +91,10 @@ export function exportToCsv(
     ],
   ];
 
+  console.log("dfef", bioreactor.name.toString());
+
   const csvContent = [
-    [`Bioreactor: ${bioreactor.name}`, "", ""],
+    [`"Bioreactor: ${bioreactor.name.toString()}"`, "", ""],
     ["", "", ""],
     ["EXPENSE BREAKDOWN", "", ""],
     ...expenseRows,
