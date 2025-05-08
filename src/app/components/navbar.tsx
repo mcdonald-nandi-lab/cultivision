@@ -1,8 +1,11 @@
+// src/app/components/navbar.tsx
 "use client";
 
 import { bioreactors } from "@/lib/bioreactors";
 import { LAB_EXT_LINK } from "@/lib/constants";
+import { exportToCsv } from "@/lib/csv-export";
 import { topRightCornerArrowLogo } from "@/lib/icons";
+import { CalculatedExpenses } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -11,11 +14,13 @@ import Icon from "./icon";
 interface NavbarProps {
   activeReactorId: string;
   onReactorChange: (reactorId: string) => void;
+  expenses: CalculatedExpenses | null;
 }
 
 export default function Navbar({
   activeReactorId,
   onReactorChange,
+  expenses, 
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -43,6 +48,12 @@ export default function Navbar({
   const handleSelect = (reactorId: string) => {
     onReactorChange(reactorId);
     setIsOpen(false);
+  };
+
+  const handleDownloadCsv = () => {
+    if (expenses && activeReactor) {
+      exportToCsv(expenses, activeReactor);
+    }
   };
 
   return (
@@ -105,7 +116,30 @@ export default function Navbar({
             </div>
           )}
         </div>
-        <div className='flex items-center justify-center gap-x-6'>
+        <div className='flex items-center justify-center gap-x-3'>
+          <button
+            onClick={handleDownloadCsv}
+            className='flex items-center justify-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-center text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
+            disabled={!expenses}
+            title='Download results as CSV'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              className='h-4 w-4'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+              />
+            </svg>
+            Download CSV
+          </button>
+
           <Link
             href={LAB_EXT_LINK}
             target='_blank'

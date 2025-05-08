@@ -66,13 +66,11 @@ export default function Dashboard() {
       <Navbar
         activeReactorId={activeReactorId}
         onReactorChange={handleReactorChange}
+        expenses={expenses}
       />
 
       <div className='flex h-full pt-20 mx-8'>
-        <div
-          className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18'
-          style={{ border: "1px solid red" }}
-        >
+        <div className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18'>
           <div className='flex flex-col gap-6'>
             <div className='bg-white rounded-lg shadow-sm p-4'>
               <ParameterForm
@@ -126,7 +124,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Modal for enlarged flow diagram */}
       {isModalOpen && (
         <ImageModal bioreactorId={activeReactorId} onClose={handleCloseModal} />
       )}

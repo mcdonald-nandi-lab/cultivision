@@ -6,7 +6,6 @@ interface IconProps {
 }
 
 const Icon = ({ height, fill, path, viewBox }: IconProps) => {
-    console.log('oje', path, viewBox)
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
