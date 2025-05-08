@@ -5,9 +5,15 @@ import { getBioreactorById } from "@/lib/bioreactors";
 
 interface FlowDiagramProps {
   bioreactorId: string;
+  height?: string;
+  showTitle?: boolean;
 }
 
-export default function FlowDiagram({ bioreactorId }: FlowDiagramProps) {
+export default function FlowDiagram({
+  bioreactorId,
+  height = "400px",
+  showTitle = true,
+}: FlowDiagramProps) {
   const bioreactor = getBioreactorById(bioreactorId);
 
   if (!bioreactor) {
@@ -15,11 +21,13 @@ export default function FlowDiagram({ bioreactorId }: FlowDiagramProps) {
   }
 
   return (
-    <div className='bg-white rounded-lg shadow-sm p-6'>
-      <h2 className='text-xl font-semibold text-gray-800 mb-4'>
-        Flow Diagram: {bioreactor.name}
-      </h2>
-      <div className='relative h-[400px] w-full'>
+    <div className='w-full'>
+      {showTitle && (
+        <h2 className='text-xl font-semibold text-slate-700 mb-4'>
+          Flow Diagram: {bioreactor.name}
+        </h2>
+      )}
+      <div className='relative w-full' style={{ height }}>
         <Image
           src={bioreactor.image}
           alt={`${bioreactor.name} Flow Diagram`}

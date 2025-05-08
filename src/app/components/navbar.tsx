@@ -1,11 +1,12 @@
 "use client";
 
 import { bioreactors } from "@/lib/bioreactors";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { LAB_EXT_LINK } from "@/lib/constants";
+import { topRightCornerArrowLogo } from "@/lib/icons";
 import Image from "next/image";
 import Link from "next/link";
-import { LAB_EXT_LINK } from "@/lib/constants";
+import { useEffect, useRef, useState } from "react";
+import Icon from "./icon";
 
 interface NavbarProps {
   activeReactorId: string;
@@ -16,7 +17,6 @@ export default function Navbar({
   activeReactorId,
   onReactorChange,
 }: NavbarProps) {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +46,7 @@ export default function Navbar({
   };
 
   return (
-    <nav className='bg-white shadow-md px-4 py-4 mb-6 rounded-b-2xl fixed top-0 w-full'>
+    <nav className='bg-white shadow-md px-4 py-4 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
       <div className='container mx-auto flex items-center justify-between'>
         <Link href={"/"} className='flex items-center justify-center gap-x-2'>
           <Image
@@ -62,7 +62,7 @@ export default function Navbar({
         </Link>
         <div className='relative' ref={dropdownRef}>
           <button
-            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
             onClick={() => setIsOpen(!isOpen)}
           >
             <span style={{ color: "var(--foreground)" }}>Bioreactor: </span>
@@ -92,7 +92,7 @@ export default function Navbar({
               {bioreactors.map((reactor) => (
                 <button
                   key={reactor.id}
-                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 ${
+                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 cursor-pointer ${
                     activeReactorId === reactor.id
                       ? "bg-blue-50 font-medium text-blue-600"
                       : ""
@@ -105,15 +105,20 @@ export default function Navbar({
             </div>
           )}
         </div>
-        <div className='flex items-center justify-center gap-x-4'>
+        <div className='flex items-center justify-center gap-x-6'>
           <Link
-            href={"/"}
-            className={`link ${pathname === "/" ? "active" : ""}`}
+            href={LAB_EXT_LINK}
+            target='_blank'
+            rel='noreferrer nofollow'
+            className='flex items-center justify-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-center text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
+            type='button'
           >
-            Dashboard
-          </Link>
-          <Link href={LAB_EXT_LINK} target='_blank' rel='noreferrer nofollow'>
-            Lab
+            <Icon
+              path={topRightCornerArrowLogo.path}
+              viewBox={topRightCornerArrowLogo.viewBox}
+              fill='#475569'
+            />
+            Mcdonald/Nandi Lab
           </Link>
         </div>
       </div>

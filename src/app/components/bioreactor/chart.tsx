@@ -21,8 +21,29 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
-  const formatNumber = (num: number): string => {
-    return num.toLocaleString();
+  // Format currency
+  const formatCurrency = (value: number): string => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
+  // Calculate percentages
+  const calculatePercentages = (chartData: any) => {
+    const total = Object.values(chartData).reduce(
+      (sum: number, value: any) => sum + value,
+      0
+    );
+    return Object.entries(chartData).reduce(
+      (acc: any, [key, value]: [string, any]) => {
+        acc[key] = (value / total) * 100;
+        return acc;
+      },
+      {}
+    );
   };
 
   useEffect(() => {
@@ -36,16 +57,17 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     if (!ctx) return;
 
     const chartData = expenses.chartData;
+    const percentages = calculatePercentages(chartData);
 
     const data = {
       labels: [
-        "Media",
-        "Other Raw Materials",
-        "Labor",
-        "Waste Treatment",
-        "Facility Dependent Cost",
-        "Consumables",
-        "Utilities",
+        `Media (${percentages.media.toFixed(1)}%)`,
+        `Raw Materials (${percentages.otherMaterials.toFixed(1)}%)`,
+        `Labor (${percentages.labor.toFixed(1)}%)`,
+        `Waste (${percentages.waste.toFixed(1)}%)`,
+        `Facility (${percentages.facility.toFixed(1)}%)`,
+        `Consumables (${percentages.consumables.toFixed(1)}%)`,
+        `Utilities (${percentages.utilities.toFixed(1)}%)`,
       ],
       datasets: [
         {
@@ -59,15 +81,17 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
             chartData.utilities,
           ],
           backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56",
-            "#4CAF50",
-            "#9966FF",
-            "#FFA07A",
-            "#808080",
+            "#4361ee",
+            "#3a0ca3",
+            "#7209b7",
+            "#f72585",
+            "#4cc9f0",
+            "#4895ef",
+            "#56cfe1",
           ],
-          hoverOffset: 4,
+          borderWidth: 1,
+          borderColor: "#ffffff",
+          hoverOffset: 6,
         },
       ],
     };
@@ -78,9 +102,26 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        cutout: "60%",
         plugins: {
           legend: {
-            position: "bottom",
+            position: "right",
+            labels: {
+              boxWidth: 10,
+              padding: 10,
+              font: {
+                size: 11,
+              },
+            },
+          },
+          tooltip: {
+            callbacks: {
+              label: function (context) {
+                const label = context.label || "";
+                const value = context.raw as number;
+                return `${label.split(" (")[0]}: ${formatCurrency(value)}`;
+              },
+            },
           },
         },
       },
@@ -95,56 +136,31 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     };
   }, [expenses]);
 
+  // Calculate total expenses
+  const totalExpenses = Object.values(expenses.chartData).reduce(
+    (sum, value) => sum + value,
+    0
+  );
+
   return (
     <div className='h-full flex flex-col'>
-      <h2 className='text-xl font-semibold text-gray-800 mb-3'>
-        Expense Breakdown
-      </h2>
-      <p className='text-gray-600 mb-4'>
-        {expenses.facilitiesNeeded} facilities needed to reach 100,000,000 kg/yr
-      </p>
+      <div className='flex justify-between items-center mb-3'>
+        <h2 className='text-xl font-semibold text-slate-700'>
+          Cost Distribution
+        </h2>
+        <div className='text-right'>
+          <div className='text-sm font-semibold text-slate-700'>
+            COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
+          </div>
+        </div>
+      </div>
 
-      <div className='flex-1 relative min-h-[300px]'>
+      <div className='flex-1 relative' style={{ minHeight: "300px" }}>
         <canvas ref={chartRef} className='w-full h-full'></canvas>
       </div>
 
-      <div className='mt-4 space-y-2'>
-        <div className='grid grid-cols-2 gap-2'>
-          <div className='text-sm font-medium text-gray-700'>
-            Annual Production:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {formatNumber(expenses.annualProduction)} kg/yr
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            Capital Expenses:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.capitalExpenses.toFixed(1)} million USD
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            Operating Expenses:
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.operatingExpenses.toFixed(1)} million USD/yr
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            COGS (with Depreciation):
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.cogsWithDepreciation.toFixed(2)} USD/kg
-          </div>
-
-          <div className='text-sm font-medium text-gray-700'>
-            COGS (without Depreciation):
-          </div>
-          <div className='text-sm text-gray-800'>
-            {expenses.cogsWithoutDepreciation.toFixed(2)} USD/kg
-          </div>
-        </div>
+      <div className='text-center text-sm mt-2 text-slate-500'>
+        Total Operating Expenses: {formatCurrency(totalExpenses)}
       </div>
     </div>
   );
