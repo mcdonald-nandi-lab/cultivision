@@ -47,7 +47,7 @@ export default function Navbar() {
       <div className='container mx-auto flex items-center justify-between'>
         <Link href='/' className='flex items-center justify-center gap-x-2'>
           <Image
-            src='/images/cvLogo.png'
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/cvLogo.png`}
             alt='Cultivision Logo'
             width={30}
             height={30}

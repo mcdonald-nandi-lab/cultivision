@@ -100,7 +100,9 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
             className='w-full h-full relative'
           >
             <Image
-              src={bioreactor.image}
+              src={`${
+                process.env.NEXT_PUBLIC_BASE_PATH || ""
+              }${bioreactor.name}`}
               alt={`${bioreactor.name} Flow Diagram`}
               fill
               className={cn(
