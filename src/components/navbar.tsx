@@ -6,6 +6,9 @@ import { exportToCsv } from "@/lib/csv-export";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import Icon from "./icon";
+import { LAB_EXT_LINK } from "@/lib/constants";
+import { topRightCornerArrowLogo } from "@/lib/icons";
 
 
 export default function Navbar() {
@@ -43,27 +46,38 @@ export default function Navbar() {
   };
 
   return (
-    <nav className='bg-white shadow-md px-4 py-4 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
-      <div className='container mx-auto flex items-center justify-between'>
-        <Link href='/' className='flex items-center justify-center gap-x-2'>
+    <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
+      <div className='container mx-auto grid grid-cols-3'>
+        <Link
+          href='/'
+          className='flex items-center justify-start gap-x-2 w-full'
+        >
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/cvLogo.png`}
             alt='Cultivision Logo'
-            width={30}
-            height={30}
+            width={35}
+            height={35}
             style={{ objectFit: "contain" }}
             priority
             className='pb-1'
           />
-          <div className='text-xl font-semibold text-slate-700'>
-            CultiVision
+          <div className='flex flex-col items-start justify-center w-full'>
+            <div className='text-xl font-semibold text-slate-700'>
+              CultiVision
+            </div>
+            <div className='text-xs font-medium italic'>
+              Cultivated Meat Dashboard
+            </div>
           </div>
         </Link>
 
-        <div className='relative' ref={dropdownRef}>
+        <div
+          className='relative flex items-center justify-center'
+          ref={dropdownRef}
+        >
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-lg text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
           >
             <span className='font-semibold'>Bioreactor:</span>
             <span className='font-medium text-green-700'>
@@ -106,11 +120,11 @@ export default function Navbar() {
           )}
         </div>
 
-        <div className='flex items-center gap-x-3'>
+        <div className='flex items-center justify-end gap-x-4'>
           <button
             onClick={handleDownloadCsv}
             disabled={!expenses}
-            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-sm transition-all hover:shadow-lg text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
           >
             <svg
               className='h-4 w-4'
@@ -128,19 +142,19 @@ export default function Navbar() {
             Download CSV
           </button>
 
-          {/* <Link
+          <Link
             href={LAB_EXT_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
+            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
           >
             <Icon
               path={topRightCornerArrowLogo.path}
               viewBox={topRightCornerArrowLogo.viewBox}
               fill='#475569'
             />
-            Mcdonald/Nandi Lab
-          </Link> */}
+            Our Lab
+          </Link>
         </div>
       </div>
     </nav>

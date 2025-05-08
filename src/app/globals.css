@@ -65,7 +65,6 @@ body {
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-/* Animation active state */
 .fade-down.animated,
 .fade-up.animated,
 .fade-right.animated {
