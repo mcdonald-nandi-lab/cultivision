@@ -1,33 +1,21 @@
-// src/app/components/navbar.tsx
 "use client";
 
+import { useCalculations } from "@/context/calculation-context";
 import { bioreactors } from "@/lib/bioreactors";
 import { LAB_EXT_LINK } from "@/lib/constants";
 import { exportToCsv } from "@/lib/csv-export";
 import { topRightCornerArrowLogo } from "@/lib/icons";
-import { CalculatedExpenses } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Icon from "./icon";
 
-interface NavbarProps {
-  activeReactorId: string;
-  onReactorChange: (reactorId: string) => void;
-  expenses: CalculatedExpenses | null;
-}
-
-export default function Navbar({
-  activeReactorId,
-  onReactorChange,
-  expenses, 
-}: NavbarProps) {
+export default function Navbar() {
+  const { activeReactorId, setActiveReactorId, expenses } = useCalculations();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const activeReactor = bioreactors.find(
-    (reactor) => reactor.id === activeReactorId
-  );
+  const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -45,8 +33,8 @@ export default function Navbar({
     };
   }, []);
 
-  const handleSelect = (reactorId: string) => {
-    onReactorChange(reactorId);
+  const handleSelect = (id: string) => {
+    setActiveReactorId(id);
     setIsOpen(false);
   };
 
@@ -59,10 +47,10 @@ export default function Navbar({
   return (
     <nav className='bg-white shadow-md px-4 py-4 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
       <div className='container mx-auto flex items-center justify-between'>
-        <Link href={"/"} className='flex items-center justify-center gap-x-2'>
+        <Link href='/' className='flex items-center justify-center gap-x-2'>
           <Image
-            src={"/images/cvLogo.png"}
-            alt={`Cultivision Logo`}
+            src='/images/cvLogo.png'
+            alt='Cultivision Logo'
             width={30}
             height={30}
             style={{ objectFit: "contain" }}
@@ -71,14 +59,15 @@ export default function Navbar({
           />
           <div className='text-xl font-semibold text-gray-700'>CultiVision</div>
         </Link>
+
         <div className='relative' ref={dropdownRef}>
           <button
-            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
             onClick={() => setIsOpen(!isOpen)}
+            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
           >
-            <span style={{ color: "var(--foreground)" }}>Bioreactor: </span>
-            <span className='font-medium' style={{ color: "#2563eb" }}>
-              {activeReactor?.name || "Select a bioreactor"}
+            <span>Bioreactor:</span>
+            <span className='font-medium text-blue-600'>
+              {activeReactor?.name || "Select"}
             </span>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -103,12 +92,12 @@ export default function Navbar({
               {bioreactors.map((reactor) => (
                 <button
                   key={reactor.id}
-                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 cursor-pointer ${
+                  onClick={() => handleSelect(reactor.id)}
+                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 ${
                     activeReactorId === reactor.id
                       ? "bg-blue-50 font-medium text-blue-600"
                       : ""
                   }`}
-                  onClick={() => handleSelect(reactor.id)}
                 >
                   {reactor.name}
                 </button>
@@ -116,15 +105,14 @@ export default function Navbar({
             </div>
           )}
         </div>
-        <div className='flex items-center justify-center gap-x-3'>
+
+        <div className='flex items-center gap-x-3'>
           <button
             onClick={handleDownloadCsv}
-            className='flex items-center justify-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-center text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
             disabled={!expenses}
-            title='Download results as CSV'
+            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
           >
             <svg
-              xmlns='http://www.w3.org/2000/svg'
               className='h-4 w-4'
               fill='none'
               viewBox='0 0 24 24'
@@ -144,8 +132,7 @@ export default function Navbar({
             href={LAB_EXT_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='flex items-center justify-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-center text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
-            type='button'
+            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-4 text-sm transition-all hover:shadow-lg text-slate-600 hover:bg-gray-100 hover:border-slate-800'
           >
             <Icon
               path={topRightCornerArrowLogo.path}
