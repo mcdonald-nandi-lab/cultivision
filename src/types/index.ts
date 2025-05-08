@@ -1,3 +1,7 @@
+export interface BasicObject {
+  [key: string]: string;
+} 
+
 export interface Bioreactor {
   id: string;
   name: string;

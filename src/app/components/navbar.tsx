@@ -1,9 +1,11 @@
 "use client";
 
 import { bioreactors } from "@/lib/bioreactors";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { LAB_EXT_LINK } from "@/lib/constants";
 
 interface NavbarProps {
   activeReactorId: string;
@@ -14,6 +16,7 @@ export default function Navbar({
   activeReactorId,
   onReactorChange,
 }: NavbarProps) {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -43,9 +46,9 @@ export default function Navbar({
   };
 
   return (
-    <nav className='bg-white shadow-md px-4 py-4 mb-6'>
+    <nav className='bg-white shadow-md px-4 py-4 mb-6 rounded-b-2xl fixed top-0 w-full'>
       <div className='container mx-auto flex items-center justify-between'>
-        <Link href={'/'} className='flex items-center justify-center gap-x-2'>
+        <Link href={"/"} className='flex items-center justify-center gap-x-2'>
           <Image
             src={"/images/cvLogo.png"}
             alt={`Cultivision Logo`}
@@ -55,11 +58,7 @@ export default function Navbar({
             priority
             className='pb-1'
           />
-          <div
-            className='text-xl font-semibold text-gray-700'
-          >
-            CultiVision
-          </div>
+          <div className='text-xl font-semibold text-gray-700'>CultiVision</div>
         </Link>
         <div className='relative' ref={dropdownRef}>
           <button
@@ -105,6 +104,17 @@ export default function Navbar({
               ))}
             </div>
           )}
+        </div>
+        <div className='flex items-center justify-center gap-x-4'>
+          <Link
+            href={"/"}
+            className={`link ${pathname === "/" ? "active" : ""}`}
+          >
+            Dashboard
+          </Link>
+          <Link href={LAB_EXT_LINK} target='_blank' rel='noreferrer nofollow'>
+            Lab
+          </Link>
         </div>
       </div>
     </nav>

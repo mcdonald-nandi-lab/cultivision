@@ -1,0 +1,1 @@
+export const LAB_EXT_LINK: string = "https://mcdonald-nandi.ech.ucdavis.edu/";
