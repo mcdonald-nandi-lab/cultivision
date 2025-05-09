@@ -50,15 +50,15 @@ const Navbar = () => {
       <div className='container mx-auto grid grid-cols-3'>
         <Link
           href='/'
-          className='flex items-center justify-start gap-x-2 w-full'
+          className='flex items-center justify-start gap-x-1 w-full'
         >
           <Image
             src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/cv-logo.png`}
             alt='Cultivision Logo'
-            width={35}
-            height={35}
+            width={40}
+            height={40}
             priority
-            className='pb-1 object-contain'
+            className=' object-contain'
           />
           <div className='flex flex-col items-start justify-center w-full'>
             <div className='text-xl font-semibold text-slate-700'>
