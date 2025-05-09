@@ -58,12 +58,12 @@ export const bioreactors: Bioreactor[] = [
 ];
 
 export const defaultProductionCosts: ProductionCosts = {
-  mediaCost: 1,
+  mediaCost: 1.4,
   laborCost: 0,
   electricityCost: 0.1,
-  steamCost: 10,
+  steamCost: 12,
   coolingWaterCost: 0.05,
-  chilledWaterCost: 0.5,
+  chilledWaterCost: 0.4,
 };
 
 export function getBioreactorById(id: string): Bioreactor | undefined {

@@ -6,18 +6,20 @@ import React from 'react'
 const Footer = () => {
   return (
     <div className='flex flex-col gap-6 w-full'>
-      <div className='grid grid-cols-2 gap-8'>
-        <div className='flex flex-col gap-3'>
-          <Image
-            src={`${
-              process.env.NEXT_PUBLIC_BASE_PATH ?? ""
-            }/images/uc-davis-logo.svg`}
-            alt='UC Davis Logo'
-            width={80}
-            height={80}
-            priority
-            className='pb-1 object-contain'
-          />
+      <div className='grid grid-cols-2 gap-8 items-center'>
+        <div className='flex flex-col gap-2'>
+          <Link href={UCD_EXT_LINK} target='_blank' rel='noreferrer nofollow'>
+            <Image
+              src={`${
+                process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+              }/images/uc-davis-logo.svg`}
+              alt='UC Davis Logo'
+              width={80}
+              height={80}
+              priority
+              className='pb-1 object-contain'
+            />
+          </Link>
         </div>
         <div className='flex flex-col gap-2'>
           <Link
