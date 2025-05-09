@@ -144,7 +144,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
         </div>
       </div>
 
-      <div className='flex-1 relative' style={{ minHeight: "300px" }}>
+      <div className='flex-1 relative' style={{ maxHeight: "450px" }}>
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
 

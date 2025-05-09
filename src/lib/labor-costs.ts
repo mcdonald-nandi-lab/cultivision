@@ -15,13 +15,14 @@ export interface HourlyRate {
 export interface LaborCostResult {
   hourlyRates: HourlyRate;
   totalAnnualCost: number;
+  absolutePercentage: number; 
 }
 
 export interface LaborCostTable {
   laborHours: LaborHours;
-  percentages: number[];
+  relativePercentages: number[];
   currentPercentage: number;
-  results: Record<number, LaborCostResult>;
+  results: Record<string, LaborCostResult>;
   currentAnnualCost: number;
 }
 
@@ -72,23 +73,26 @@ export function calculateTotalAnnualCost(
   );
 }
 
-// Complete labor cost table data
+// Generate labor cost table data
 export function generateLaborCostTable(
   bioreactorId: string,
   currentLaborCostPercentage: number
 ): LaborCostTable {
   const laborHours = laborHoursByReactor[bioreactorId];
-  const percentages = [-2, -1, 0, 1, 2];
+  const relativePercentages = [-2, -1, 0, 1, 2];
 
-  const results: Record<number, LaborCostResult> = {};
+  const results: Record<string, LaborCostResult> = {};
 
-  percentages.forEach((percentage) => {
-    const hourlyRates = calculateModifiedRates(percentage);
+  relativePercentages.forEach((relPercentage) => {
+    const absolutePercentage = currentLaborCostPercentage + relPercentage;
+
+    const hourlyRates = calculateModifiedRates(absolutePercentage);
     const totalAnnualCost = calculateTotalAnnualCost(laborHours, hourlyRates);
 
-    results[percentage] = {
+    results[relPercentage.toString()] = {
       hourlyRates,
       totalAnnualCost,
+      absolutePercentage,
     };
   });
 
@@ -97,7 +101,7 @@ export function generateLaborCostTable(
 
   return {
     laborHours,
-    percentages,
+    relativePercentages,
     currentPercentage: currentLaborCostPercentage,
     results,
     currentAnnualCost,

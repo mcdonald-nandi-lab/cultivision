@@ -27,7 +27,7 @@ const Home = () => {
     <div className='min-h-screen'>
       <Navbar />
       <div className='flex h-full pt-20 mx-8'>
-        <div className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'>
+        <div className='w-full lg:w-1/4 pt-5 px-4 pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'>
             <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
               <ParameterForm />
             </div>

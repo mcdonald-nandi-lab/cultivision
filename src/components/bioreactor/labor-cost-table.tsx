@@ -5,30 +5,21 @@ import { useCalculations } from "@/context/calculation-context";
 import cn from "classnames";
 
 const LaborCostTable = () => {
-  const { laborCostTable, costs, setCosts } = useCalculations();
-  
+  const { laborCostTable } = useCalculations();
+
   if (!laborCostTable) {
     return <div>Loading labor cost data...</div>;
   }
-  
-  const { laborHours, percentages, currentPercentage, results, currentAnnualCost } = laborCostTable;
-  
-  const handlePercentageChange = (percentage: number) => {
-    setCosts({
-      ...costs,
-      laborCost: percentage
-    });
-  };
-  
+
+  const { laborHours, relativePercentages, currentPercentage, results } =
+    laborCostTable;
+
   return (
     <div className='h-full flex flex-col'>
-      <h3 className='text-lg font-semibold text-gray-700 mb-2'>
+      <h3 className='text-lg font-semibold text-gray-700 mb-4'>
         Labor Cost Analysis
       </h3>
-      <p className='text-sm text-gray-600 mb-4'>
-        Click any row to set the current labor cost percentage.
-      </p>
-      <div className='overflow-scroll border border-gray-200 rounded-lg'>
+      <div className='overflow-auto border border-gray-200 rounded-lg'>
         <table className='min-w-full divide-y divide-gray-200'>
           <thead className='bg-gray-50'>
             <tr>
@@ -36,7 +27,13 @@ const LaborCostTable = () => {
                 scope='col'
                 className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
-                Percent Change (%)
+                Relative Change (%)
+              </th>
+              <th
+                scope='col'
+                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+              >
+                Applied Percentage (%)
               </th>
               <th
                 scope='col'
@@ -87,31 +84,29 @@ const LaborCostTable = () => {
               </th>
             </tr>
           </thead>
-          <tbody className='bg-white divide-y divide-gray-200'>
-            {percentages.map((percentage, index) => {
-              const isCurrentPercentage =
-                Math.abs(percentage - currentPercentage) < 0.1;
-              const result = results[percentage];
-
+          <tbody className='bg-white divide-y divide-gray-200 text-sm'>
+            {relativePercentages.map((relPercentage, index) => {
+              const result = results[relPercentage.toString()];
+              const isCurrentRow = relPercentage === 0; 
               return (
                 <tr
-                  key={`percentage-${percentage}`}
+                  key={`percentage-${relPercentage}`}
                   className={cn(
-                    "bg-gray-50",
                     { "bg-white": index % 2 === 0 },
-                    { "bg-green-50": isCurrentPercentage }
+                    { "bg-gray-50": index % 2 !== 0 },
+                    { "bg-green-50": isCurrentRow } // Highlight the row with 0 relative change
                   )}
-                  onClick={() => handlePercentageChange(percentage)}
-                  style={{ cursor: "pointer" }}
-                  title='Click to set as current percentage'
                 >
                   <td className='px-6 py-4 whitespace-nowrap'>
-                    {percentage}
-                    {isCurrentPercentage && (
+                    {relPercentage > 0 ? `+${relPercentage}` : relPercentage}%
+                    {isCurrentRow && (
                       <span className='ml-2 text-green-600 text-xs'>
                         (current)
                       </span>
                     )}
+                  </td>
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    {result.absolutePercentage}%
                   </td>
                   <td className='px-6 py-4 whitespace-nowrap'>
                     {result.hourlyRates.upstream.toFixed(2)}
@@ -134,17 +129,10 @@ const LaborCostTable = () => {
           </tbody>
           <tfoot>
             <tr className='bg-gray-100 text-sm font-semibold'>
-              <td colSpan={5} className='px-6 py-4 whitespace-nowrap'>
+              <td colSpan={6} className='px-6 py-4 whitespace-nowrap'>
                 <div className='flex justify-between items-center'>
-                  <span>
-                    Current labor cost adjustment: {currentPercentage}%
-                  </span>
-                  <span>
-                    Current annual labor cost: $
-                    {currentAnnualCost.toLocaleString(undefined, {
-                      maximumFractionDigits: 0,
-                    })}
-                  </span>
+                  <span>Current labor cost setting: {currentPercentage}%</span>
+                  <span>Use the form to change the labor cost percentage</span>
                 </div>
               </td>
             </tr>
@@ -153,6 +141,6 @@ const LaborCostTable = () => {
       </div>
     </div>
   );
-}
+};
 
 export default LaborCostTable;
