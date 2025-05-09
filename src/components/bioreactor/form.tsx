@@ -19,7 +19,7 @@ const parameterInputs = [
     unit: "%",
     step: "1",
     default: defaultProductionCosts.laborCost,
-    description: 'Labor cost as a percent difference from base labor cost',
+    description: "Labor cost as a percent difference from base labor cost",
   },
   {
     id: "electricityCost",
@@ -56,13 +56,17 @@ const parameterInputs = [
 ];
 
 const ParameterForm = () => {
-  const { costs, setCosts } = useCalculations();
+  const { costs, setCosts, isUrlParamProcessed } = useCalculations();
   const [localCosts, setLocalCosts] = useState(costs);
   const [realTimeUpdates, setRealTimeUpdates] = useState(false);
+  const [urlParamsSet, setUrlParamsSet] = useState(false);
 
   useEffect(() => {
-    setLocalCosts(costs);
-  }, [costs]);
+    if ((isUrlParamProcessed && !urlParamsSet) || !urlParamsSet) {
+      setLocalCosts(costs);
+      setUrlParamsSet(true);
+    }
+  }, [costs, isUrlParamProcessed, urlParamsSet]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -96,6 +100,12 @@ const ParameterForm = () => {
     }
   };
 
+  const hasCustomSettings = Object.entries(localCosts).some(
+    ([key, value]) =>
+      value !==
+      defaultProductionCosts[key as keyof typeof defaultProductionCosts]
+  );
+
   return (
     <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
@@ -106,7 +116,12 @@ const ParameterForm = () => {
           <button
             type='button'
             onClick={handleReset}
-            className='flex items-center gap-x-1 text-xs font-medium text-slate-600 hover:text-green-600 transition cursor-pointer'
+            className={`flex items-center gap-x-1 text-xs font-medium ${
+              hasCustomSettings
+                ? "text-slate-600 hover:text-green-600"
+                : "text-slate-400 cursor-not-allowed"
+            } transition`}
+            disabled={!hasCustomSettings}
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -157,7 +172,7 @@ const ParameterForm = () => {
                   id={param.id}
                   value={localCosts[param.id as keyof typeof localCosts]}
                   onChange={handleChange}
-                  className='block w-full pl-5 pr-12 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-700 focus:border-slate-700 text-gray-600'
+                  className={`block w-full pl-5 pr-12 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-700 focus:border-slate-700 text-gray-600`}
                   placeholder='0.00'
                   step={param.step}
                   min='0'
@@ -165,7 +180,7 @@ const ParameterForm = () => {
                 <div className='absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-xs text-gray-500'>
                   {param.unit}
                 </div>
-                <div className="absolute -bottom-4 left-0 text-xs text-gray-400">
+                <div className='absolute -bottom-4 left-0 text-xs text-gray-400'>
                   {param.description}
                 </div>
               </div>
@@ -186,6 +201,6 @@ const ParameterForm = () => {
       </form>
     </div>
   );
-}
+};
 
 export default ParameterForm;

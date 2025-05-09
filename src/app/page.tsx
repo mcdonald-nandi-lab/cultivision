@@ -1,7 +1,7 @@
 "use client";
 
 import { useCalculations } from "@/context/calculation-context";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/navbar";
 import ParameterForm from "@/components/bioreactor/form";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
@@ -13,13 +13,46 @@ import LaborCostTable from "@/components/bioreactor/labor-cost-table";
 import LaborCostHourlyGraph from "@/components/bioreactor/labor-cost-hourly-graph";
 import LaborCostAnnualGraph from "@/components/bioreactor/labor-cost-annual-graph";
 import ImageModal from "@/components/bioreactor/image-modal";
+import Toast from "@/components/toast";
 import Loading from "./loading";
 import Container from "@/components/container";
 import Footer from "@/components/footer";
 
+const URL_COPIED_EVENT = "urlCopied";
+
 const Home = () => {
-  const { activeReactorId, expenses } = useCalculations();
+  const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState<"success" | "error" | "info">(
+    "success"
+  );
+
+  useEffect(() => {
+    const handleUrlCopied = () => {
+      setToastMessage("Input URL copied to clipboard!");
+      setToastType("success");
+      setShowToast(true);
+    };
+
+    window.addEventListener(URL_COPIED_EVENT, handleUrlCopied);
+
+    return () => {
+      window.removeEventListener(URL_COPIED_EVENT, handleUrlCopied);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      isUrlParamProcessed &&
+      new URLSearchParams(window.location.search).has("p")
+    ) {
+      setToastMessage("Dashboard loaded with saved inputs!");
+      setToastType("info");
+      setShowToast(true);
+    }
+  }, [isUrlParamProcessed]);
 
   if (!expenses) {
     return <Loading />;
@@ -76,7 +109,6 @@ const Home = () => {
               </Container>
             </div>
 
-            {/* Labor cost graphs side by side */}
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
               <Container>
                 <LaborCostHourlyGraph />
@@ -94,12 +126,21 @@ const Home = () => {
           </div>
         </div>
       </div>
+
       {isModalOpen && (
         <ImageModal
           bioreactorId={activeReactorId}
           onClose={() => setIsModalOpen(false)}
         />
       )}
+
+      <Toast
+        message={toastMessage}
+        type={toastType}
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        duration={3000}
+      />
     </div>
   );
 };

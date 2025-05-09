@@ -1,4 +1,4 @@
-// src/context/CalculationContext.tsx
+// src/context/calculation-context.tsx
 "use client";
 
 import {
@@ -8,6 +8,7 @@ import {
   getBioreactorById,
 } from "@/lib/bioreactors";
 import { generateLaborCostTable } from "@/lib/labor-costs";
+import { decodeProductionCosts } from "@/lib/url-params";
 import { CalculatedExpenses, ProductionCosts } from "@/types";
 import { LaborCostTable } from "@/lib/labor-costs";
 import {
@@ -25,6 +26,7 @@ interface CalculationContextType {
   setCosts: (costs: ProductionCosts) => void;
   expenses: CalculatedExpenses | null;
   laborCostTable: LaborCostTable | null;
+  isUrlParamProcessed: boolean;
 }
 
 const CalculationContext = createContext<CalculationContextType | undefined>(
@@ -40,6 +42,26 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
   const [laborCostTable, setLaborCostTable] = useState<LaborCostTable | null>(
     null
   );
+  const [isUrlParamProcessed, setIsUrlParamProcessed] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const encodedParams = params.get("p");
+      const reactorId = params.get("r");
+
+      if (encodedParams) {
+        const decodedCosts = decodeProductionCosts(encodedParams);
+        if (decodedCosts) {
+          setCosts(decodedCosts);
+        }
+      }
+      if (reactorId && bioreactors.some((r) => r.id === reactorId)) {
+        setActiveReactorId(reactorId);
+      }
+      setIsUrlParamProcessed(true);
+    }
+  }, []);
 
   useEffect(() => {
     const reactor = getBioreactorById(activeReactorId);
@@ -64,6 +86,7 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
         setCosts,
         expenses,
         laborCostTable,
+        isUrlParamProcessed,
       }}
     >
       {children}
