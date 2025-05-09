@@ -53,13 +53,12 @@ const Navbar = () => {
           className='flex items-center justify-start gap-x-2 w-full'
         >
           <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/cvLogo.png`}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/cv-logo.png`}
             alt='Cultivision Logo'
             width={35}
             height={35}
-            style={{ objectFit: "contain" }}
             priority
-            className='pb-1'
+            className='pb-1 object-contain'
           />
           <div className='flex flex-col items-start justify-center w-full'>
             <div className='text-xl font-semibold text-slate-700'>

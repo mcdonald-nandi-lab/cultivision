@@ -13,6 +13,7 @@ import LaborCostTable from "@/components/bioreactor/labor-cost-table";
 import ImageModal from "@/components/bioreactor/image-modal";
 import Loading from "./loading";
 import Container from "@/components/container";
+import Footer from "@/components/footer";
 
 const Home = () => {
   const { activeReactorId, expenses } = useCalculations();
@@ -26,14 +27,12 @@ const Home = () => {
     <div className='min-h-screen'>
       <Navbar />
       <div className='flex h-full pt-20 mx-8'>
-        <div className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18'>
-          <div className='flex flex-col gap-6'>
+        <div className='w-full lg:w-1/4 pt-5 p-4 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'>
             <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
               <ParameterForm />
             </div>
-
             <div
-              className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 mb-16 flex flex-col gap-y-2 cursor-pointer'
+              className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer'
               onClick={() => setIsModalOpen(true)}
             >
               <h3 className='text-lg font-semibold text-gray-700 text-center'>
@@ -50,7 +49,9 @@ const Home = () => {
                 Click to enlarge
               </div>
             </div>
-          </div>
+            <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+              <Footer />
+            </div>
         </div>
 
         <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
