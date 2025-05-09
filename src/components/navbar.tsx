@@ -11,7 +11,7 @@ import { LAB_EXT_LINK } from "@/lib/constants";
 import { topRightCornerArrowLogo } from "@/lib/icons";
 
 
-export default function Navbar() {
+const Navbar = () => {
   const { activeReactorId, setActiveReactorId, expenses } = useCalculations();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -160,3 +160,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar;

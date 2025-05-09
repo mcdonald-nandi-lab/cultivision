@@ -9,11 +9,11 @@ interface FlowDiagramProps {
   showTitle?: boolean;
 }
 
-export default function FlowDiagram({
+const FlowDiagram = ({
   bioreactorId,
   height = "400px",
   showTitle = true,
-}: FlowDiagramProps) {
+}: FlowDiagramProps) => {
   const bioreactor = getBioreactorById(bioreactorId);
 
   if (!bioreactor) {
@@ -39,3 +39,5 @@ export default function FlowDiagram({
     </div>
   );
 }
+
+export default FlowDiagram;

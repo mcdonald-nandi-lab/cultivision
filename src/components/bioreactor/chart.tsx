@@ -18,7 +18,7 @@ interface BioreactorChartProps {
   expenses: CalculatedExpenses;
 }
 
-export default function BioreactorChart({ expenses }: BioreactorChartProps) {
+const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -154,3 +154,5 @@ export default function BioreactorChart({ expenses }: BioreactorChartProps) {
     </div>
   );
 }
+
+export default BioreactorChart;

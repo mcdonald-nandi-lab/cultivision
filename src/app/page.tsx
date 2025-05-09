@@ -9,18 +9,17 @@ import BioreactorBarChart from "@/components/bioreactor/bar-chart";
 import ExpenseTable from "@/components/bioreactor/expense-table";
 import BioreactorChart from "@/components/bioreactor/chart";
 import MetricsTable from "@/components/bioreactor/metrics-table";
+import LaborCostTable from "@/components/bioreactor/labor-cost-table";
 import ImageModal from "@/components/bioreactor/image-modal";
 import Loading from "./loading";
 import Container from "@/components/container";
 
-export default function Home() {
+const Home = () => {
   const { activeReactorId, expenses } = useCalculations();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (!expenses) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   return (
@@ -73,6 +72,11 @@ export default function Home() {
                 <MetricsTable expenses={expenses} />
               </Container>
             </div>
+            <div className='grid grid-cols-1 gap-4'>
+              <Container>
+                <LaborCostTable />
+              </Container>
+            </div>
           </div>
         </div>
       </div>
@@ -85,3 +89,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

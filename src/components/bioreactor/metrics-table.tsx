@@ -1,12 +1,13 @@
 "use client";
 
 import { CalculatedExpenses } from "@/types";
+import cn from "classnames";
 
 interface MetricsTableProps {
   expenses: CalculatedExpenses;
 }
 
-export default function MetricsTable({ expenses }: MetricsTableProps) {
+const MetricsTable = ({ expenses }: MetricsTableProps) => {
   console.log('Expenses', expenses)
   const formatNumber = (num: number): string => {
     return num.toLocaleString();
@@ -88,7 +89,7 @@ export default function MetricsTable({ expenses }: MetricsTableProps) {
             {metrics.map((metric, index) => (
               <tr
                 key={index}
-                className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                className={cn('bg-gray-50', { 'bg-white': index % 2 === 0 })}
               >
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='text-sm font-medium text-gray-900'>
@@ -117,4 +118,6 @@ export default function MetricsTable({ expenses }: MetricsTableProps) {
       </div>
     </div>
   );
-}
+};
+
+export default MetricsTable;

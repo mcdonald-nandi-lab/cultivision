@@ -7,7 +7,7 @@ interface ExpenseTableProps {
   expenses: CalculatedExpenses;
 }
 
-export default function ExpenseTable({ expenses }: ExpenseTableProps) {
+const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   const chartData = expenses.chartData;
 
   const total = Object.values(chartData).reduce((sum, value) => sum + value, 0);
@@ -121,3 +121,5 @@ export default function ExpenseTable({ expenses }: ExpenseTableProps) {
     </div>
   );
 }
+
+export default ExpenseTable;

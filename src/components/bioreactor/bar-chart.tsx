@@ -37,9 +37,9 @@ const labels = [
   "Utilities",
 ];
 
-export default function BioreactorBarChart({
+const BioreactorBarChart = ({
   expenses,
-}: BioreactorBarChartProps) {
+}: BioreactorBarChartProps) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -154,4 +154,6 @@ export default function BioreactorBarChart({
       </div>
     </div>
   );
-}
+};
+
+export default BioreactorBarChart;

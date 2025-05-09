@@ -11,7 +11,7 @@ const parameterInputs = [
     unit: "$/L",
     step: "0.1",
     default: 1.4,
-    description: "Base case cost $1.4/L",
+    description: "Base case cost: $1.4/L",
   },
   {
     id: "laborCost",
@@ -55,7 +55,7 @@ const parameterInputs = [
   },
 ];
 
-export default function ParameterForm() {
+const ParameterForm = () => {
   const { costs, setCosts } = useCalculations();
   const [localCosts, setLocalCosts] = useState(costs);
   const [realTimeUpdates, setRealTimeUpdates] = useState(false);
@@ -187,3 +187,5 @@ export default function ParameterForm() {
     </div>
   );
 }
+
+export default ParameterForm;
