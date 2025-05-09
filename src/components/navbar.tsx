@@ -3,17 +3,23 @@
 import { useCalculations } from "@/context/calculation-context";
 import { bioreactors } from "@/lib/bioreactors";
 import { exportToCsv } from "@/lib/csv-export";
+import { createShareableUrl } from "@/lib/url-params";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Icon from "./icon";
 import { LAB_EXT_LINK } from "@/lib/constants";
 import { topRightCornerArrowLogo } from "@/lib/icons";
+import cn from "classnames";
 
+
+const URL_COPIED_EVENT = "urlCopied";
 
 const Navbar = () => {
-  const { activeReactorId, setActiveReactorId, expenses } = useCalculations();
+  const { activeReactorId, setActiveReactorId, expenses, costs } =
+    useCalculations();
   const [isOpen, setIsOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
@@ -34,6 +40,16 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isCopied) {
+      const timeout = setTimeout(() => {
+        setIsCopied(false);
+      }, 4000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isCopied]);
+
   const handleSelect = (id: string) => {
     setActiveReactorId(id);
     setIsOpen(false);
@@ -45,6 +61,35 @@ const Navbar = () => {
     }
   };
 
+  const handleSaveSettings = async () => {
+    const shareableUrl = createShareableUrl(costs, activeReactorId);
+
+    try {
+      await navigator.clipboard.writeText(shareableUrl);
+      setIsCopied(true);
+      window.dispatchEvent(new Event(URL_COPIED_EVENT));
+    } catch (err) {
+      console.error("Failed to copy URL: ", err);
+      const textarea = document.createElement("textarea");
+      textarea.value = shareableUrl;
+      textarea.style.position = "fixed";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+
+      try {
+        document.execCommand("copy");
+        setIsCopied(true);
+        window.dispatchEvent(new Event(URL_COPIED_EVENT));
+      } catch (err) {
+        console.error("Fallback: Failed to copy URL: ", err);
+        alert("Please copy this URL manually: " + shareableUrl);
+      }
+
+      document.body.removeChild(textarea);
+    }
+  };
+
   return (
     <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
       <div className='container mx-auto grid grid-cols-3'>
@@ -53,7 +98,9 @@ const Navbar = () => {
           className='flex items-center justify-start gap-x-1 w-full'
         >
           <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/cv-logo.png`}
+            src={`${
+              process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+            }/images/cv-logo.png`}
             alt='Cultivision Logo'
             width={40}
             height={40}
@@ -119,7 +166,50 @@ const Navbar = () => {
           )}
         </div>
 
-        <div className='flex items-center justify-end gap-x-4'>
+        <div className='flex items-center justify-end gap-x-2'>
+          <button
+            onClick={handleSaveSettings}
+            className={cn(
+              "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
+            )}
+          >
+            {isCopied ? (
+              <>
+                <svg
+                  className='h-4 w-4 text-green-600'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M5 13l4 4L19 7'
+                  />
+                </svg>
+                <span className='text-green-600'>URL Copied!</span>
+              </>
+            ) : (
+              <>
+                <svg
+                  className='h-4 w-4'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                  />
+                </svg>
+                Save Inputs
+              </>
+            )}
+          </button>
+
           <button
             onClick={handleDownloadCsv}
             disabled={!expenses}
@@ -158,6 +248,6 @@ const Navbar = () => {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;
