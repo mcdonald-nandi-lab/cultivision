@@ -10,7 +10,7 @@ interface ImageModalProps {
   onClose: () => void;
 }
 
-export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
+const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [transformOrigin, setTransformOrigin] = useState("center center");
@@ -135,3 +135,5 @@ export default function ImageModal({ bioreactorId, onClose }: ImageModalProps) {
     </div>
   );
 }
+
+export default ImageModal;

@@ -2,17 +2,20 @@
 "use client";
 
 import {
-    bioreactors,
-    calculateExpenses,
-    defaultProductionCosts,
+  bioreactors,
+  calculateExpenses,
+  defaultProductionCosts,
+  getBioreactorById,
 } from "@/lib/bioreactors";
+import { generateLaborCostTable } from "@/lib/labor-costs";
 import { CalculatedExpenses, ProductionCosts } from "@/types";
+import { LaborCostTable } from "@/lib/labor-costs";
 import {
-    createContext,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState,
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 
 interface CalculationContextType {
@@ -21,6 +24,7 @@ interface CalculationContextType {
   costs: ProductionCosts;
   setCosts: (costs: ProductionCosts) => void;
   expenses: CalculatedExpenses | null;
+  laborCostTable: LaborCostTable | null;
 }
 
 const CalculationContext = createContext<CalculationContextType | undefined>(
@@ -33,18 +37,34 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
   );
   const [costs, setCosts] = useState<ProductionCosts>(defaultProductionCosts);
   const [expenses, setExpenses] = useState<CalculatedExpenses | null>(null);
+  const [laborCostTable, setLaborCostTable] = useState<LaborCostTable | null>(
+    null
+  );
 
   useEffect(() => {
-    const reactor = bioreactors.find((r) => r.id === activeReactorId);
+    const reactor = getBioreactorById(activeReactorId);
     if (reactor) {
       const result = calculateExpenses(reactor, costs);
       setExpenses(result);
+
+      const laborTable = generateLaborCostTable(
+        activeReactorId,
+        costs.laborCost
+      );
+      setLaborCostTable(laborTable);
     }
   }, [activeReactorId, costs]);
 
   return (
     <CalculationContext.Provider
-      value={{ activeReactorId, setActiveReactorId, costs, setCosts, expenses }}
+      value={{
+        activeReactorId,
+        setActiveReactorId,
+        costs,
+        setCosts,
+        expenses,
+        laborCostTable,
+      }}
     >
       {children}
     </CalculationContext.Provider>

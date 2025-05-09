@@ -12,10 +12,10 @@ interface BioreactorSelectorProps {
   onBioreactorChange: (bioreactorId: string) => void;
 }
 
-export default function BioreactorSelector({
+const BioreactorSelector = ({
   selectedBioreactor,
   onBioreactorChange,
-}: BioreactorSelectorProps) {
+}: BioreactorSelectorProps) => {
   const [options, setOptions] = useState<BioreactorOption[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -71,3 +71,5 @@ export default function BioreactorSelector({
     </div>
   );
 }
+
+export default BioreactorSelector;

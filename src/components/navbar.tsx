@@ -11,7 +11,7 @@ import { LAB_EXT_LINK } from "@/lib/constants";
 import { topRightCornerArrowLogo } from "@/lib/icons";
 
 
-export default function Navbar() {
+const Navbar = () => {
   const { activeReactorId, setActiveReactorId, expenses } = useCalculations();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,13 +53,12 @@ export default function Navbar() {
           className='flex items-center justify-start gap-x-2 w-full'
         >
           <Image
-            src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/images/cvLogo.png`}
+            src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/images/cv-logo.png`}
             alt='Cultivision Logo'
             width={35}
             height={35}
-            style={{ objectFit: "contain" }}
             priority
-            className='pb-1'
+            className='pb-1 object-contain'
           />
           <div className='flex flex-col items-start justify-center w-full'>
             <div className='text-xl font-semibold text-slate-700'>
@@ -160,3 +159,5 @@ export default function Navbar() {
     </nav>
   );
 }
+
+export default Navbar;
