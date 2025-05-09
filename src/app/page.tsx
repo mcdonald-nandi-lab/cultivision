@@ -10,6 +10,8 @@ import ExpenseTable from "@/components/bioreactor/expense-table";
 import BioreactorChart from "@/components/bioreactor/chart";
 import MetricsTable from "@/components/bioreactor/metrics-table";
 import LaborCostTable from "@/components/bioreactor/labor-cost-table";
+import LaborCostHourlyGraph from "@/components/bioreactor/labor-cost-hourly-graph";
+import LaborCostAnnualGraph from "@/components/bioreactor/labor-cost-annual-graph";
 import ImageModal from "@/components/bioreactor/image-modal";
 import Loading from "./loading";
 import Container from "@/components/container";
@@ -28,30 +30,30 @@ const Home = () => {
       <Navbar />
       <div className='flex h-full pt-20 mx-8'>
         <div className='w-full lg:w-1/4 pt-5 px-4 pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'>
-            <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
-              <ParameterForm />
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+            <ParameterForm />
+          </div>
+          <div
+            className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer'
+            onClick={() => setIsModalOpen(true)}
+          >
+            <h3 className='text-lg font-semibold text-gray-700 text-center'>
+              Bioreactor View
+            </h3>
+            <div className='hover:opacity-90 transition-opacity'>
+              <FlowDiagram
+                bioreactorId={activeReactorId}
+                height='200px'
+                showTitle={false}
+              />
             </div>
-            <div
-              className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer'
-              onClick={() => setIsModalOpen(true)}
-            >
-              <h3 className='text-lg font-semibold text-gray-700 text-center'>
-                Bioreactor View
-              </h3>
-              <div className='hover:opacity-90 transition-opacity'>
-                <FlowDiagram
-                  bioreactorId={activeReactorId}
-                  height='200px'
-                  showTitle={false}
-                />
-              </div>
-              <div className='text-center text-sm text-green-600 hover:text-blue-500'>
-                Click to enlarge
-              </div>
+            <div className='text-center text-sm text-green-600 hover:text-blue-500'>
+              Click to enlarge
             </div>
-            <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
-              <Footer />
-            </div>
+          </div>
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+            <Footer />
+          </div>
         </div>
 
         <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
@@ -73,6 +75,17 @@ const Home = () => {
                 <MetricsTable expenses={expenses} />
               </Container>
             </div>
+
+            {/* Labor cost graphs side by side */}
+            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
+              <Container>
+                <LaborCostHourlyGraph />
+              </Container>
+              <Container>
+                <LaborCostAnnualGraph />
+              </Container>
+            </div>
+
             <div className='grid grid-cols-1 gap-4'>
               <Container>
                 <LaborCostTable />
@@ -89,6 +102,6 @@ const Home = () => {
       )}
     </div>
   );
-}
+};
 
 export default Home;
