@@ -5,27 +5,54 @@ import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 
 const parameterInputs = [
-    { id: "mediaCost", label: "Media Cost", unit: "$/L", step: "0.1" },
-    { id: "laborCost", label: "Labor Cost Change", unit: "%", step: "1" },
-    {
-      id: "electricityCost",
-      label: "Electricity Cost",
-      unit: "$/kWh",
-      step: "0.01",
-    },
-    { id: "steamCost", label: "Steam Cost", unit: "$/MT", step: "0.1" },
-    {
-      id: "coolingWaterCost",
-      label: "Cooling Water",
-      unit: "$/MT",
-      step: "0.01",
-    },
-    {
-      id: "chilledWaterCost",
-      label: "Chilled Water",
-      unit: "$/MT",
-      step: "0.01",
-    },
+  {
+    id: "mediaCost",
+    label: "Media Cost",
+    unit: "$/L",
+    step: "0.1",
+    default: 1.4,
+    description: "Base case cost $1.4/L",
+  },
+  {
+    id: "laborCost",
+    label: "Labor Cost Change",
+    unit: "%",
+    step: "1",
+    default: 0,
+    description: 'Labor cost as a percent difference from base labor cost',
+  },
+  {
+    id: "electricityCost",
+    label: "Electricity Cost",
+    unit: "$/kWh",
+    step: "0.01",
+    default: 0.1,
+    description: "Base case cost: $0.1/kW-h",
+  },
+  {
+    id: "steamCost",
+    label: "Steam Cost",
+    unit: "$/MT",
+    step: "0.1",
+    default: 12,
+    description: "Base case cost: $12/MT",
+  },
+  {
+    id: "coolingWaterCost",
+    label: "Cooling Water",
+    unit: "$/MT",
+    step: "0.01",
+    default: 0.05,
+    description: "Base case cost: $0.05/MT",
+  },
+  {
+    id: "chilledWaterCost",
+    label: "Chilled Water",
+    unit: "$/MT",
+    step: "0.01",
+    default: 0.4,
+    description: "Base case cost: $0.4/MT",
+  },
 ];
 
 export default function ParameterForm() {
@@ -114,8 +141,8 @@ export default function ParameterForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className='flex-1 flex flex-col gap-y-6'>
-        <div className='flex-1 space-y-3'>
+      <form onSubmit={handleSubmit} className='flex-1 flex flex-col gap-y-8'>
+        <div className='flex-1 space-y-6'>
           {parameterInputs.map((param) => (
             <div key={param.id} className='form-group'>
               <label
@@ -130,13 +157,16 @@ export default function ParameterForm() {
                   id={param.id}
                   value={localCosts[param.id as keyof typeof localCosts]}
                   onChange={handleChange}
-                  className='block w-full pl-5 pr-8 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-700 focus:border-slate-700 text-gray-600'
+                  className='block w-full pl-5 pr-12 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-700 focus:border-slate-700 text-gray-600'
                   placeholder='0.00'
                   step={param.step}
                   min='0'
                 />
                 <div className='absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-xs text-gray-500'>
                   {param.unit}
+                </div>
+                <div className="absolute -bottom-4 left-0 text-xs text-gray-400">
+                  {param.description}
                 </div>
               </div>
             </div>
