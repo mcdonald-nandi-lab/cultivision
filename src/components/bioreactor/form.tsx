@@ -10,15 +10,15 @@ const parameterInputs = [
     label: "Media Cost",
     unit: "$/L",
     step: "0.1",
-    default: 1.4,
-    description: "Base case cost: $1.4/L",
+    default: defaultProductionCosts.mediaCost,
+    description: `Base case cost: $${defaultProductionCosts.mediaCost}/L`,
   },
   {
     id: "laborCost",
     label: "Labor Cost Change",
     unit: "%",
     step: "1",
-    default: 0,
+    default: defaultProductionCosts.laborCost,
     description: 'Labor cost as a percent difference from base labor cost',
   },
   {
@@ -26,32 +26,32 @@ const parameterInputs = [
     label: "Electricity Cost",
     unit: "$/kWh",
     step: "0.01",
-    default: 0.1,
-    description: "Base case cost: $0.1/kW-h",
+    default: defaultProductionCosts.electricityCost,
+    description: `Base case cost: $${defaultProductionCosts.electricityCost}/kW-h`,
   },
   {
     id: "steamCost",
     label: "Steam Cost",
     unit: "$/MT",
     step: "0.1",
-    default: 12,
-    description: "Base case cost: $12/MT",
+    default: defaultProductionCosts.steamCost,
+    description: `Base case cost: $${defaultProductionCosts.steamCost}/MT`,
   },
   {
     id: "coolingWaterCost",
     label: "Cooling Water",
     unit: "$/MT",
     step: "0.01",
-    default: 0.05,
-    description: "Base case cost: $0.05/MT",
+    default: defaultProductionCosts.coolingWaterCost,
+    description: `Base case cost: $${defaultProductionCosts.coolingWaterCost}/MT`,
   },
   {
     id: "chilledWaterCost",
     label: "Chilled Water",
     unit: "$/MT",
     step: "0.01",
-    default: 0.4,
-    description: "Base case cost: $0.4/MT",
+    default: defaultProductionCosts.chilledWaterCost,
+    description: `Base case cost: $${defaultProductionCosts.chilledWaterCost}/MT`,
   },
 ];
 
@@ -97,7 +97,7 @@ const ParameterForm = () => {
   };
 
   return (
-    <div className='h-full flex flex-col gap-y-3'>
+    <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
         <div className='flex justify-between items-center'>
           <h2 className='text-lg font-semibold text-slate-700'>
