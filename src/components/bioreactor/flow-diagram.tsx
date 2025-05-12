@@ -29,7 +29,7 @@ const FlowDiagram = ({
       )}
       <div className='relative w-full' style={{ height }}>
         <Image
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${bioreactor.image}`}
+          src={`${bioreactor.image}`}
           alt={`${bioreactor.name} Flow Diagram`}
           fill
           priority
