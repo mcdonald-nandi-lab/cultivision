@@ -110,7 +110,7 @@ const Navbar = () => {
     <>
       <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-40'>
         <div className='container mx-auto flex items-center justify-between'>
-          <Link href='/' className='flex items-center justify-start gap-x-1'>
+          <Link href='/' className='flex items-center justify-start gap-x-1 '>
             <Image
               src={`${
                 process.env.NEXT_PUBLIC_BASE_PATH ?? ""
