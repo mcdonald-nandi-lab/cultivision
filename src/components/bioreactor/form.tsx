@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 import Title from "@/components/title";
+import classNames from "classnames";
 
 const parameterInputs = [
   {
@@ -157,7 +158,10 @@ const ParameterForm = () => {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className='flex-1 flex flex-col gap-y-8'>
+      <form
+        onSubmit={handleSubmit}
+        className={classNames("flex-1 flex flex-col gap-y-8", { 'pb-4': realTimeUpdates })}
+      >
         <div className='flex-1 space-y-6'>
           {parameterInputs.map((param) => (
             <div key={param.id} className='form-group'>
