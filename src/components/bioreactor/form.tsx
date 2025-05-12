@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
+import Title from "@/components/title";
 
 const parameterInputs = [
   {
@@ -109,49 +110,49 @@ const ParameterForm = () => {
   return (
     <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
-        <div className='flex justify-between items-center'>
-          <h2 className='text-lg font-semibold text-slate-700'>
-            Cost Parameters
-          </h2>
-          <button
-            type='button'
-            onClick={handleReset}
-            className={`flex items-center gap-x-1 text-xs font-medium ${
-              hasCustomSettings
-                ? "text-slate-600 hover:text-green-600"
-                : "text-slate-400 cursor-not-allowed"
-            } transition`}
-            disabled={!hasCustomSettings}
-          >
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-3 w-3'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
+        <div className='flex justify-between items-center gap-x-2'>
+          <Title title='Cost Parameters' />
+          <div className='flex gap-x-2'>
+            <button
+              type='button'
+              onClick={handleReset}
+              className={`flex items-center gap-x-1 text-xs font-medium ${
+                hasCustomSettings
+                  ? "text-slate-600 hover:text-green-600"
+                  : "text-slate-400 cursor-not-allowed"
+              } transition`}
+              disabled={!hasCustomSettings}
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
-              />
-            </svg>
-            Reset
-          </button>
-          <div className='flex items-center gap-x-2 bg-gray-100 px-2 py-1 rounded-md text-slate-600'>
-            <span className='text-xs font-medium'>
-              {realTimeUpdates ? "Real-time" : "Manual"}
-            </span>
-            <label className='relative inline-flex items-center cursor-pointer'>
-              <input
-                type='checkbox'
-                className='sr-only peer'
-                checked={realTimeUpdates}
-                onChange={toggleRealTimeUpdates}
-              />
-              <div className="w-8 h-4 bg-gray-300 peer-focus:ring-1 peer-focus:ring-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-600"></div>
-            </label>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                className='h-3 w-3'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15'
+                />
+              </svg>
+              Reset
+            </button>
+            <div className='flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-md text-slate-600'>
+              <span className='text-xs font-medium'>
+                {realTimeUpdates ? "Real-time" : "Manual"}
+              </span>
+              <label className='relative inline-flex items-center cursor-pointer'>
+                <input
+                  type='checkbox'
+                  className='sr-only peer'
+                  checked={realTimeUpdates}
+                  onChange={toggleRealTimeUpdates}
+                />
+                <div className="w-8 h-4 bg-gray-300 peer-focus:ring-1 peer-focus:ring-slate-300 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-slate-600"></div>
+              </label>
+            </div>
           </div>
         </div>
       </div>

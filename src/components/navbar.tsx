@@ -6,38 +6,43 @@ import { exportToCsv } from "@/lib/csv-export";
 import { createShareableUrl } from "@/lib/url-params";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "./icon";
 import { LAB_EXT_LINK } from "@/lib/constants";
 import { topRightCornerArrowLogo } from "@/lib/icons";
 import cn from "classnames";
-
 
 const URL_COPIED_EVENT = "urlCopied";
 
 const Navbar = () => {
   const { activeReactorId, setActiveReactorId, expenses, costs } =
     useCalculations();
-  const [isOpen, setIsOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
 
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+
+      if (!target) return;
+
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        !target.closest(".dropdown-container") &&
+        !target.closest(".dropdown-button")
       ) {
-        setIsOpen(false);
+        setIsDropdownOpen(false);
       }
-    }
+
+      if (!target.closest(".sidebar") && !target.closest(".hamburger-button")) {
+        setIsSidebarOpen(false);
+      }
+    };
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -45,20 +50,20 @@ const Navbar = () => {
       const timeout = setTimeout(() => {
         setIsCopied(false);
       }, 4000);
-
       return () => clearTimeout(timeout);
     }
   }, [isCopied]);
 
-  const handleSelect = (id: string) => {
+  const handleSelect = (id:string) => {
     setActiveReactorId(id);
-    setIsOpen(false);
+    setIsDropdownOpen(false);
   };
 
   const handleDownloadCsv = () => {
     if (expenses && activeReactor) {
       exportToCsv(expenses, activeReactor);
     }
+    setIsSidebarOpen(false);
   };
 
   const handleSaveSettings = async () => {
@@ -70,6 +75,7 @@ const Navbar = () => {
       window.dispatchEvent(new Event(URL_COPIED_EVENT));
     } catch (err) {
       console.error("Failed to copy URL: ", err);
+      // Fallback for browsers that don't support clipboard API
       const textarea = document.createElement("textarea");
       textarea.value = shareableUrl;
       textarea.style.position = "fixed";
@@ -88,95 +94,58 @@ const Navbar = () => {
 
       document.body.removeChild(textarea);
     }
+
+    setIsSidebarOpen(false);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
-    <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-50'>
-      <div className='container mx-auto grid grid-cols-3'>
-        <Link
-          href='/'
-          className='flex items-center justify-start gap-x-1 w-full'
-        >
-          <Image
-            src={`${
-              process.env.NEXT_PUBLIC_BASE_PATH ?? ""
-            }/images/cv-logo.png`}
-            alt='Cultivision Logo'
-            width={40}
-            height={40}
-            priority
-            className=' object-contain'
-          />
-          <div className='flex flex-col items-start justify-center w-full'>
-            <div className='text-xl font-semibold text-slate-700'>
-              CultiVision
+    <>
+      <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-40'>
+        <div className='container mx-auto flex items-center justify-between'>
+          <Link href='/' className='flex items-center justify-start gap-x-1 '>
+            <Image
+              src={`${
+                process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+              }/images/cv-logo.png`}
+              alt='Cultivision Logo'
+              width={40}
+              height={40}
+              priority
+              className='object-contain'
+            />
+            <div className='flex flex-col items-start justify-center sm:flex hidden'>
+              <div className='text-xl font-semibold text-slate-700'>
+                CultiVision
+              </div>
+              <div className='text-xs font-medium italic'>
+                Cultivated Meat Dashboard
+              </div>
             </div>
-            <div className='text-xs font-medium italic'>
-              Cultivated Meat Dashboard
-            </div>
-          </div>
-        </Link>
+          </Link>
 
-        <div
-          className='relative flex items-center justify-center'
-          ref={dropdownRef}
-        >
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className='cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
-          >
-            <span className='font-semibold'>Bioreactor:</span>
-            <span className='font-medium text-green-700'>
-              {activeReactor?.name || "Select"}
-            </span>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className={`h-5 w-5 transition-transform ${
-                isOpen ? "rotate-180" : ""
-              }`}
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M19 9l-7 7-7-7'
-              />
-            </svg>
-          </button>
-
-          {isOpen && (
-            <div className='absolute top-10 right-20 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10'>
-              {bioreactors.map((reactor) => (
-                <button
-                  key={reactor.id}
-                  onClick={() => handleSelect(reactor.id)}
-                  className={`block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer ${
-                    activeReactorId === reactor.id
-                      ? "bg-blue-50 font-medium"
-                      : ""
-                  }`}
-                >
-                  {reactor.name}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className='flex items-center justify-end gap-x-2'>
-          <button
-            onClick={handleSaveSettings}
-            className={cn(
-              "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
-            )}
-          >
-            {isCopied ? (
-              <>
+          <div className='flex items-center justify-around gap-4'>
+            <div className='relative dropdown-container'>
+              <button
+                onClick={toggleDropdown}
+                className='dropdown-button cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+              >
+                <span className='font-semibold'>Bioreactor:</span>
+                <span className='font-medium text-green-700'>
+                  {activeReactor?.name || "Select"}
+                </span>
                 <svg
-                  className='h-4 w-4 text-green-600'
+                  xmlns='http://www.w3.org/2000/svg'
+                  className={`h-5 w-5 transition-transform duration-200 ease-in-out ${
+                    isDropdownOpen ? "rotate-180" : ""
+                  }`}
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'
@@ -185,13 +154,98 @@ const Navbar = () => {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth={2}
-                    d='M5 13l4 4L19 7'
+                    d='M19 9l-7 7-7-7'
                   />
                 </svg>
-                <span className='text-green-600'>URL Copied!</span>
-              </>
-            ) : (
-              <>
+              </button>
+              <div
+                className={`absolute top-full right-0 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out ${
+                  isDropdownOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-2"
+                }`}
+              >
+                {bioreactors.map((reactor) => (
+                  <button
+                    key={reactor.id}
+                    onClick={() => handleSelect(reactor.id)}
+                    className={`block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer ${
+                      activeReactorId === reactor.id
+                        ? "bg-blue-50 font-medium"
+                        : ""
+                    }`}
+                  >
+                    {reactor.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button
+              onClick={toggleSidebar}
+              className='hamburger-button block xl:hidden p-2 focus:outline-none cursor-pointer'
+            >
+              <svg
+                className='w-6 h-6 text-slate-700'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='2'
+                  d='M4 6h16M4 12h16M4 18h16'
+                />
+              </svg>
+            </button>
+            <div className='hidden xl:flex items-center gap-4'>
+              <button
+                onClick={handleSaveSettings}
+                className={cn(
+                  "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
+                )}
+              >
+                {isCopied ? (
+                  <>
+                    <svg
+                      className='h-4 w-4 text-green-600'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M5 13l4 4L19 7'
+                      />
+                    </svg>
+                    <span className='text-green-600'>URL Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className='h-4 w-4'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                      />
+                    </svg>
+                    <span>Save Inputs</span>
+                  </>
+                )}
+              </button>
+              <button
+                onClick={handleDownloadCsv}
+                disabled={!expenses}
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+              >
                 <svg
                   className='h-4 w-4'
                   fill='none'
@@ -202,51 +256,139 @@ const Navbar = () => {
                     strokeLinecap='round'
                     strokeLinejoin='round'
                     strokeWidth={2}
-                    d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                    d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
                   />
                 </svg>
-                Save Inputs
-              </>
-            )}
-          </button>
-
-          <button
-            onClick={handleDownloadCsv}
-            disabled={!expenses}
-            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
-          >
-            <svg
-              className='h-4 w-4'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
+                <span>Download CSV</span>
+              </button>
+              <Link
+                href={LAB_EXT_LINK}
+                target='_blank'
+                rel='noreferrer nofollow'
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
+              >
+                <Icon
+                  path={topRightCornerArrowLogo.path}
+                  viewBox={topRightCornerArrowLogo.viewBox}
+                  fill='#475569'
+                />
+                <span>Our Lab</span>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div
+        className={`sidebar fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${
+          isSidebarOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className='p-6'>
+          <div className='flex justify-between items-center mb-8'>
+            <h2 className='text-xl font-semibold text-slate-700'>Menu</h2>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className='text-gray-500 hover:text-gray-700 cursor-pointer'
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-              />
-            </svg>
-            Download CSV
-          </button>
+              <svg
+                className='w-6 h-6'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth='2'
+                  d='M6 18L18 6M6 6l12 12'
+                />
+              </svg>
+            </button>
+          </div>
 
-          <Link
-            href={LAB_EXT_LINK}
-            target='_blank'
-            rel='noreferrer nofollow'
-            className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
-          >
-            <Icon
-              path={topRightCornerArrowLogo.path}
-              viewBox={topRightCornerArrowLogo.viewBox}
-              fill='#475569'
-            />
-            Our Lab
-          </Link>
+          <div className='flex flex-col space-y-4'>
+            <button
+              onClick={handleSaveSettings}
+              className={cn(
+                "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start"
+              )}
+            >
+              {isCopied ? (
+                <>
+                  <svg
+                    className='h-4 w-4 text-green-600'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M5 13l4 4L19 7'
+                    />
+                  </svg>
+                  <span className='text-green-600'>URL Copied!</span>
+                </>
+              ) : (
+                <>
+                  <svg
+                    className='h-4 w-4'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                    />
+                  </svg>
+                  <span>Save Inputs</span>
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={handleDownloadCsv}
+              disabled={!expenses}
+              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start disabled:opacity-50 disabled:cursor-not-allowed'
+            >
+              <svg
+                className='h-4 w-4'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                />
+              </svg>
+              <span>Download CSV</span>
+            </button>
+
+            <Link
+              href={LAB_EXT_LINK}
+              target='_blank'
+              rel='noreferrer nofollow'
+              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500 w-full justify-start'
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <Icon
+                path={topRightCornerArrowLogo.path}
+                viewBox={topRightCornerArrowLogo.viewBox}
+                fill='#475569'
+              />
+              <span>Our Lab</span>
+            </Link>
+          </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 
