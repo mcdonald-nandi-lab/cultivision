@@ -55,7 +55,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   };
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className='h-full flex flex-col pb-2'>
       <div className='flex items-center justify-start gap-x-2 mb-4'>
         <h2 className='text-lg font-semibold text-slate-700'>
           Expense Breakdown

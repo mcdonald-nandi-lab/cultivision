@@ -40,7 +40,7 @@ const TableDownloadButton = ({
           <button
             type='button'
             onClick={downloadCSV}
-            className='inline-flex items-center px-2 py-1 text-gray-400 focus:outline-none rounded-md cursor-pointer border border-solid border-gray-200 hover:bg-gray-100'
+            className='h-6 inline-flex items-center justify-center px-2 py-1 text-gray-400 focus:outline-none rounded-md cursor-pointer border border-solid border-gray-200 hover:bg-gray-100'
             aria-label={tooltipText}
           >
             <svg

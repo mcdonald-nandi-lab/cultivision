@@ -135,7 +135,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
   );
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-between items-start w-full'>
         <div className='flex gap-x-2'>
           <h2 className='text-lg font-semibold text-gray-700'>

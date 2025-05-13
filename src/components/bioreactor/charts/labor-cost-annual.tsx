@@ -125,7 +125,7 @@ const LaborCostAnnualGraph = () => {
   }
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
         <h3 className='text-lg font-semibold text-gray-700'>
           Total Annual Labor Cost
