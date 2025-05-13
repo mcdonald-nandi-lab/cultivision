@@ -2,6 +2,7 @@
 
 import { BRAND_COLORS } from "@/lib/constants";
 import { CalculatedExpenses } from "@/types";
+import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
 
 interface ExpenseTableProps {
   expenses: CalculatedExpenses;
@@ -55,11 +56,28 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
 
   return (
     <div className='h-full flex flex-col'>
-      <h2 className='text-xl font-semibold text-slate-700 mb-4'>
-        Expense Breakdown
-      </h2>
+      <div className='flex items-center justify-start gap-x-2 mb-4'>
+        <h2 className='text-lg font-semibold text-slate-700'>
+          Expense Breakdown
+        </h2>
+        <TableDownloadButton
+          filename='expense-breakdown.csv'
+          headers={["Category", "Cost", "Percentage"]}
+          rows={[
+            ...expenseItems.map((item) => [
+              item.name,
+              formatCurrency(item.value),
+              ((item.value / total) * 100).toFixed(1) + "%",
+            ]),
+            ["Total", formatCurrency(total), "100%"],
+          ]}
+        />
+      </div>
       <div className='overflow-scroll border border-gray-200 rounded-lg'>
-        <table className='min-w-full divide-y divide-gray-200'>
+        <table
+          className='min-w-full divide-y divide-gray-200'
+          aria-label='Table showing detailed cost breakdown by category, cost in dollars, and percentage'
+        >
           <thead className='bg-gray-50'>
             <tr>
               <th

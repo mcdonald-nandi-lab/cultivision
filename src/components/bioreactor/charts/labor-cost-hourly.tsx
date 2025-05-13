@@ -175,8 +175,8 @@ const LaborCostHourlyGraph = () => {
   }
 
   return (
-    <div className='h-full flex flex-col gap-3'>
-      <div className='flex justify-start items-center w-full gap-x-2'>
+    <div className='h-full flex flex-col'>
+      <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
         <h3 className='text-lg font-semibold text-gray-700'>
           Hourly Rates by Labor Type
         </h3>

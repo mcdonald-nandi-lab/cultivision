@@ -3,6 +3,7 @@
 
 import { useCalculations } from "@/context/calculation-context";
 import cn from "classnames";
+import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
 
 const LaborCostTable = () => {
   const { laborCostTable } = useCalculations();
@@ -14,11 +15,39 @@ const LaborCostTable = () => {
   const { laborHours, relativePercentages, currentPercentage, results } =
     laborCostTable;
 
+    const headers = [
+      "Relative Change (%)",
+      "Applied %",
+      "USP Operator ($/hr)",
+      "Operator ($/hr)",
+      "DSP Operator ($/hr)",
+      "Total Annual Cost",
+    ];
+
+    const rows = relativePercentages.map((rel) => {
+      const r = results[rel.toString()];
+      return [
+        rel > 0 ? `+${rel}%` : `${rel}%`,
+        `${r.absolutePercentage}%`,
+        r.hourlyRates.upstream.toFixed(2),
+        r.hourlyRates.main.toFixed(2),
+        r.hourlyRates.downstream.toFixed(2),
+        `$${r.totalAnnualCost.toLocaleString()}`,
+      ];
+    });
+    
   return (
     <div className='h-full flex flex-col'>
-      <h3 className='text-lg font-semibold text-gray-700 mb-4'>
-        Labor Cost Analysis
-      </h3>
+      <div className='flex items-center justify-start gap-x-2 mb-4'>
+        <h3 className='text-lg font-semibold text-gray-700'>
+          Labor Cost Analysis
+        </h3>
+        <TableDownloadButton
+          filename='labor-cost-analysis.csv'
+          headers={headers}
+          rows={rows}
+        />
+      </div>
       <div className='overflow-auto border border-gray-200 rounded-lg'>
         <table
           className='min-w-full divide-y divide-gray-200'

@@ -2,6 +2,7 @@
 
 import { CalculatedExpenses } from "@/types";
 import cn from "classnames";
+import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
 
 interface MetricsTableProps {
   expenses: CalculatedExpenses;
@@ -55,12 +56,21 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
     },
   ];
 
+  const headers = ["Metric", "Value", "Unit"];
+  const rows = metrics.map((m) => [m.name, m.value, m.unit]);
+
   return (
     <div className='h-full flex flex-col'>
-      <h2 className='text-xl font-semibold text-slate-700 mb-4'>
-        Performance Metrics
-      </h2>
-
+      <div className='flex items-center justify-start gap-x-2 mb-4'>
+        <h2 className='text-lg font-semibold text-slate-700'>
+          Performance Metrics
+        </h2>
+        <TableDownloadButton
+          filename='performance-metrics.csv'
+          headers={headers}
+          rows={rows}
+        />
+      </div>
       <div className='overflow-scroll border border-gray-200 rounded-lg'>
         <table
           className='min-w-full divide-y divide-gray-200'

@@ -141,7 +141,7 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
 
   return (
     <div className='h-full flex flex-col'>
-      <div className='flex justify-between items-center w-full'>
+      <div className='flex justify-between items-start w-full mb-4'>
         <div className='flex gap-x-2'>
           <h2 className='text-lg font-semibold text-gray-700'>
             Cost Breakdown
@@ -160,7 +160,11 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
         </div>
       </div>
 
-      <div className='flex-1 relative' style={{ minHeight: "300px" }}>
+      <div
+        className='flex-1 relative'
+        aria-label='Horizontal bar chart showing cost breakdown across categories in USD millions'
+        style={{ minHeight: "300px" }}
+      >
         <canvas ref={chartRef} className='w-full h-full'></canvas>
       </div>
     </div>
