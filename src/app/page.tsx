@@ -5,13 +5,13 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/navbar";
 import ParameterForm from "@/components/bioreactor/form";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
-import BioreactorBarChart from "@/components/bioreactor/bar-chart";
-import ExpenseTable from "@/components/bioreactor/expense-table";
-import BioreactorChart from "@/components/bioreactor/chart";
-import MetricsTable from "@/components/bioreactor/metrics-table";
-import LaborCostTable from "@/components/bioreactor/labor-cost-table";
-import LaborCostHourlyGraph from "@/components/bioreactor/labor-cost-hourly-graph";
-import LaborCostAnnualGraph from "@/components/bioreactor/labor-cost-annual-graph";
+import BioreactorBarChart from "@/components/bioreactor/charts/cost-breakdown";
+import ExpenseTable from "@/components/bioreactor/tables/expense-breakdown";
+import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
+import MetricsTable from "@/components/bioreactor/tables/performance-metrics";
+import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
+import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hourly";
+import LaborCostAnnualGraph from "@/components/bioreactor/charts/labor-cost-annual";
 import ImageModal from "@/components/bioreactor/image-modal";
 import Toast from "@/components/toast";
 import Loading from "./loading";
@@ -59,10 +59,13 @@ const Home = () => {
   }
 
   return (
-    <div className='min-h-screen'>
+    <main className='min-h-screen'>
       <Navbar />
       <div className='flex h-full pt-20 mx-8'>
-        <div className='w-full lg:w-1/4 pt-5 px-4 pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'>
+        <div
+          className='w-full lg:w-1/4 pt-5 px-4 pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'
+          aria-label='Input Form and Bioreactor View'
+        >
           <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
             <ParameterForm />
           </div>
@@ -141,7 +144,7 @@ const Home = () => {
         onClose={() => setShowToast(false)}
         duration={3000}
       />
-    </div>
+    </main>
   );
 };
 

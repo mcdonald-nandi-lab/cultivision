@@ -13,6 +13,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useChartDownload from "@/hooks/useChartDownload";
+import ChartDownloadButton from "@/components/bioreactor/charts/download-button";
 
 Chart.register(
   LineController,
@@ -34,6 +36,8 @@ const LaborCostHourlyGraph = () => {
   const { laborCostTable } = useCalculations();
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
+
+  const { downloadChart } = useChartDownload();
 
   // Format currency for tooltip and axes
   const formatCurrency = (value: number, digits: number = 2): string => {
@@ -171,11 +175,22 @@ const LaborCostHourlyGraph = () => {
   }
 
   return (
-    <div className='h-full flex flex-col'>
-      <h3 className='text-lg font-semibold text-gray-700 mb-4'>
-        Hourly Rates by Labor Type
-      </h3>
-      <div className='flex-1'>
+    <div className='h-full flex flex-col pb-2'>
+      <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
+        <h3 className='text-lg font-semibold text-gray-700'>
+          Hourly Rates by Labor Type
+        </h3>
+        <ChartDownloadButton
+          downloadChart={downloadChart}
+          chartInstance={chartInstance}
+          filename='hourly-labor-cost-chart.png'
+        />
+      </div>
+      <div
+        className='flex-1'
+        role='img'
+        aria-label='Line chart showing hourly labor rates by type and percentage change'
+      >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
       <div className='text-xs text-gray-500 mt-2'>

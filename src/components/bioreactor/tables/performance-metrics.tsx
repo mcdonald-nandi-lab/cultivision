@@ -2,6 +2,7 @@
 
 import { CalculatedExpenses } from "@/types";
 import cn from "classnames";
+import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
 
 interface MetricsTableProps {
   expenses: CalculatedExpenses;
@@ -55,14 +56,27 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
     },
   ];
 
-  return (
-    <div className='h-full flex flex-col'>
-      <h2 className='text-xl font-semibold text-slate-700 mb-4'>
-        Performance Metrics
-      </h2>
+  const headers = ["Metric", "Value", "Unit"];
+  const rows = metrics.map((m) => [m.name, m.value, m.unit]);
 
+  return (
+    <div className='h-full flex flex-col pb-2'>
+      <div className='flex items-center justify-start gap-x-2 mb-4'>
+        <h2 className='text-lg font-semibold text-slate-700'>
+          Performance Metrics
+        </h2>
+        <TableDownloadButton
+          filename='performance-metrics.csv'
+          headers={headers}
+          rows={rows}
+        />
+      </div>
       <div className='overflow-scroll border border-gray-200 rounded-lg'>
-        <table className='min-w-full divide-y divide-gray-200'>
+        <table
+          className='min-w-full divide-y divide-gray-200'
+          role='table'
+          aria-label='Performance metrics table'
+        >
           <thead className='bg-gray-50'>
             <tr>
               <th
@@ -89,7 +103,7 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
             {metrics.map((metric, index) => (
               <tr
                 key={index}
-                className={cn('bg-gray-50', { 'bg-white': index % 2 === 0 })}
+                className={cn("bg-gray-50", { "bg-white": index % 2 === 0 })}
               >
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='text-sm font-medium text-gray-900'>

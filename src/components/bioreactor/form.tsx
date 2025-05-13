@@ -160,7 +160,9 @@ const ParameterForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className={classNames("flex-1 flex flex-col gap-y-8", { 'pb-4': realTimeUpdates })}
+        className={classNames("flex-1 flex flex-col gap-y-8", {
+          "pb-4": realTimeUpdates,
+        })}
       >
         <div className='flex-1 space-y-6'>
           {parameterInputs.map((param) => (
@@ -181,11 +183,15 @@ const ParameterForm = () => {
                   placeholder='0.00'
                   step={param.step}
                   min='0'
+                  aria-describedby={`${param.id}-desc`}
                 />
                 <div className='absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-xs text-gray-500'>
                   {param.unit}
                 </div>
-                <div className='absolute -bottom-4 left-0 text-xs text-gray-400'>
+                <div
+                  className='absolute -bottom-4 left-0 text-xs text-gray-400'
+                  id={`${param.id}-desc`}
+                >
                   {param.description}
                 </div>
               </div>

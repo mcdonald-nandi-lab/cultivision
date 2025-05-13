@@ -12,6 +12,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useChartDownload from "@/hooks/useChartDownload";
+import ChartDownloadButton from "./download-button";
 
 Chart.register(
   BarController,
@@ -22,12 +24,14 @@ Chart.register(
   Legend
 );
 
-const ANNUAL_COST_COLOR = "#659C46"; 
+const ANNUAL_COST_COLOR = "#659C46";
 
 const LaborCostAnnualGraph = () => {
   const { laborCostTable } = useCalculations();
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
+
+  const { downloadChart } = useChartDownload();
 
   useEffect(() => {
     if (!laborCostTable || !chartRef.current) return;
@@ -121,11 +125,22 @@ const LaborCostAnnualGraph = () => {
   }
 
   return (
-    <div className='h-full flex flex-col'>
-      <h3 className='text-lg font-semibold text-gray-700 mb-4'>
-        Total Annual Labor Cost
-      </h3>
-      <div className='flex-1'>
+    <div className='h-full flex flex-col pb-2'>
+      <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
+        <h3 className='text-lg font-semibold text-gray-700'>
+          Total Annual Labor Cost
+        </h3>
+        <ChartDownloadButton
+          downloadChart={downloadChart}
+          chartInstance={chartInstance}
+          filename='annual-labor-cost-by-percentage-chart.png'
+        />
+      </div>
+      <div
+        className='flex-1'
+        role='img'
+        aria-label='Bar chart showing annual labor cost by percentage change'
+      >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
       <div className='text-xs text-gray-500 mt-2'>
