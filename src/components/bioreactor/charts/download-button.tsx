@@ -26,7 +26,7 @@ const ChartDownloadButton = ({
           <button
             type='button'
             onClick={() => downloadChart(chartInstance, filename)}
-            className='inline-flex items-center p-1 text-gray-400 focus:outline-none rounded-md cursor-pointer border border-solid border-gray-200 hover:bg-gray-100'
+            className='inline-flex items-center px-2 py-1 text-gray-400 focus:outline-none rounded-md cursor-pointer border border-solid border-gray-200 hover:bg-gray-100'
             aria-label={tooltipText}
           >
             <svg
@@ -50,10 +50,10 @@ const ChartDownloadButton = ({
         <RadixTooltip.Content
           side='top'
           sideOffset={6}
-          className='bg-black text-white px-2 py-1 rounded text-xs shadow-sm z-50'
+          className='bg-white text-gray-600 px-2 py-1 rounded-md text-xs shadow-md border border-gray-200 z-50'
         >
           {tooltipText}
-          <RadixTooltip.Arrow className='fill-black' />
+          <RadixTooltip.Arrow className='fill-white' />
         </RadixTooltip.Content>
       </RadixTooltip.Root>
     </RadixTooltip.Provider>
