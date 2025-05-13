@@ -11,6 +11,8 @@ import {
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
 import { BRAND_COLOR_ORDER } from "@/lib/constants";
+import useChartDownload from "@/hooks/useChartDownload";
+import ChartDownloadButton from "./download-button";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -21,6 +23,8 @@ interface BioreactorChartProps {
 const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
+
+  const { downloadChart } = useChartDownload();
 
   const formatCurrency = (value: number, digits: number = 0): string => {
     return new Intl.NumberFormat("en-US", {
@@ -116,7 +120,6 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       },
     };
 
-
     chartInstance.current = new Chart(ctx, config);
 
     return () => {
@@ -133,10 +136,17 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
 
   return (
     <div className='h-full flex flex-col'>
-      <div className='flex justify-between items-center mb-3'>
-        <h2 className='text-xl font-semibold text-slate-700'>
-          Cost Distribution
-        </h2>
+      <div className='flex justify-between items-center w-full'>
+        <div className='flex gap-x-2'>
+          <h2 className='text-lg font-semibold text-gray-700'>
+            Cost Distribution
+          </h2>
+          <ChartDownloadButton
+            downloadChart={downloadChart}
+            chartInstance={chartInstance}
+            filename='cost-distribution-chart.png'
+          />
+        </div>
         <div className='text-right'>
           <div className='text-sm font-semibold text-slate-700'>
             COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
@@ -153,6 +163,6 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       </div>
     </div>
   );
-}
+};
 
 export default BioreactorChart;

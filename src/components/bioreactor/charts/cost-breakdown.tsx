@@ -13,6 +13,8 @@ import {
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
 import { BRAND_COLOR_ORDER } from "@/lib/constants";
+import useChartDownload from "@/hooks/useChartDownload";
+import ChartDownloadButton from "./download-button";
 
 Chart.register(
   BarController,
@@ -37,11 +39,11 @@ const labels = [
   "Utilities",
 ];
 
-const BioreactorBarChart = ({
-  expenses,
-}: BioreactorBarChartProps) => {
+const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
+
+  const { downloadChart } = useChartDownload();
 
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat("en-US", {
@@ -139,8 +141,17 @@ const BioreactorBarChart = ({
 
   return (
     <div className='h-full flex flex-col'>
-      <div className='flex items-start justify-between items-center mb-3'>
-        <h2 className='text-xl font-semibold text-slate-700'>Cost Breakdown</h2>
+      <div className='flex justify-between items-center w-full'>
+        <div className='flex gap-x-2'>
+          <h2 className='text-lg font-semibold text-gray-700'>
+            Cost Breakdown
+          </h2>
+          <ChartDownloadButton
+            downloadChart={downloadChart}
+            chartInstance={chartInstance}
+            filename='cost-distribution-chart.png'
+          />
+        </div>
         <div className='text-right'>
           <div className='text-lg font-semibold text-slate-700'>
             {formatCurrency(totalExpense * 1000000)}
