@@ -125,7 +125,11 @@ const LaborCostAnnualGraph = () => {
       <h3 className='text-lg font-semibold text-gray-700 mb-4'>
         Total Annual Labor Cost
       </h3>
-      <div className='flex-1'>
+      <div
+        className='flex-1'
+        role='img'
+        aria-label='Bar chart showing annual labor cost by percentage change'
+      >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
       <div className='text-xs text-gray-500 mt-2'>

@@ -20,7 +20,11 @@ const LaborCostTable = () => {
         Labor Cost Analysis
       </h3>
       <div className='overflow-auto border border-gray-200 rounded-lg'>
-        <table className='min-w-full divide-y divide-gray-200'>
+        <table
+          className='min-w-full divide-y divide-gray-200'
+          role='table'
+          aria-label='Table of labor costs by relative percentage'
+        >
           <thead className='bg-gray-50'>
             <tr>
               <th
@@ -87,7 +91,7 @@ const LaborCostTable = () => {
           <tbody className='bg-white divide-y divide-gray-200 text-sm'>
             {relativePercentages.map((relPercentage, index) => {
               const result = results[relPercentage.toString()];
-              const isCurrentRow = relPercentage === 0; 
+              const isCurrentRow = relPercentage === 0;
               return (
                 <tr
                   key={`percentage-${relPercentage}`}

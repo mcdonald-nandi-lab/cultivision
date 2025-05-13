@@ -62,13 +62,18 @@ const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
   };
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30'>
+    <div
+      className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30'
+      role='dialog'
+      aria-modal='true'
+      aria-labelledby='modal-title'
+    >
       <div
         ref={modalRef}
         className='relative bg-white rounded-lg max-w-4xl w-11/12 h-5/6 flex flex-col'
       >
         <div className='p-4 border-b flex justify-between items-center'>
-          <h3 className='text-xl font-semibold text-slate-700'>
+          <h3 className='text-xl font-semibold text-slate-700' id='modal-title'>
             {bioreactor.name} - Flow Diagram
           </h3>
           <button

@@ -175,7 +175,11 @@ const LaborCostHourlyGraph = () => {
       <h3 className='text-lg font-semibold text-gray-700 mb-4'>
         Hourly Rates by Labor Type
       </h3>
-      <div className='flex-1'>
+      <div
+        className='flex-1'
+        role='img'
+        aria-label='Line chart showing hourly labor rates by type and percentage change'
+      >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
       <div className='text-xs text-gray-500 mt-2'>

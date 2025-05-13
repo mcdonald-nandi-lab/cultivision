@@ -62,7 +62,11 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
       </h2>
 
       <div className='overflow-scroll border border-gray-200 rounded-lg'>
-        <table className='min-w-full divide-y divide-gray-200'>
+        <table
+          className='min-w-full divide-y divide-gray-200'
+          role='table'
+          aria-label='Performance metrics table'
+        >
           <thead className='bg-gray-50'>
             <tr>
               <th
@@ -89,7 +93,7 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
             {metrics.map((metric, index) => (
               <tr
                 key={index}
-                className={cn('bg-gray-50', { 'bg-white': index % 2 === 0 })}
+                className={cn("bg-gray-50", { "bg-white": index % 2 === 0 })}
               >
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='text-sm font-medium text-gray-900'>
