@@ -108,7 +108,11 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-40'>
+      <nav
+        className='bg-white shadow-md px-4 py-3 mb-6 rounded-b-3xl fixed top-0 w-full z-40'
+        role='navigation'
+        aria-label='Main Navigation'
+      >
         <div className='container mx-auto flex items-center justify-between'>
           <Link href='/' className='flex items-center justify-start gap-x-1 '>
             <Image
@@ -136,6 +140,9 @@ const Navbar = () => {
               <button
                 onClick={toggleDropdown}
                 className='dropdown-button cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+                aria-expanded={isDropdownOpen}
+                aria-controls='reactor-dropdown'
+                aria-haspopup='listbox'
               >
                 <span className='font-semibold'>Bioreactor:</span>
                 <span className='font-medium text-green-700'>
@@ -143,9 +150,9 @@ const Navbar = () => {
                 </span>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  className={`h-5 w-5 transition-transform duration-200 ease-in-out ${
-                    isDropdownOpen ? "rotate-180" : ""
-                  }`}
+                  className={cn('h-5 w-5 transition-transform duration-200 ease-in-out', {
+                    "rotate-180" : isDropdownOpen
+                  })}
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke='currentColor'
@@ -159,21 +166,18 @@ const Navbar = () => {
                 </svg>
               </button>
               <div
-                className={`absolute top-full right-0 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out ${
-                  isDropdownOpen
-                    ? "opacity-100 visible translate-y-0"
-                    : "opacity-0 invisible -translate-y-2"
-                }`}
+                className={cn(`absolute top-full right-0 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out`, {
+                  "opacity-100 visible translate-y-0": isDropdownOpen},{ "opacity-0 invisible -translate-y-2": !isDropdownOpen})}
+                id='reactor-dropdown'
+                role='listbox'
               >
                 {bioreactors.map((reactor) => (
                   <button
                     key={reactor.id}
                     onClick={() => handleSelect(reactor.id)}
-                    className={`block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer ${
-                      activeReactorId === reactor.id
-                        ? "bg-blue-50 font-medium"
-                        : ""
-                    }`}
+                    className={cn('block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer' ,{
+                      "bg-blue-50 font-medium": activeReactorId === reactor.id
+                    })}
                   >
                     {reactor.name}
                   </button>
@@ -279,9 +283,10 @@ const Navbar = () => {
         </div>
       </nav>
       <div
-        className={`sidebar fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={cn(`sidebar fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-xl transform transition-transform duration-300 ease-in-out`, {"translate-x-0": isSidebarOpen},{"translate-x-full": !isSidebarOpen}
+        )}
+        role='complementary'
+        aria-label='Sidebar Menu'
       >
         <div className='p-6'>
           <div className='flex justify-between items-center mb-8'>
