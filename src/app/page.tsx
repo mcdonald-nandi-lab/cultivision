@@ -61,12 +61,12 @@ const Home = () => {
   return (
     <main className='min-h-screen'>
       <Navbar />
-      <div className='flex md:flex-col lg:flex-row h-full pt-20 mx-8 gap-2'>
+      <div className='flex flex-col lg:flex-row h-full pt-20 mx-8 gap-2'>
         <div
-          className='w-full lg:w-1/4 pt-5 px-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex md:flex-col md:items-center md:justify-start gap-6'
+          className='w-full lg:w-1/4 pt-5 px-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col md:items-center md:justify-start gap-6'
           aria-label='Input Form and Bioreactor View'
         >
-          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 lg:w-full'>
             <ParameterForm />
           </div>
           <div
@@ -84,7 +84,7 @@ const Home = () => {
               Click to enlarge
             </div>
           </div>
-          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 hidden lg:block'>
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 hidden lg:block lg:w-full'>
             <Footer />
           </div>
         </div>
