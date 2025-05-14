@@ -164,11 +164,11 @@ const ParameterForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className={classNames("flex-1 flex flex-col gap-y-8", {
+        className={classNames("flex-1 flex flex-col gap-y-4", {
           "pb-4": realTimeUpdates,
         })}
       >
-        <div className='flex-1 space-y-6'>
+        <div className='flex-1 space-y-3'>
           {parameterInputs.map((param) => (
             <div key={param.id} className='form-group'>
               <label
@@ -207,8 +207,6 @@ const ParameterForm = () => {
                     {param.unit}
                   </div>
                 </div>
-
-                {/* Description - No relative positioning needed */}
                 <div
                   className={classNames("text-xs text-gray-400 mt-1")}
                   id={`${param.id}-desc`}
