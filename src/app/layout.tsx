@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CalculationProvider } from "@/context/calculation-context";
+import { METADATA_IMG } from "@/lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,13 +45,13 @@ export const metadata: Metadata = {
       "Track, analyze, and optimize cultivated meat production with real-time sustainability data and performance metrics.",
     images: [
       {
-        url: "https://i.postimg.cc/bJw4jzv1/cultivision-Dashboard.png",
+        url: METADATA_IMG,
         width: 1200,
         height: 630,
         alt: "Cultivision Dashboard Interface",
       },
       {
-        url: "https://i.postimg.cc/bJw4jzv1/cultivision-Dashboard.png",
+        url: METADATA_IMG,
         width: 1200,
         height: 600,
         alt: "Cultivision Analytics Overview",
@@ -65,7 +66,7 @@ export const metadata: Metadata = {
     title: "Cultivision | Cultivated Meat Analytics",
     description:
       "Interactive dashboard for cultivated meat production monitoring and optimization.",
-    images: ["https://i.postimg.cc/bJw4jzv1/cultivision-Dashboard.png"],
+    images: [METADATA_IMG],
   },
 
   alternates: {
