@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CalculationProvider } from "@/context/calculation-context";
 import { METADATA_IMG } from "@/lib/constants";
+import CookieConsent from "@/components/cookie-constent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -113,7 +114,10 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CalculationProvider>{children}</CalculationProvider>
+        <CalculationProvider>
+          {children}
+          <CookieConsent />
+        </CalculationProvider>
       </body>
     </html>
   );
