@@ -5,13 +5,11 @@ import { getBioreactorById } from "@/lib/bioreactors";
 
 interface FlowDiagramProps {
   bioreactorId: string;
-  height?: string;
   showTitle?: boolean;
 }
 
 const FlowDiagram = ({
   bioreactorId,
-  height = "400px",
   showTitle = true,
 }: FlowDiagramProps) => {
   const bioreactor = getBioreactorById(bioreactorId);
@@ -27,9 +25,9 @@ const FlowDiagram = ({
           Flow Diagram: {bioreactor.name}
         </h2>
       )}
-      <div className='relative w-full' style={{ height }}>
+      <div className='relative w-full h-96 lg:h-36'>
         <Image
-          src={`${bioreactor.image}`}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${bioreactor.image}`}
           alt={`${bioreactor.name} Flow Diagram`}
           fill
           priority
