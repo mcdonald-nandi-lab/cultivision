@@ -139,7 +139,7 @@ const Navbar = () => {
             <div className='relative dropdown-container'>
               <button
                 onClick={toggleDropdown}
-                className='dropdown-button cursor-pointer flex items-center space-x-2 bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+                className='dropdown-button cursor-pointer flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2  focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
                 aria-expanded={isDropdownOpen}
                 aria-controls='reactor-dropdown'
                 aria-haspopup='listbox'
@@ -186,7 +186,7 @@ const Navbar = () => {
             </div>
             <button
               onClick={toggleSidebar}
-              className='hamburger-button block xl:hidden p-2 focus:outline-none cursor-pointer'
+              className='hamburger-button block xl:hidden md:p-2 focus:outline-none cursor-pointer'
             >
               <svg
                 className='w-6 h-6 text-slate-700'

@@ -4,8 +4,7 @@ export const bioreactors: Bioreactor[] = [
   {
     id: "40K_STR",
     name: "42,000 L Stirred Tank",
-    image:
-      "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto/y4rmj3ghtwplxxkzqeeu",
+    image: "/images/40K_STR.png",
     annualProduction: 4003226,
     mediaVolume: 40732424,
     baseLaborCost: 722 * 34.5 + 24076 * 46.0 + 261 * 57.5,
@@ -23,8 +22,7 @@ export const bioreactors: Bioreactor[] = [
   {
     id: "210K_STR",
     name: "211,000 L Stirred Tank",
-    image:
-      "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto/ufskw5vll1ah0xhfs87y",
+    image: "/images/210K_STR.png",
     annualProduction: 20170140,
     mediaVolume: 205220306,
     baseLaborCost: 1443 * 34.5 + 20302 * 46.0 + 261 * 57.5,
@@ -42,8 +40,7 @@ export const bioreactors: Bioreactor[] = [
   {
     id: "260K_ALR",
     name: "262,000 L Airlift",
-    image:
-      "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto/t5dcgtnvuth5nndjja3r",
+    image: "/images/260K_ALR.png",
     annualProduction: 25000000,
     mediaVolume: 253758783,
     baseLaborCost: 2756 * 34.5 + 20353 * 46.0 + 261 * 57.5,

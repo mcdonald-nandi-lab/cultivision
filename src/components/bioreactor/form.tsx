@@ -111,7 +111,7 @@ const ParameterForm = () => {
   return (
     <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
-        <div className='flex justify-between items-center gap-x-2'>
+        <div className='flex flex-col xl:flex-row justify-between items-center gap-2'>
           <Title title='Cost Parameters' />
           <div className='flex gap-x-2'>
             <button
@@ -140,7 +140,11 @@ const ParameterForm = () => {
               </svg>
               Reset
             </button>
-            <div className='flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-md text-slate-600'>
+            <div
+              className={classNames(
+                "flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-md text-slate-600"
+              )}
+            >
               <span className='text-xs font-medium'>
                 {realTimeUpdates ? "Real-time" : "Manual"}
               </span>
@@ -173,23 +177,40 @@ const ParameterForm = () => {
               >
                 {param.label}
               </label>
-              <div className='relative'>
-                <input
-                  type='number'
-                  id={param.id}
-                  value={localCosts[param.id as keyof typeof localCosts]}
-                  onChange={handleChange}
-                  className={`block w-full pl-5 pr-12 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-slate-700 focus:border-slate-700 text-gray-600`}
-                  placeholder='0.00'
-                  step={param.step}
-                  min='0'
-                  aria-describedby={`${param.id}-desc`}
-                />
-                <div className='absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-xs text-gray-500'>
-                  {param.unit}
-                </div>
+              <div className='grid grid-cols-1'>
                 <div
-                  className='absolute -bottom-4 left-0 text-xs text-gray-400'
+                  className={classNames(
+                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                    "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                  )}
+                >
+                  <input
+                    type='number'
+                    id={param.id}
+                    value={localCosts[param.id as keyof typeof localCosts]}
+                    onChange={handleChange}
+                    className={classNames(
+                      "flex-grow w-full px-4 py-1.5 text-sm",
+                      "focus:outline-none text-gray-600 border-0"
+                    )}
+                    placeholder='0.00'
+                    step={param.step}
+                    min='0'
+                    aria-describedby={`${param.id}-desc`}
+                  />
+                  <div
+                    className={classNames(
+                      "flex items-center justify-center px-3 text-xs",
+                      "text-gray-500 bg-gray-50 border-l border-gray-200"
+                    )}
+                  >
+                    {param.unit}
+                  </div>
+                </div>
+
+                {/* Description - No relative positioning needed */}
+                <div
+                  className={classNames("text-xs text-gray-400 mt-1")}
                   id={`${param.id}-desc`}
                 >
                   {param.description}
@@ -200,10 +221,13 @@ const ParameterForm = () => {
         </div>
 
         {!realTimeUpdates && (
-          <div className=''>
+          <div>
             <button
               type='submit'
-              className='w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800 cursor-pointer'
+              className={classNames(
+                "w-full py-1.5 rounded-md text-sm font-medium",
+                "bg-slate-700 text-white hover:bg-slate-800 cursor-pointer"
+              )}
             >
               Run Calculation
             </button>

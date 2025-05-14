@@ -61,33 +61,30 @@ const Home = () => {
   return (
     <main className='min-h-screen'>
       <Navbar />
-      <div className='flex h-full pt-20 mx-8'>
+      <div className='flex md:flex-col lg:flex-row h-full pt-20 mx-8 gap-2'>
         <div
-          className='w-full lg:w-1/4 pt-5 px-4 pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col gap-6'
+          className='w-full lg:w-1/4 pt-5 px-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex md:flex-col md:items-center md:justify-start gap-6'
           aria-label='Input Form and Bioreactor View'
         >
           <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
             <ParameterForm />
           </div>
           <div
-            className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer'
+            className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer w-full'
             onClick={() => setIsModalOpen(true)}
           >
             <h3 className='text-lg font-semibold text-gray-700 text-center'>
               Bioreactor View
             </h3>
             <div className='hover:opacity-90 transition-opacity'>
-              <FlowDiagram
-                bioreactorId={activeReactorId}
-                height='200px'
-                showTitle={false}
-              />
+              <FlowDiagram bioreactorId={activeReactorId} showTitle={false}/>
             </div>
+
             <div className='text-center text-sm text-green-600 hover:text-blue-500'>
               Click to enlarge
             </div>
           </div>
-          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100'>
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 hidden lg:block'>
             <Footer />
           </div>
         </div>
@@ -126,6 +123,11 @@ const Home = () => {
                 <LaborCostTable />
               </Container>
             </div>
+          </div>
+        </div>
+        <div className='lg:hidden w-full flex justify-center items-center'>
+          <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 w-96'>
+            <Footer />
           </div>
         </div>
       </div>
