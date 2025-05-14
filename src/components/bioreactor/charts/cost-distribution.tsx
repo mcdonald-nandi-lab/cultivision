@@ -156,7 +156,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       <div
         className='flex-1 relative'
         aria-label='Doughnut chart showing percentage distribution of operational expenses'
-        style={{ maxHeight: "450px" }}
+        style={{ maxHeight: "300px" }}
       >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
