@@ -63,7 +63,7 @@ const Home = () => {
       <Navbar />
       <div className='flex flex-col lg:flex-row h-full pt-20 mx-8 gap-2'>
         <div
-          className='w-full lg:w-1/4 pt-5 px-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col md:items-center md:justify-start gap-6'
+          className='w-full lg:w-1/4 pt-5 px-0 lg:p-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col md:items-center md:justify-start gap-6'
           aria-label='Input Form and Bioreactor View'
         >
           <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 lg:w-full'>
@@ -77,7 +77,7 @@ const Home = () => {
               Bioreactor View
             </h3>
             <div className='hover:opacity-90 transition-opacity'>
-              <FlowDiagram bioreactorId={activeReactorId} showTitle={false}/>
+              <FlowDiagram bioreactorId={activeReactorId} showTitle={false} />
             </div>
 
             <div className='text-center text-sm text-green-600 hover:text-blue-500'>
@@ -89,7 +89,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='w-full lg:w-3/4 lg:ml-[25%] p-4 overflow-y-auto'>
+        <div className='w-full lg:w-3/4 lg:ml-[25%] pt-4 px-0 lg:p-4 overflow-y-auto'>
           <div className='flex flex-col gap-4'>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
               <Container>
