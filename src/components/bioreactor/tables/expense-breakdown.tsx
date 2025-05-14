@@ -3,6 +3,7 @@
 import { BRAND_COLORS } from "@/lib/constants";
 import { CalculatedExpenses } from "@/types";
 import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
+import Title from "@/components/title";
 
 interface ExpenseTableProps {
   expenses: CalculatedExpenses;
@@ -57,9 +58,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex items-center justify-start gap-x-2 mb-4'>
-        <h2 className='text-lg font-semibold text-slate-700'>
-          Expense Breakdown
-        </h2>
+        <Title title={"Expense Breakdown"} />
         <TableDownloadButton
           filename='expense-breakdown.csv'
           headers={["Category", "Cost", "Percentage"]}

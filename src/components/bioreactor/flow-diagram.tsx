@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { getBioreactorById } from "@/lib/bioreactors";
+import Title from '@/components/title'
 
 interface FlowDiagramProps {
   bioreactorId: string;
@@ -21,9 +22,9 @@ const FlowDiagram = ({
   return (
     <div className='w-full border border-gray-200 rounded-lg'>
       {showTitle && (
-        <h2 className='text-xl font-semibold text-slate-700 mb-4'>
-          Flow Diagram: {bioreactor.name}
-        </h2>
+        <div className='mb-4'>
+          <Title title={`Flow Diagram: ${bioreactor.name}`} />
+        </div>
       )}
       <div className='relative w-full h-96 lg:h-36'>
         <Image
