@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import useChartDownload from "@/hooks/useChartDownload";
 import ChartDownloadButton from "@/components/bioreactor/charts/download-button";
+import Title from "@/components/title";
 
 Chart.register(
   LineController,
@@ -177,9 +178,7 @@ const LaborCostHourlyGraph = () => {
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
-        <h3 className='text-lg font-semibold text-gray-700'>
-          Hourly Rates by Labor Type
-        </h3>
+        <Title title={"Hourly Rates by Labor Type"} />
         <ChartDownloadButton
           downloadChart={downloadChart}
           chartInstance={chartInstance}
@@ -190,6 +189,7 @@ const LaborCostHourlyGraph = () => {
         className='flex-1'
         role='img'
         aria-label='Line chart showing hourly labor rates by type and percentage change'
+        style={{ minHeight: "450px" }}
       >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>

@@ -60,7 +60,7 @@ const Footer = () => {
           </Link> */}
         </div>
       </div>
-      <div className='text-xs text-gray-300 sm:text-center px-4' aria-describedby='info' aria-label='Copyright of the The Regents of the University of California'>
+      <div className='text-xs text-gray-300 text-center px-2 md:px-4' aria-describedby='info' aria-label='Copyright of the The Regents of the University of California'>
         © 2025{" "}
         <Link href={UCD_EXT_LINK} className='hover:underline'>
           The Regents of the University of California

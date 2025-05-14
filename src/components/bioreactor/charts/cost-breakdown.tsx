@@ -15,6 +15,7 @@ import { CalculatedExpenses } from "@/types";
 import { BRAND_COLOR_ORDER } from "@/lib/constants";
 import useChartDownload from "@/hooks/useChartDownload";
 import ChartDownloadButton from "./download-button";
+import Title from "@/components/title";
 
 Chart.register(
   BarController,
@@ -143,9 +144,7 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
     <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-between items-start w-full mb-4'>
         <div className='flex gap-x-2'>
-          <h2 className='text-lg font-semibold text-gray-700'>
-            Cost Breakdown
-          </h2>
+          <Title title={"Cost Breakdown"} />
           <ChartDownloadButton
             downloadChart={downloadChart}
             chartInstance={chartInstance}

@@ -4,6 +4,7 @@
 import { useCalculations } from "@/context/calculation-context";
 import cn from "classnames";
 import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
+import Title from "@/components/title";
 
 const LaborCostTable = () => {
   const { laborCostTable } = useCalculations();
@@ -39,9 +40,7 @@ const LaborCostTable = () => {
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex items-center justify-start gap-x-2 mb-4'>
-        <h3 className='text-lg font-semibold text-gray-700'>
-          Labor Cost Analysis
-        </h3>
+        <Title title={`Labor Cost Analysis`} />
         <TableDownloadButton
           filename='labor-cost-analysis.csv'
           headers={headers}

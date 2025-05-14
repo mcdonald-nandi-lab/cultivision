@@ -14,6 +14,7 @@ import {
 } from "chart.js";
 import useChartDownload from "@/hooks/useChartDownload";
 import ChartDownloadButton from "./download-button";
+import Title from "@/components/title";
 
 Chart.register(
   BarController,
@@ -127,9 +128,7 @@ const LaborCostAnnualGraph = () => {
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-start items-center w-full gap-x-2 mb-4'>
-        <h3 className='text-lg font-semibold text-gray-700'>
-          Total Annual Labor Cost
-        </h3>
+        <Title title={"Total Annual Labor Cost"} />
         <ChartDownloadButton
           downloadChart={downloadChart}
           chartInstance={chartInstance}
@@ -140,6 +139,7 @@ const LaborCostAnnualGraph = () => {
         className='flex-1'
         role='img'
         aria-label='Bar chart showing annual labor cost by percentage change'
+        style={{ minHeight: "450px" }}
       >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
