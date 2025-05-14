@@ -162,7 +162,7 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
       <div
         className='flex-1 relative'
         aria-label='Horizontal bar chart showing cost breakdown across categories in USD millions'
-        style={{ minHeight: "300px" }}
+        style={{ minHeight: "450px" }}
       >
         <canvas ref={chartRef} className='w-full h-full'></canvas>
       </div>
