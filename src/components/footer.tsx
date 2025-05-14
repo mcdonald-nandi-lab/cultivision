@@ -1,12 +1,11 @@
-import { LAB_EXT_LINK, LICENSE_LINK, PRIVACY_POL_LINK, UCD_EXT_LINK } from '@/lib/constants';
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import { LAB_EXT_LINK, PRIVACY_POL_LINK, UCD_EXT_LINK } from '@/lib/constants';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
     <footer className='flex flex-col gap-6 w-full' role='contentinfo'>
-      <div className='grid grid-cols-2 gap-8 items-center'>
+      <div className='grid grid-cols-2 gap-8 items-start'>
         <div className='flex flex-col gap-2'>
           <Link href={UCD_EXT_LINK} target='_blank' rel='noreferrer nofollow'>
             <Image
@@ -50,7 +49,7 @@ const Footer = () => {
           >
             Privacy Policy
           </Link>
-          <Link
+          {/* <Link
             href={LICENSE_LINK}
             target='_blank'
             rel='noreferrer nofollow'
@@ -58,7 +57,7 @@ const Footer = () => {
             aria-label='License'
           >
             License
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className='text-xs text-gray-300 sm:text-center px-4' aria-describedby='info' aria-label='Copyright of the The Regents of the University of California'>
