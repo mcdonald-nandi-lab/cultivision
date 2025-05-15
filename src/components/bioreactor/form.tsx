@@ -5,6 +5,7 @@ import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 import Title from "@/components/title";
 import cn from "classnames";
+import { trackButtonClick, trackFormSubmission, trackUserBehavior } from "@/lib/analytics";
 
 const parameterInputs = [
   {
@@ -87,19 +88,26 @@ const ParameterForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setCosts(localCosts);
+    trackFormSubmission("cost_parameters", "Cost Parameters Form");
   };
 
   const handleReset = () => {
     const defaultCosts = defaultProductionCosts;
     setLocalCosts(defaultCosts);
     setCosts(defaultCosts);
+    trackButtonClick("reset_form", "Reset", {
+      form_id: "cost_parameters",
+      button_text: 'hasCustomSettings',
+    });  
   };
 
   const toggleRealTimeUpdates = () => {
-    setRealTimeUpdates(!realTimeUpdates);
-    if (!realTimeUpdates) {
-      setCosts(localCosts);
-    }
+    const newValue = !realTimeUpdates;
+    setRealTimeUpdates(newValue);
+    if (newValue) setCosts(localCosts);
+    trackUserBehavior("toggle_realtime_updates", {
+      enabled: newValue,
+    });
   };
 
   const hasCustomSettings = Object.entries(localCosts).some(

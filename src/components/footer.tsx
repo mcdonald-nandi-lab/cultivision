@@ -1,13 +1,23 @@
+import { trackButtonClick } from '@/lib/analytics';
 import { LAB_EXT_LINK, PRIVACY_POL_LINK, TERMS_LINK, UCD_EXT_LINK } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
+
+const trackFooterLinkClick = (linkName: string) => {
+  trackButtonClick("footer_link", linkName);
+};
 
 const Footer = () => {
   return (
     <footer className='flex flex-col gap-6 w-full' role='contentinfo'>
       <div className='grid grid-cols-2 gap-8 items-start'>
         <div className='flex flex-col gap-2'>
-          <Link href={UCD_EXT_LINK} target='_blank' rel='noreferrer nofollow'>
+          <Link
+            href={UCD_EXT_LINK}
+            target='_blank'
+            rel='noreferrer nofollow'
+            onClick={() => trackFooterLinkClick("UC Davis")}
+          >
             <Image
               src={`${
                 process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -28,6 +38,7 @@ const Footer = () => {
             rel='noreferrer nofollow'
             className='text-sm font-semibold hover:text-green-500 text-slate-600'
             aria-label='Visit Mcdonald/Nandi Lab website'
+            onClick={() => trackFooterLinkClick("Mcdonald/Nandi Lab")}
           >
             Mcdonald/Nandi Lab
           </Link>
@@ -37,6 +48,7 @@ const Footer = () => {
             rel='noreferrer nofollow'
             className='text-sm hover:text-green-500 text-slate-600'
             aria-label='Contact Us'
+            onClick={() => trackFooterLinkClick("Contact Us")}
           >
             Contact Us
           </Link>
@@ -46,6 +58,7 @@ const Footer = () => {
             rel='noreferrer nofollow'
             className='text-sm hover:text-green-500 text-slate-600'
             aria-label='Privacy Policy'
+            onClick={() => trackFooterLinkClick("Terms of Use")}
           >
             Terms of Use
           </Link>
@@ -55,6 +68,7 @@ const Footer = () => {
             rel='noreferrer nofollow'
             className='text-sm hover:text-green-500 text-slate-600'
             aria-label='Privacy Policy'
+            onClick={() => trackFooterLinkClick("Privacy Policy")}
           >
             Privacy Policy
           </Link>

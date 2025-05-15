@@ -16,6 +16,7 @@ import Toast from "@/components/toast";
 import { useCalculations } from "@/context/calculation-context";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
+import { trackButtonClick } from "@/lib/analytics";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -53,6 +54,11 @@ const Home = () => {
     }
   }, [isUrlParamProcessed]);
 
+  const toggleModal = (val: boolean) => {
+    setIsModalOpen(val);
+    trackButtonClick("toggle_modal", "Modal");  
+  }
+
   if (!expenses) {
     return <Loading />;
   }
@@ -69,7 +75,7 @@ const Home = () => {
           </div>
           <div
             className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer w-full'
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => toggleModal(true)}
           >
             <h3 className='text-lg font-semibold text-gray-700 text-center'>
               Bioreactor View
@@ -133,7 +139,7 @@ const Home = () => {
       {isModalOpen && (
         <ImageModal
           bioreactorId={activeReactorId}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => toggleModal(false)}
         />
       )}
 

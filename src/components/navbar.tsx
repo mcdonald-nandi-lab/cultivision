@@ -12,6 +12,7 @@ import { LAB_EXT_LINK } from "@/lib/constants";
 import { houseLogo, topRightCornerArrowLogo } from "@/lib/icons";
 import cn from "classnames";
 import { usePathname } from "next/navigation";
+import { trackDownload, trackUserBehavior } from "@/lib/analytics";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -62,11 +63,18 @@ const Navbar = () => {
   const handleSelect = (id:string) => {
     setActiveReactorId(id);
     setIsDropdownOpen(false);
+
+    const selectedReactor = bioreactors.find((r) => r.id === id);
+    trackUserBehavior("bioreactor_selection", {
+      reactor_id: id,
+      reactor_name: selectedReactor?.name ?? "Unknown",
+    });
   };
 
   const handleDownloadCsv = () => {
     if (expenses && activeReactor) {
       exportToCsv(expenses, activeReactor);
+      trackDownload("csv", `${activeReactor.name}-expenses.csv`);
     }
     setIsSidebarOpen(false);
   };
@@ -78,6 +86,10 @@ const Navbar = () => {
       await navigator.clipboard.writeText(shareableUrl);
       setIsCopied(true);
       window.dispatchEvent(new Event(URL_COPIED_EVENT));
+      trackUserBehavior("save_settings", {
+        reactor_id: activeReactorId,
+        success: true,
+      });  
     } catch (err) {
       console.error("Failed to copy URL: ", err);
       // Fallback for browsers that don't support clipboard API
@@ -87,6 +99,10 @@ const Navbar = () => {
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();
+      trackUserBehavior("save_settings", {
+        reactor_id: activeReactorId,
+        success: document.execCommand("copy"),
+      });
 
       try {
         document.execCommand("copy");
@@ -105,10 +121,12 @@ const Navbar = () => {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
+    trackUserBehavior("toggle_sidebar", { opened: !isSidebarOpen });
   };
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+    trackUserBehavior("toggle_dropdown", { opened: !isDropdownOpen });
   };
 
   return (

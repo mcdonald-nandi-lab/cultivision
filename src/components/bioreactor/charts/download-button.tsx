@@ -1,6 +1,7 @@
 import React from "react";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { Chart } from "chart.js";
+import { trackDownload } from "@/lib/analytics";
 
 type ChartDownloadButtonProps = {
   downloadChart: (
@@ -25,7 +26,10 @@ const ChartDownloadButton = ({
         <RadixTooltip.Trigger asChild>
           <button
             type='button'
-            onClick={() => downloadChart(chartInstance, filename)}
+            onClick={() => {
+              downloadChart(chartInstance, filename);
+              trackDownload("png", filename);
+            }}
             className='h-6 inline-flex items-center justify-center px-2 py-1 text-gray-400 focus:outline-none rounded-md cursor-pointer border border-solid border-gray-200 hover:bg-gray-100'
             aria-label={tooltipText}
           >

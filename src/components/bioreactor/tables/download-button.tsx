@@ -1,5 +1,6 @@
 import React from "react";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
+import { trackDownload } from "@/lib/analytics";
 
 interface TableDownloadButtonProps {
   filename: string;
@@ -31,6 +32,7 @@ const TableDownloadButton = ({
     link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
+    trackDownload("csv", filename);
   };
 
   return (
