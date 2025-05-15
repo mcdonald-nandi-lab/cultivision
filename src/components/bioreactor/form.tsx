@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 import Title from "@/components/title";
-import classNames from "classnames";
+import cn from "classnames";
 
 const parameterInputs = [
   {
@@ -117,11 +117,7 @@ const ParameterForm = () => {
             <button
               type='button'
               onClick={handleReset}
-              className={`flex items-center gap-x-1 text-xs font-medium ${
-                hasCustomSettings
-                  ? "text-slate-600 hover:text-green-600"
-                  : "text-slate-400 cursor-not-allowed"
-              } transition`}
+              className={cn('flex items-center gap-x-1 text-xs font-medium transition cursor-pointer hover:text-green-500', {"text-slate-600 hover:text-green-600":hasCustomSettings})}
               disabled={!hasCustomSettings}
             >
               <svg
@@ -141,7 +137,7 @@ const ParameterForm = () => {
               Reset
             </button>
             <div
-              className={classNames(
+              className={cn(
                 "flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-md text-slate-600"
               )}
             >
@@ -164,7 +160,7 @@ const ParameterForm = () => {
 
       <form
         onSubmit={handleSubmit}
-        className={classNames("flex-1 flex flex-col gap-y-4", {
+        className={cn("flex-1 flex flex-col gap-y-4", {
           "pb-4": realTimeUpdates,
         })}
       >
@@ -179,7 +175,7 @@ const ParameterForm = () => {
               </label>
               <div className='grid grid-cols-1'>
                 <div
-                  className={classNames(
+                  className={cn(
                     "flex w-full rounded-md border border-gray-300 overflow-hidden",
                     "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
                   )}
@@ -189,7 +185,7 @@ const ParameterForm = () => {
                     id={param.id}
                     value={localCosts[param.id as keyof typeof localCosts]}
                     onChange={handleChange}
-                    className={classNames(
+                    className={cn(
                       "flex-grow w-full px-4 py-1.5 text-sm",
                       "focus:outline-none text-gray-600 border-0"
                     )}
@@ -199,7 +195,7 @@ const ParameterForm = () => {
                     aria-describedby={`${param.id}-desc`}
                   />
                   <div
-                    className={classNames(
+                    className={cn(
                       "flex items-center justify-center px-3 text-xs",
                       "text-gray-500 bg-gray-50 border-l border-gray-200"
                     )}
@@ -208,7 +204,7 @@ const ParameterForm = () => {
                   </div>
                 </div>
                 <div
-                  className={classNames("text-xs text-gray-400 mt-1")}
+                  className={cn("text-xs text-gray-400 mt-1")}
                   id={`${param.id}-desc`}
                 >
                   {param.description}
@@ -222,7 +218,7 @@ const ParameterForm = () => {
           <div>
             <button
               type='submit'
-              className={classNames(
+              className={cn(
                 "w-full py-1.5 rounded-md text-sm font-medium",
                 "bg-slate-700 text-white hover:bg-slate-800 cursor-pointer"
               )}

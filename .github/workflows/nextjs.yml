@@ -70,7 +70,7 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        run: NEXT_PUBLIC_BASE_PATH=/cultivision ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: NEXT_PUBLIC_BASE_PATH=/cultivision NEXT_GOOGLE_ANALYTICS_ID=G-36TY4ZM011 ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
