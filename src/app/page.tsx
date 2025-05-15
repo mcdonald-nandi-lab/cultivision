@@ -1,22 +1,21 @@
 "use client";
 
-import { useCalculations } from "@/context/calculation-context";
-import { useState, useEffect } from "react";
-import Navbar from "@/components/navbar";
-import ParameterForm from "@/components/bioreactor/form";
-import FlowDiagram from "@/components/bioreactor/flow-diagram";
 import BioreactorBarChart from "@/components/bioreactor/charts/cost-breakdown";
-import ExpenseTable from "@/components/bioreactor/tables/expense-breakdown";
 import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
-import MetricsTable from "@/components/bioreactor/tables/performance-metrics";
-import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
-import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hourly";
 import LaborCostAnnualGraph from "@/components/bioreactor/charts/labor-cost-annual";
+import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hourly";
+import FlowDiagram from "@/components/bioreactor/flow-diagram";
+import ParameterForm from "@/components/bioreactor/form";
 import ImageModal from "@/components/bioreactor/image-modal";
-import Toast from "@/components/toast";
-import Loading from "./loading";
+import ExpenseTable from "@/components/bioreactor/tables/expense-breakdown";
+import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
+import MetricsTable from "@/components/bioreactor/tables/performance-metrics";
 import Container from "@/components/container";
 import Footer from "@/components/footer";
+import Toast from "@/components/toast";
+import { useCalculations } from "@/context/calculation-context";
+import { useEffect, useState } from "react";
+import Loading from "./loading";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -60,7 +59,6 @@ const Home = () => {
 
   return (
     <main className='min-h-screen'>
-      <Navbar />
       <div className='flex flex-col lg:flex-row h-full pt-18 mx-8 gap-2'>
         <div
           className='w-full lg:w-1/4 pt-6 px-0 lg:p-4 lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-18 flex flex-col md:items-center md:justify-start gap-6'

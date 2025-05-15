@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CalculationProvider } from "@/context/calculation-context";
 import { METADATA_IMG } from "@/lib/constants";
+import CookieConsent from "@/components/cookie-constent";
+import Navbar from "@/components/navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,7 +20,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://aunshx.github.io/cultivision/"),
   title: "Cultivision | Cultivated Meat Insights & Analytics",
   description:
-    "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance for research and industry professionals.",
+    "Explore insights on cultivated meat production, sustainability metrics, and bioreactor performance for research and industry professionals.",
   authors: [{ name: "Aunsh Bandivadekar", url: "https://aunsh.dev" }],
   creator: "Aunsh Bandivadekar",
   publisher: "UC Davis",
@@ -113,7 +115,11 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CalculationProvider>{children}</CalculationProvider>
+        <CalculationProvider>
+          <Navbar />
+          {children}
+          <CookieConsent />
+        </CalculationProvider>
       </body>
     </html>
   );
