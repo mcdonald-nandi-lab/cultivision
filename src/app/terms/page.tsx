@@ -27,8 +27,8 @@ export default function Terms() {
               >
                 https://aunshx.github.io/cultivision
               </a>{" "} also called as CultiVision
-              (the &quot;Site&quot;). This Site is owned by the Regents of the University of California and operated by
-              the Mcdonald-Nandi Lab. This Site is an educational/academic tool.
+              (the &quot;Site&quot;). This Site is operated by
+              the Mcdonald-Nandi Lab at the University of California, Davis. This Site is an educational/academic tool.
             </p>
 
             <p className='mb-6'>

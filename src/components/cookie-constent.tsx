@@ -1,7 +1,7 @@
 // components/CookieConsent.js
 "use client";
 
-import { PRIVACY_POL_LINK } from "@/lib/constants";
+import { PRIVACY_POL_LINK, TERMS_LINK } from "@/lib/constants";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import Container from "./container";
@@ -42,7 +42,7 @@ const CookieConsent = () => {
             </div>
           </div>
           <div className='text-gray-500 text-sm mt-2'>
-            This website uses cookies and google analytics to improve your
+            This website uses cookies and google analytics to improve user
             experience, collecting data on page views, scrolls, outbound clicks,
             form interactions, and file downloads. You can checkout our{" "}
             <Link
@@ -53,6 +53,16 @@ const CookieConsent = () => {
               className='hover:underline text-green-500'
             >
               privacy policy
+            </Link>{" "}
+            <span>and the </span>
+            <Link
+              href={TERMS_LINK}
+              target='_blank'
+              rel='noreferrer nofollow'
+              aria-label='Link to checkout the privacy policy'
+              className='hover:underline text-green-500'
+            >
+              terms of use
             </Link>{" "}
             for more information.
           </div>

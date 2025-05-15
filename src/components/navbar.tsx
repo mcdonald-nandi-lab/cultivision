@@ -132,7 +132,8 @@ const Navbar = () => {
             />
             <div
               className={cn(
-                "flex flex-col items-start justify-center sm:flex", { 'hidden': isHome }
+                "flex flex-col items-start justify-center sm:flex",
+                { hidden: isHome }
               )}
             >
               <div className='text-xl font-semibold text-slate-700'>
@@ -299,7 +300,7 @@ const Navbar = () => {
               {!isHome && (
                 <Link
                   href={"/"}
-                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
+                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
                 >
                   <Icon
                     path={houseLogo.path}
@@ -358,71 +359,86 @@ const Navbar = () => {
             </button>
           </div>
 
-          <div className='flex flex-col space-y-4'>
-            <button
-              onClick={handleSaveSettings}
-              className={cn(
-                "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start"
-              )}
-            >
-              {isCopied ? (
-                <>
-                  <svg
-                    className='h-4 w-4 text-green-600'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M5 13l4 4L19 7'
-                    />
-                  </svg>
-                  <span className='text-green-600'>URL Copied!</span>
-                </>
-              ) : (
-                <>
-                  <svg
-                    className='h-4 w-4'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
-                    />
-                  </svg>
-                  <span>Save Inputs</span>
-                </>
-              )}
-            </button>
-
-            <button
-              onClick={handleDownloadCsv}
-              disabled={!expenses}
-              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start disabled:opacity-50 disabled:cursor-not-allowed'
-            >
-              <svg
-                className='h-4 w-4'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
+          <div className={cn("flex flex-col space-y-8", { 'space-y-4': isHome })}>
+            {isHome && (
+              <button
+                onClick={handleSaveSettings}
+                className={cn(
+                  "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start"
+                )}
               >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                {isCopied ? (
+                  <>
+                    <svg
+                      className='h-4 w-4 text-green-600'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M5 13l4 4L19 7'
+                      />
+                    </svg>
+                    <span className='text-green-600'>URL Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className='h-4 w-4'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                      />
+                    </svg>
+                    <span>Save Inputs</span>
+                  </>
+                )}
+              </button>
+            )}
+            {isHome && (
+              <button
+                onClick={handleDownloadCsv}
+                disabled={!expenses}
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start disabled:opacity-50 disabled:cursor-not-allowed'
+              >
+                <svg
+                  className='h-4 w-4'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                  />
+                </svg>
+                <span>Download CSV</span>
+              </button>
+            )}
+            {!isHome && (
+              <Link
+                href={"/"}
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+              >
+                <Icon
+                  path={houseLogo.path}
+                  viewBox={houseLogo.viewBox}
+                  fill='#475569'
                 />
-              </svg>
-              <span>Download CSV</span>
-            </button>
-
+                <span>Home</span>
+              </Link>
+            )}
             <Link
               href={LAB_EXT_LINK}
               target='_blank'
