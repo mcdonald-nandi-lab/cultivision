@@ -17,6 +17,7 @@ import { useCalculations } from "@/context/calculation-context";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
 import { trackButtonClick } from "@/lib/analytics";
+import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -28,6 +29,8 @@ const Home = () => {
   const [toastType, setToastType] = useState<"success" | "error" | "info">(
     "success"
   );
+
+  usePageViewTracking();
 
   useEffect(() => {
     const handleUrlCopied = () => {
