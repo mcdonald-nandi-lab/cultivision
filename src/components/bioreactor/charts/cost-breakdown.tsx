@@ -13,7 +13,7 @@ import {
 } from "chart.js";
 import { CalculatedExpenses } from "@/types";
 import { BRAND_COLOR_ORDER } from "@/lib/constants";
-import useChartDownload from "@/hooks/useChartDownload";
+import useChartDownload from "@/hooks/use-chart-download";
 import ChartDownloadButton from "./download-button";
 import Title from "@/components/title";
 

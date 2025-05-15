@@ -63,7 +63,6 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  console.log("HELLO", process.env.NEXT_GOOGLE_ANALYTICS_ID);
   return (
     <html lang='en'>
       <body
