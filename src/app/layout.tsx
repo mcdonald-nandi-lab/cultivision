@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { CalculationProvider } from "@/context/calculation-context";
-import { METADATA_IMG } from "@/lib/constants";
 import CookieConsent from "@/components/cookie-constent";
 import Navbar from "@/components/navbar";
+import { CalculationProvider } from "@/context/calculation-context";
+import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
+import { METADATA_IMG } from "@/lib/constants";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -63,7 +64,8 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  console.log("HELLO", process.env.NEXT_GOOGLE_ANALYTICS_ID);
+  usePageViewTracking();
+
   return (
     <html lang='en'>
       <body
