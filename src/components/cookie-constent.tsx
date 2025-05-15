@@ -26,7 +26,7 @@ const CookieConsent = () => {
       {showConsent && (
         <Container
           movement='fade-up'
-          className='fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 max-w-xs md:max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700 flex flex-col gap-2'
+          className='fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 max-w-xs md:max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700'
         >
           <div className='flex gap-x-1'>
             <svg
@@ -41,7 +41,7 @@ const CookieConsent = () => {
               Cookie Consent Notice
             </div>
           </div>
-          <div className='text-gray-500 text-sm'>
+          <div className='text-gray-500 text-sm mt-2'>
             This website uses cookies and google analytics to improve your
             experience, collecting data on page views, scrolls, outbound clicks,
             form interactions, and file downloads. You can checkout our{" "}
@@ -56,7 +56,7 @@ const CookieConsent = () => {
             </Link>{" "}
             for more information.
           </div>
-          <div className='flex items-center justify-center mt-1'>
+          <div className='flex items-center justify-center mt-3'>
             <button
               onClick={handleAccept}
               className='bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-md cursor-pointer'
