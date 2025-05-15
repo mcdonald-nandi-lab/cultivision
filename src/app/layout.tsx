@@ -17,14 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://aunshx.github.io/cultivision/"),
   title: "Cultivision | Cultivated Meat Insights & Analytics",
   description:
-    "Explore insights on cultivated meat production, sustainability metrics, and bioreactor performance for research and industry professionals.",
-  authors: [{ name: "Aunsh Bandivadekar", url: "https://aunsh.dev" }],
-  creator: "Aunsh Bandivadekar",
-  publisher: "UC Davis",
-  applicationName: "Cultivision",
+    "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance.",
+  authors: {
+    url: "https://aunsh.dev",
+    name: "Aunsh Bandivadekar",
+  },
   keywords: [
     "cultivated meat",
     "cellular agriculture",
@@ -35,73 +34,26 @@ export const metadata: Metadata = {
     "ucdavis",
     "dashboard",
   ],
-  category: "technology",
-
   openGraph: {
-    type: "website",
-    locale: "en_US",
+    title: "Cultivision",
+    description: "Track cultivated meat production and sustainability data.",
     url: "https://aunshx.github.io/cultivision/",
     siteName: "Cultivision",
-    title: "Cultivision | Advanced Cultivated Meat Analytics Platform",
-    description:
-      "Track, analyze, and optimize cultivated meat production with real-time sustainability data and performance metrics.",
     images: [
       {
         url: METADATA_IMG,
         width: 1200,
         height: 630,
-        alt: "Cultivision Dashboard Interface",
-      },
-      {
-        url: METADATA_IMG,
-        width: 1200,
-        height: 600,
-        alt: "Cultivision Analytics Overview",
+        alt: "Cultivated Meat Dashboard",
       },
     ],
+    type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
-    site: "@YourTwitterHandle",
-    creator: "@aunshx",
-    title: "Cultivision | Cultivated Meat Analytics",
-    description:
-      "Interactive dashboard for cultivated meat production monitoring and optimization.",
-    images: [METADATA_IMG],
-  },
-
-  alternates: {
-    canonical: "https://aunshx.github.io/cultivision/",
-    languages: {
-      "en-US": "https://aunshx.github.io/cultivision/",
-    },
-  },
-
-  appleWebApp: {
     title: "Cultivision",
-    statusBarStyle: "black-translucent",
-    capable: true,
-  },
-
-  appLinks: {
-    web: {
-      url: "https://aunshx.github.io/cultivision/",
-      should_fallback: true,
-    },
-  },
-
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
-
-  other: {
-    "dc.creator": "Aunsh Bandivadekar",
-    "dc.publisher": "UC Davis",
-    "dc.rights": "© 2025 Cultivision",
-    "dc.subject": "Cultivated Meat, Cellular Agriculture, Alternative Protein",
+    description: "Interactive dashboard for cultivated meat production.",
+    images: [METADATA_IMG],
   },
 };
 
