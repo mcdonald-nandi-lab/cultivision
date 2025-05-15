@@ -1,4 +1,4 @@
-import { LAB_EXT_LINK, PRIVACY_POL_LINK, UCD_EXT_LINK } from '@/lib/constants';
+import { LAB_EXT_LINK, PRIVACY_POL_LINK, TERMS_LINK, UCD_EXT_LINK } from '@/lib/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -41,6 +41,15 @@ const Footer = () => {
             Contact Us
           </Link>
           <Link
+            href={TERMS_LINK}
+            target='_blank'
+            rel='noreferrer nofollow'
+            className='text-sm hover:text-green-500 text-slate-600'
+            aria-label='Privacy Policy'
+          >
+            Terms of Use
+          </Link>
+          <Link
             href={PRIVACY_POL_LINK}
             target='_blank'
             rel='noreferrer nofollow'
@@ -60,7 +69,11 @@ const Footer = () => {
           </Link> */}
         </div>
       </div>
-      <div className='text-xs text-gray-300 text-center px-2 md:px-4' aria-describedby='info' aria-label='Copyright of the The Regents of the University of California'>
+      <div
+        className='text-xs text-gray-300 text-center px-2 md:px-4'
+        aria-describedby='info'
+        aria-label='Copyright of the The Regents of the University of California'
+      >
         © 2025{" "}
         <Link href={UCD_EXT_LINK} className='hover:underline'>
           The Regents of the University of California

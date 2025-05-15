@@ -26,7 +26,7 @@ const CookieConsent = () => {
       {showConsent && (
         <Container
           movement='fade-up'
-          className='fixed bottom-8 right-8 max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-500 flex flex-col gap-2'
+          className='fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 max-w-xs md:max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700 flex flex-col gap-2'
         >
           <div className='flex gap-x-1'>
             <svg
