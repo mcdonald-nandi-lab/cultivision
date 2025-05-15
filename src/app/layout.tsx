@@ -1,13 +1,10 @@
 import CookieConsent from "@/components/cookie-constent";
 import Navbar from "@/components/navbar";
 import { CalculationProvider } from "@/context/calculation-context";
-import { trackPageView } from "@/lib/analytics";
 import { METADATA_IMG } from "@/lib/constants";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -66,12 +63,6 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const pathname = usePathname();
-  
-  useEffect(() => {
-    const pageTitle = document.title;
-    trackPageView(pathname, pageTitle);
-  }, [pathname]);
 
   return (
     <html lang='en'>

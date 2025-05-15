@@ -1,8 +1,11 @@
 "use client";
 
+import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import Head from "next/head";
 
 export default function Terms() {
+  usePageViewTracking();
+
   return (
     <div className='min-h-screen'>
       <Head>
