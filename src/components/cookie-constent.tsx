@@ -1,6 +1,7 @@
 // components/CookieConsent.js
 "use client";
 
+import { trackUserBehavior } from "@/lib/analytics";
 import { PRIVACY_POL_LINK, TERMS_LINK } from "@/lib/constants";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -19,6 +20,7 @@ const CookieConsent = () => {
   const handleAccept = () => {
     localStorage.setItem("cookieConsent", "true");
     setShowConsent(false);
+    trackUserBehavior("consent_given");
   };
 
   return (
