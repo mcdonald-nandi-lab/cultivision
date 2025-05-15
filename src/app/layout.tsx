@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CalculationProvider } from "@/context/calculation-context";
@@ -62,6 +63,7 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  console.log("HELLO", process.env.NEXT_GOOGLE_ANALYTICS_ID);
   return (
     <html lang='en'>
       <body
@@ -72,6 +74,7 @@ const RootLayout = ({
           {children}
           <CookieConsent />
         </CalculationProvider>
+        <GoogleAnalytics gaId={process.env.NEXT_GOOGLE_ANALYTICS_ID ?? ''} />
       </body>
     </html>
   );

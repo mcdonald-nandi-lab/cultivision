@@ -105,7 +105,7 @@ const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
             className='w-full h-full relative'
           >
             <Image
-              src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+              src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${
                 bioreactor.image
               }`}
               alt={`${bioreactor.name} Flow Diagram`}
