@@ -163,7 +163,7 @@ const Navbar = () => {
             </div>
           </Link>
 
-          <div className='flex items-center justify-around gap-8'>
+          <div className='flex items-center justify-around gap-4'>
             {isHome && (
               <div className='relative dropdown-container'>
                 <button

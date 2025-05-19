@@ -75,7 +75,7 @@ const ParameterForm = () => {
     const { id, value } = e.target;
     const newCosts = {
       ...localCosts,
-      [id]: parseFloat(value) || 0,
+      [id]: parseFloat(value) ?? 0,
     };
 
     setLocalCosts(newCosts);

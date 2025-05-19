@@ -10,7 +10,6 @@ interface MetricsTableProps {
 }
 
 const MetricsTable = ({ expenses }: MetricsTableProps) => {
-  console.log('Expenses', expenses)
   const formatNumber = (num: number): string => {
     return num.toLocaleString();
   };

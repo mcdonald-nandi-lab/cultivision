@@ -1,11 +1,13 @@
+import ConditionalAnalytics from "@/components/conditional-analytics";
 import CookieConsent from "@/components/cookie-constent";
 import Navbar from "@/components/navbar";
 import { CalculationProvider } from "@/context/calculation-context";
 import { METADATA_IMG } from "@/lib/constants";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { CookieConsentProvider } from "@/context/cookie-consent-context";
+import ComposeProviders from "@/context/compose-providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +60,11 @@ export const metadata: Metadata = {
   },
 };
 
+const providers = [
+  CookieConsentProvider,
+  CalculationProvider,
+];
+
 const RootLayout = ({
   children,
 }: Readonly<{
@@ -69,12 +76,12 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CalculationProvider>
+        <ComposeProviders providers={providers}>
           <Navbar />
           {children}
           <CookieConsent />
-        </CalculationProvider>
-        <GoogleAnalytics gaId={process.env.NEXT_GOOGLE_ANALYTICS_ID ?? ''} />
+          <ConditionalAnalytics />
+        </ComposeProviders>
       </body>
     </html>
   );
