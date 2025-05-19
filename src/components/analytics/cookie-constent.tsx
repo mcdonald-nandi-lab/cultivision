@@ -29,9 +29,14 @@ const CookieConsent = () => {
             </div>
           </div>
           <div className='text-gray-500 text-sm mt-2'>
-            This website uses cookies and google analytics to improve user
-            experience, collecting data on page views, scrolls, outbound clicks,
-            form interactions, and file downloads. You can checkout our{" "}
+            <span className='underline'>
+              We do not share or sell any data to third parties or use it to
+              track individual users
+            </span>
+            . This website uses cookies and google analytics to
+            <span className='underline'>anonymously</span>
+            improve user experience, collecting data on page views and
+            interactions. You can checkout our{" "}
             <Link
               href={PRIVACY_POL_LINK}
               target='_blank'
