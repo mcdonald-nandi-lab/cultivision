@@ -35,7 +35,7 @@ const CalculationContext = createContext<CalculationContextType | undefined>(
 
 export function CalculationProvider({ children }: { children: ReactNode }) {
   const [activeReactorId, setActiveReactorId] = useState(
-    bioreactors[0]?.id || ""
+    bioreactors[0]?.id ?? ""
   );
   const [costs, setCosts] = useState<ProductionCosts>(defaultProductionCosts);
   const [expenses, setExpenses] = useState<CalculatedExpenses | null>(null);

@@ -1,31 +1,16 @@
-// components/CookieConsent.js
 "use client";
 
-import { trackUserBehavior } from "@/lib/analytics";
 import { PRIVACY_POL_LINK, TERMS_LINK } from "@/lib/constants";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import Container from "./container";
+import { useCookieConsent } from "@/context/cookie-consent-context";
 
 const CookieConsent = () => {
-  const [showConsent, setShowConsent] = useState(false);
-  useEffect(() => {
-    const consentGiven = localStorage.getItem("cookieConsent");
-
-    if (!consentGiven) {
-      setShowConsent(true);
-    }
-  }, []);
-
-  const handleAccept = () => {
-    localStorage.setItem("cookieConsent", "true");
-    setShowConsent(false);
-    trackUserBehavior("consent_given");
-  };
+  const { showConsentBanner, handleAccept, handleReject } = useCookieConsent();
 
   return (
     <>
-      {showConsent && (
+      {showConsentBanner && (
         <Container
           movement='fade-up'
           className='fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 min-w-sm max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700'
@@ -68,12 +53,18 @@ const CookieConsent = () => {
             </Link>{" "}
             for more information.
           </div>
-          <div className='flex items-center justify-center mt-3'>
+          <div className='flex items-center justify-center mt-4 gap-4'>
+            <button
+              onClick={handleReject}
+              className='bg-transparent border-2 border-solid border-gray-400 text-gray-400 text-sm py-1 px-2 rounded-md cursor-pointer hover:border-red-400 hover:text-red-400'
+            >
+              Reject
+            </button>
             <button
               onClick={handleAccept}
-              className='bg-green-600 hover:bg-green-700 text-white text-sm py-2 px-4 rounded-md cursor-pointer'
+              className='bg-transparent border-2 border-solid border-gray-400 text-gray-400 text-sm py-1 px-2 rounded-md cursor-pointer hover:border-green-500 hover:text-green-500'
             >
-              Okay
+              Accept
             </button>
           </div>
         </Container>
