@@ -1,5 +1,5 @@
-import ConditionalAnalytics from "@/components/conditional-analytics";
-import CookieConsent from "@/components/cookie-constent";
+import ConditionalAnalytics from "@/components/analytics/conditional-analytics";
+import CookieConsent from "@/components/analytics/cookie-constent";
 import Navbar from "@/components/navbar";
 import { CalculationProvider } from "@/context/calculation-context";
 import { METADATA_IMG } from "@/lib/constants";
@@ -60,17 +60,13 @@ export const metadata: Metadata = {
   },
 };
 
-const providers = [
-  CookieConsentProvider,
-  CalculationProvider,
-];
+const providers = [CookieConsentProvider, CalculationProvider];
 
 const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-
   return (
     <html lang='en'>
       <body
@@ -85,6 +81,6 @@ const RootLayout = ({
       </body>
     </html>
   );
-}
+};
 
 export default RootLayout;
