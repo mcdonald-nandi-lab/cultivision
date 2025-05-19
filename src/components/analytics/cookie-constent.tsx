@@ -2,7 +2,7 @@
 
 import { PRIVACY_POL_LINK, TERMS_LINK } from "@/lib/constants";
 import Link from "next/link";
-import Container from "./container";
+import Container from "../container";
 import { useCookieConsent } from "@/context/cookie-consent-context";
 
 const CookieConsent = () => {
