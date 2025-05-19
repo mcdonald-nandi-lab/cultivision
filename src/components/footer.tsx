@@ -36,11 +36,11 @@ const Footer = () => {
             href={LAB_EXT_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='text-sm font-semibold hover:text-green-500 text-slate-600'
+            className='text-sm font-semibold hover:text-green-500 text-slate-600 break-normal'
             aria-label='Visit Mcdonald/Nandi Lab website'
             onClick={() => trackFooterLinkClick("Mcdonald/Nandi Lab")}
           >
-            Mcdonald/Nandi Lab
+            Mcdonald-Nandi Lab
           </Link>
           <Link
             href={LAB_EXT_LINK}
