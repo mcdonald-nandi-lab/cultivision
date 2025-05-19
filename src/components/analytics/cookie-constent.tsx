@@ -32,9 +32,9 @@ const CookieConsent = () => {
             <span className='underline'>
               We do not share or sell any data to third parties or use it to
               track individual users
-            </span>.
-            This website uses cookies and google analytics to anonymously
-            improve user experience, collecting data on page views and
+            </span>
+            . This website uses cookies and google analytics to improve user
+            experience, collecting <u>anonymous</u> data on page views and
             interactions. You can checkout our{" "}
             <Link
               href={PRIVACY_POL_LINK}
