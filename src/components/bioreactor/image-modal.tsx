@@ -70,7 +70,7 @@ const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
     >
       <div
         ref={modalRef}
-        className='relative bg-white rounded-lg max-w-4xl w-11/12 h-5/6 flex flex-col'
+        className='relative bg-white rounded-lg max-w-6xl w-11/12 md:h-5/6 h-1/2 flex flex-col'
       >
         <div className='p-4 border-b flex justify-between items-center'>
           <h3 className='text-xl font-semibold text-slate-700' id='modal-title'>

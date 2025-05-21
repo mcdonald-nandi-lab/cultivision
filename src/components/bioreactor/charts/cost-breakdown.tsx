@@ -46,15 +46,6 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
 
   const { downloadChart } = useChartDownload();
 
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
-
   useEffect(() => {
     if (!chartRef.current) return;
 
@@ -136,9 +127,14 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
     };
   }, [expenses]);
 
-  const totalExpense =
-    Object.values(expenses.chartData).reduce((sum, value) => sum + value, 0) /
-    1000000;
+  const formatCurrency = (value: number, digits: number = 0): string => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: digits,
+      maximumFractionDigits: digits,
+    }).format(value);
+  };
 
   return (
     <div className='h-full flex flex-col pb-2'>
@@ -152,10 +148,9 @@ const BioreactorBarChart = ({ expenses }: BioreactorBarChartProps) => {
           />
         </div>
         <div className='text-right'>
-          <div className='text-lg font-semibold text-slate-700'>
-            {formatCurrency(totalExpense * 1000000)}
+          <div className='text-sm font-semibold text-slate-700'>
+            COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
           </div>
-          <div className='text-xs text-slate-500'>Total Operating Expense</div>
         </div>
       </div>
 

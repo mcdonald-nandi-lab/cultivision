@@ -7,7 +7,16 @@ import Title from "@/components/title";
 import cn from "classnames";
 import { trackButtonClick, trackFormSubmission, trackUserBehavior } from "@/lib/analytics";
 
-const parameterInputs = [
+interface ParameterProps {
+  id: string;
+  label: string;
+  unit: string;
+  step: string;
+  default: number;
+  description: string;
+}
+
+const costInputs: ParameterProps[] = [
   {
     id: "mediaCost",
     label: "Media Cost",
@@ -23,10 +32,13 @@ const parameterInputs = [
     step: "1",
     default: defaultProductionCosts.laborCost,
     description: "Labor cost as a percent difference from base labor cost",
-  },
+  }
+];
+
+const utilitiesInput: ParameterProps[] = [
   {
     id: "electricityCost",
-    label: "Electricity Cost",
+    label: "Electricity",
     unit: "$/kWh",
     step: "0.01",
     default: defaultProductionCosts.electricityCost,
@@ -34,7 +46,7 @@ const parameterInputs = [
   },
   {
     id: "steamCost",
-    label: "Steam Cost",
+    label: "Steam",
     unit: "$/MT",
     step: "0.1",
     default: defaultProductionCosts.steamCost,
@@ -120,12 +132,15 @@ const ParameterForm = () => {
     <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
         <div className='flex flex-col xl:flex-row justify-between items-center gap-2'>
-          <Title title='Cost Parameters' />
+          <Title title='Cost' />
           <div className='flex gap-x-2'>
             <button
               type='button'
               onClick={handleReset}
-              className={cn('flex items-center gap-x-1 text-xs font-medium transition cursor-pointer hover:text-green-500', {"text-slate-600 hover:text-green-600":hasCustomSettings})}
+              className={cn(
+                "flex items-center gap-x-1 text-xs font-medium transition cursor-pointer hover:text-green-500",
+                { "text-slate-600 hover:text-green-600": hasCustomSettings }
+              )}
               disabled={!hasCustomSettings}
             >
               <svg
@@ -173,7 +188,61 @@ const ParameterForm = () => {
         })}
       >
         <div className='flex-1 space-y-3'>
-          {parameterInputs.map((param) => (
+          {costInputs.map((param) => (
+            <div key={param.id} className='form-group'>
+              <label
+                htmlFor={param.id}
+                className='block mb-1 text-xs font-semibold text-gray-500'
+              >
+                {param.label}
+              </label>
+              <div className='grid grid-cols-1'>
+                <div
+                  className={cn(
+                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                    "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                  )}
+                >
+                  <input
+                    type='number'
+                    id={param.id}
+                    value={localCosts[param.id as keyof typeof localCosts]}
+                    onChange={handleChange}
+                    className={cn(
+                      "flex-grow w-full px-4 py-1.5 text-sm",
+                      "focus:outline-none text-gray-600 border-0"
+                    )}
+                    placeholder='0.00'
+                    step={param.step}
+                    min='0'
+                    aria-describedby={`${param.id}-desc`}
+                  />
+                  <div
+                    className={cn(
+                      "flex items-center justify-center px-3 text-xs",
+                      "text-gray-500 bg-gray-50 border-l border-gray-200"
+                    )}
+                  >
+                    {param.unit}
+                  </div>
+                </div>
+                <div
+                  className={cn("text-xs text-gray-400 mt-1")}
+                  id={`${param.id}-desc`}
+                >
+                  {param.description}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className='flex items-center justify-center xl:justify-start text-md xl:text-lg 2xl:text-xl font-semibold text-slate-700 border-b-1 border-gray-300'>
+          Utilities
+        </div>
+
+        <div className='flex-1 space-y-3'>
+          {utilitiesInput.map((param) => (
             <div key={param.id} className='form-group'>
               <label
                 htmlFor={param.id}

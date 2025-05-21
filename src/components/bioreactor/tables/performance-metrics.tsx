@@ -85,13 +85,13 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Value
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Unit
               </th>
@@ -101,17 +101,19 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
             {metrics.map((metric, index) => (
               <tr
                 key={index}
-                className={cn("bg-gray-50", { "bg-white": index % 2 === 0 })}
+                className={cn("bg-gray-50 text-left", {
+                  "bg-white": index % 2 === 0,
+                })}
               >
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='text-sm font-medium text-gray-900'>
                     {metric.name}
                   </div>
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 font-medium'>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium'>
                   {metric.value}
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500'>
+                <td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>
                   {metric.unit}
                 </td>
               </tr>
@@ -120,7 +122,9 @@ const MetricsTable = ({ expenses }: MetricsTableProps) => {
         </table>
       </div>
 
-      <div className='mt-4 text-sm text-gray-500 border-t pt-4'>
+      <div className="border-t border-gray-400 mx-4 my-4"/> 
+
+      <div className='text-sm text-gray-500 px-4'>
         <div className='font-medium mb-1'>Notes:</div>
         <ul className='list-disc pl-5 space-y-1'>
           <li>COGS = Cost of Goods Sold</li>
