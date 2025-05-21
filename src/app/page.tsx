@@ -1,7 +1,6 @@
 "use client";
 
 import BioreactorBarChart from "@/components/bioreactor/charts/cost-breakdown";
-import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
 import LaborCostAnnualGraph from "@/components/bioreactor/charts/labor-cost-annual";
 import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hourly";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
@@ -14,16 +13,16 @@ import Container from "@/components/container";
 import Footer from "@/components/footer";
 import Toast from "@/components/toast";
 import { useCalculations } from "@/context/calculation-context";
+import { useModal } from "@/context/modal-context";
+import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect, useState } from "react";
 import Loading from "./loading";
-import { trackButtonClick } from "@/lib/analytics";
-import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 
 const URL_COPIED_EVENT = "urlCopied";
 
 const Home = () => {
   const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isModalOpen, openModal, closeModal } = useModal();
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<"success" | "error" | "info">(
@@ -57,11 +56,6 @@ const Home = () => {
     }
   }, [isUrlParamProcessed]);
 
-  const toggleModal = (val: boolean) => {
-    setIsModalOpen(val);
-    trackButtonClick("toggle_modal", "Modal");  
-  }
-
   if (!expenses) {
     return <Loading />;
   }
@@ -78,7 +72,7 @@ const Home = () => {
           </div>
           <div
             className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer w-full'
-            onClick={() => toggleModal(true)}
+            onClick={openModal}
           >
             <h3 className='text-lg font-semibold text-gray-700 text-center'>
               Bioreactor View
@@ -107,10 +101,10 @@ const Home = () => {
               </Container>
             </div>
 
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-              <Container>
+            <div className='grid grid-cols-1 gap-4'>
+              {/* <Container>
                 <BioreactorChart expenses={expenses} />
-              </Container>
+              </Container> */}
               <Container className='h-full'>
                 <MetricsTable expenses={expenses} />
               </Container>
@@ -140,10 +134,7 @@ const Home = () => {
       </div>
 
       {isModalOpen && (
-        <ImageModal
-          bioreactorId={activeReactorId}
-          onClose={() => toggleModal(false)}
-        />
+        <ImageModal bioreactorId={activeReactorId} onClose={closeModal} />
       )}
 
       <Toast

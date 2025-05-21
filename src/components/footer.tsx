@@ -40,7 +40,7 @@ const Footer = () => {
             aria-label='Visit Mcdonald/Nandi Lab website'
             onClick={() => trackFooterLinkClick("Mcdonald/Nandi Lab")}
           >
-            Mcdonald-Nandi Lab
+            McDonald-Nandi Lab
           </Link>
           <Link
             href={LAB_EXT_LINK}
