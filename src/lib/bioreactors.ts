@@ -76,50 +76,50 @@ export const bioreactors: Bioreactor[] = [
     capitalExpense: 365900000,
 
     depreciation: 1.2,
-    reactors: {
-      "17h": {
-        "100gpl": {},
-      },
-      "20h": {
-        "100gpl": {},
-      },
-      "23h": {
-        "100gpl": {
-          // 1. EXECUTIVE SUMMARY (2021 prices) - Cost Basis Annual Rate
-          annualProduction: 25000000,
-          // 1. EXECUTIVE SUMMARY (2021 prices) - Total Capital Investment
-          capitalExpense: 345079000,
-          // 5. MATERIALS COST - PROCESS SUMMARY - Annual Amount - Beefy R Enhance (MEDIA COST - Part of Cost Parameters)
-          mediaVolume: 253758783,
-          // MATERIALS COST - PROCESS SUMMARY - Annual Amount: Difference of Beefy R
-          otherMaterialsCost: 105953161,
-          // Utility - Annual Amount- Std Power
-          powerUsage: 3116542,
-          // Utility - Annual Amount - Steam
-          steamUsage: 35198,
-          // Utility - Annual Amount - Cooling Water
-          coolingWaterUsage: 1264953,
-          // Utility -  Annual Amount - Chilled Water
-          chilledWaterUsage: 110527,
-          // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Consumables - $
-          consumableCosts: 246000,
-          // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Waste Treatment/Disposal - $
-          wasteTreatmentCost: 3034000,
-          // 4. FACILITY-DEPENDENT COST - PROCESS SUMMARY - TOTAL - "Annual Cost($)"
-          facilityCosts: 59461000,
-          //  7. LABOR COST - PROCESS SUMMARY - "Unit Cost ($/h)" * "Annual Amount(h)"
-          // Operator + USP Operator + DSP Operator
-          baseLaborCost: 2755 * 34.5 + 20353 * 46.0 + 261 * 57.5,
-          //
-        },
-      },
-      "26h": {
-        "100gpl": {},
-      },
-      "29h": {
-        "100gpl": {},
-      },
-    },
+    // reactors: {
+    //   "17h": {
+    //     "100gpl": {},
+    //   },
+    //   "20h": {
+    //     "100gpl": {},
+    //   },
+    //   "23h": {
+    //     "100gpl": {
+    //       // 1. EXECUTIVE SUMMARY (2021 prices) - Cost Basis Annual Rate
+    //       annualProduction: 25000000,
+    //       // 1. EXECUTIVE SUMMARY (2021 prices) - Total Capital Investment
+    //       capitalExpense: 345079000,
+    //       // 5. MATERIALS COST - PROCESS SUMMARY - Annual Amount - Beefy R Enhance (MEDIA COST - Part of Cost Parameters)
+    //       mediaVolume: 253758783,
+    //       // MATERIALS COST - PROCESS SUMMARY - Annual Amount: Difference of Beefy R
+    //       otherMaterialsCost: 105953161,
+    //       // Utility - Annual Amount- Std Power
+    //       powerUsage: 3116542,
+    //       // Utility - Annual Amount - Steam
+    //       steamUsage: 35198,
+    //       // Utility - Annual Amount - Cooling Water
+    //       coolingWaterUsage: 1264953,
+    //       // Utility -  Annual Amount - Chilled Water
+    //       chilledWaterUsage: 110527,
+    //       // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Consumables - $
+    //       consumableCosts: 246000,
+    //       // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Waste Treatment/Disposal - $
+    //       wasteTreatmentCost: 3034000,
+    //       // 4. FACILITY-DEPENDENT COST - PROCESS SUMMARY - TOTAL - "Annual Cost($)"
+    //       facilityCosts: 59461000,
+    //       //  7. LABOR COST - PROCESS SUMMARY - "Unit Cost ($/h)" * "Annual Amount(h)"
+    //       // Operator + USP Operator + DSP Operator
+    //       baseLaborCost: 2755 * 34.5 + 20353 * 46.0 + 261 * 57.5,
+    //       //
+    //     },
+    //   },
+    //   "26h": {
+    //     "100gpl": {},
+    //   },
+    //   "29h": {
+    //     "100gpl": {},
+    //   },
+    // },
   },
 ];
 
