@@ -187,7 +187,7 @@ const ParameterForm = () => {
 
   return (
     <div className='h-full flex flex-col gap-y-4'>
-      <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
+      <div className='flex flex-col gap-y-2 pb-2 mb-1 border-b border-slate-300'>
         <div className='flex flex-col xl:flex-row justify-between items-center gap-2'>
           <Title title='Parameters' />
           <div className='flex gap-x-2'>
@@ -245,10 +245,9 @@ const ParameterForm = () => {
         })}
       >
         <div className='space-y-3'>
-          <div className='text-sm font-semibold text-slate-700'>
+          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
             Bioreactor Configuration
           </div>
-
           <div className='form-group'>
             <label
               htmlFor='bioreactor'
@@ -378,7 +377,7 @@ const ParameterForm = () => {
         </div>
 
         <div className='space-y-3'>
-          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-gray-300'>
+          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
             Cost Parameters
           </div>
           {costInputs.map((param) => (
@@ -429,7 +428,7 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-        <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-gray-300'>
+        <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
           Utilities
         </div>
 
