@@ -25,10 +25,10 @@ export default function Terms() {
               These terms and conditions (the &quot;Terms and Conditions&quot;)
               govern the use of{" "}
               <a
-                href='https://aunshx.github.io/cultivision'
+                href='https://mcdonald-nandi-lab.github.io/cultivision/'
                 className='text-green-700 hover:text-green-800'
               >
-                https://aunshx.github.io/cultivision
+                https://mcdonald-nandi-lab.github.io/cultivision/
               </a>{" "} also called as CultiVision
               (the &quot;Site&quot;). This Site is operated by
               the Mcdonald-Nandi Lab at the University of California, Davis. This Site is an educational/academic tool.
@@ -115,7 +115,7 @@ export default function Terms() {
             <p className='mb-6'>1 Shields Ave, Davis, CA 95616</p>
 
             <div className='flex justify-between items-center mt-8 pt-6 border-t border-gray-200 text-sm text-gray-500'>
-              <p>Effective Date: 14th day of May, 2025</p>
+              <p>Effective Date: 25th day of June, 2025</p>
               <p>© 2025 The Regents of the University of California</p>
             </div>
           </div>

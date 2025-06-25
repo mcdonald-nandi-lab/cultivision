@@ -1,21 +1,33 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { getBioreactorById } from "@/lib/bioreactors";
+import { getBioreactorById, getBioreactorData } from "@/lib/bioreactors";
 import cn from "classnames";
 import Image from "next/image";
 
 interface ImageModalProps {
   bioreactorId: string;
+  doublingTime?: string;
+  density?: string;
   onClose: () => void;
 }
 
-const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
+const ImageModal = ({
+  bioreactorId,
+  doublingTime,
+  density,
+  onClose,
+}: ImageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [transformOrigin, setTransformOrigin] = useState("center center");
   const [isZoomed, setIsZoomed] = useState(false);
+
   const bioreactor = getBioreactorById(bioreactorId);
+  const bioreactorData =
+    bioreactor && doublingTime && density
+      ? getBioreactorData(bioreactor, doublingTime, density)
+      : null;
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -122,23 +134,40 @@ const ImageModal = ({ bioreactorId, onClose }: ImageModalProps) => {
           </div>
         </div>
 
-        <div className='p-4 border-t'>
-          <div className='grid grid-cols-2 gap-4 text-sm'>
-            <div className='flex flex-col'>
-              <span className='font-medium text-slate-600'>
-                Annual Production:
-              </span>
-              <span>{bioreactor.annualProduction.toLocaleString()} kg/yr</span>
-            </div>
-            <div className='flex flex-col'>
-              <span className='font-medium text-slate-600'>Media Volume:</span>
-              <span>{(bioreactor.mediaVolume / 1_000_000).toFixed(1)}M L</span>
+        {bioreactorData && (
+          <div className='p-4 border-t'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-4 text-sm'>
+              <div className='flex flex-col'>
+                <span className='font-medium text-slate-600'>
+                  Configuration:
+                </span>
+                <span>
+                  {doublingTime} • {density}
+                </span>
+              </div>
+              <div className='flex flex-col'>
+                <span className='font-medium text-slate-600'>
+                  Annual Production:
+                </span>
+                <span>
+                  {bioreactorData.annualProduction?.toLocaleString()} kg/yr
+                </span>
+              </div>
+              <div className='flex flex-col'>
+                <span className='font-medium text-slate-600'>
+                  Media Volume:
+                </span>
+                <span>
+                  {((bioreactorData.mediaVolume || 0) / 1_000_000).toFixed(1)}M
+                  L
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default ImageModal;

@@ -2,13 +2,9 @@ export const LAB_EXT_LINK: string = "https://mcdonald-nandi.ech.ucdavis.edu/";
 
 export const PRIVACY_POL_LINK: string = "https://privacy.ucdavis.edu/web-page-privacy"; 
 
-export const TERMS_LINK: string =
-  "/terms"; 
+export const TERMS_LINK: string = "/terms"; 
 
 export const UCD_EXT_LINK: string = 'https://ucdavis.edu';
-
-export const LICENSE_LINK: string =
-  "https://github.com/aunshx/cultivision?tab=AGPL-3.0-1-ov-file";
 
 export const METADATA_IMG: string =
   "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto/avrbdmte5govwwrrwz8n";

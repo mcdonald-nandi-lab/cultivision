@@ -1,17 +1,13 @@
 export interface BasicObject {
   [key: string]: string;
-} 
+}
 
-export interface Bioreactor {
-  id: string;
-  name: string;
-  image: string;
+export interface BioreactorData {
   annualProduction: number;
   mediaVolume: number;
-  baseLaborCost: number;
   otherMaterialsCost: number;
   wasteTreatmentCost: number;
-  facilityCosts: number;
+  otherFacilityCosts: number;
   consumableCosts: number;
   powerUsage: number;
   steamUsage: number;
@@ -19,6 +15,22 @@ export interface Bioreactor {
   chilledWaterUsage: number;
   capitalExpense: number;
   depreciation: number;
+  laborHours: {
+    main: number;
+    upstream: number;
+    downstream: number;
+  };
+}
+
+export interface Bioreactor {
+  id: string;
+  name: string;
+  image: string;
+  reactors: {
+    [timeKey: string]: {
+      [densityKey: string]: Partial<BioreactorData>;
+    };
+  };
 }
 
 export interface ProductionCosts {

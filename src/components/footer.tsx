@@ -72,19 +72,10 @@ const Footer = () => {
           >
             Privacy Policy
           </Link>
-          {/* <Link
-            href={LICENSE_LINK}
-            target='_blank'
-            rel='noreferrer nofollow'
-            className='text-sm hover:text-green-500 text-slate-600'
-            aria-label='License'
-          >
-            License
-          </Link> */}
         </div>
       </div>
       <div
-        className='text-xs text-gray-300 text-center px-2 md:px-4'
+        className='text-xs text-gray-400 text-center px-2 md:px-4'
         aria-describedby='info'
         aria-label='Copyright of the The Regents of the University of California'
       >

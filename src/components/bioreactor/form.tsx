@@ -2,10 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
-import { defaultProductionCosts } from "@/lib/bioreactors";
+import {
+  defaultProductionCosts,
+  getBioreactorById,
+  getAvailableDoublingTimes,
+  getAvailableDensities,
+  bioreactors,
+} from "@/lib/bioreactors";
 import Title from "@/components/title";
 import cn from "classnames";
-import { trackButtonClick, trackFormSubmission, trackUserBehavior } from "@/lib/analytics";
+import {
+  trackButtonClick,
+  trackFormSubmission,
+  trackUserBehavior,
+} from "@/lib/analytics";
 
 interface ParameterProps {
   id: string;
@@ -32,7 +42,7 @@ const costInputs: ParameterProps[] = [
     step: "1",
     default: defaultProductionCosts.laborCost,
     description: "Labor cost as a percent difference from base labor cost",
-  }
+  },
 ];
 
 const utilitiesInput: ParameterProps[] = [
@@ -71,10 +81,29 @@ const utilitiesInput: ParameterProps[] = [
 ];
 
 const ParameterForm = () => {
-  const { costs, setCosts, isUrlParamProcessed } = useCalculations();
+  const {
+    costs,
+    setCosts,
+    isUrlParamProcessed,
+    activeReactorId,
+    setActiveReactorId,
+    doublingTime,
+    setDoublingTime,
+    density,
+    setDensity,
+  } = useCalculations();
   const [localCosts, setLocalCosts] = useState(costs);
   const [realTimeUpdates, setRealTimeUpdates] = useState(false);
   const [urlParamsSet, setUrlParamsSet] = useState(false);
+
+  const activeReactor = getBioreactorById(activeReactorId);
+  const availableDoublingTimes = activeReactor
+    ? getAvailableDoublingTimes(activeReactor)
+    : [];
+  const availableDensities =
+    activeReactor && doublingTime
+      ? getAvailableDensities(activeReactor, doublingTime)
+      : [];
 
   useEffect(() => {
     if ((isUrlParamProcessed && !urlParamsSet) || !urlParamsSet) {
@@ -82,6 +111,34 @@ const ParameterForm = () => {
       setUrlParamsSet(true);
     }
   }, [costs, isUrlParamProcessed, urlParamsSet]);
+
+  const handleReactorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setActiveReactorId(e.target.value);
+    trackUserBehavior("bioreactor_selection", {
+      reactor_id: e.target.value,
+      reactor_name:
+        bioreactors.find((r) => r.id === e.target.value)?.name || "Unknown",
+    });
+  };
+
+  const handleDoublingTimeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDoublingTime(e.target.value);
+    trackUserBehavior("doubling_time_selection", {
+      reactor_id: activeReactorId,
+      doubling_time: e.target.value,
+    });
+  };
+
+  const handleDensityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDensity(e.target.value);
+    trackUserBehavior("density_selection", {
+      reactor_id: activeReactorId,
+      doubling_time: doublingTime,
+      density: e.target.value,
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -109,8 +166,8 @@ const ParameterForm = () => {
     setCosts(defaultCosts);
     trackButtonClick("reset_form", "Reset", {
       form_id: "cost_parameters",
-      button_text: 'hasCustomSettings',
-    });  
+      button_text: "hasCustomSettings",
+    });
   };
 
   const toggleRealTimeUpdates = () => {
@@ -132,7 +189,7 @@ const ParameterForm = () => {
     <div className='h-full flex flex-col gap-y-4'>
       <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
         <div className='flex flex-col xl:flex-row justify-between items-center gap-2'>
-          <Title title='Cost' />
+          <Title title='Parameters' />
           <div className='flex gap-x-2'>
             <button
               type='button'
@@ -187,7 +244,143 @@ const ParameterForm = () => {
           "pb-4": realTimeUpdates,
         })}
       >
-        <div className='flex-1 space-y-3'>
+        <div className='space-y-3'>
+          <div className='text-sm font-semibold text-slate-700'>
+            Bioreactor Configuration
+          </div>
+
+          <div className='form-group'>
+            <label
+              htmlFor='bioreactor'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Type
+            </label>
+            <div
+              className={cn(
+                "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+              )}
+            >
+              <select
+                id='bioreactor'
+                value={activeReactorId}
+                onChange={handleReactorChange}
+                className={cn(
+                  "flex-grow w-full px-4 py-1.5 text-sm",
+                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer"
+                )}
+              >
+                {bioreactors.map((reactor) => (
+                  <option
+                    key={reactor.id}
+                    value={reactor.id}
+                    className='cursor-pointer'
+                  >
+                    {reactor.name}
+                  </option>
+                ))}
+              </select>
+              <div
+                className={cn(
+                  "flex items-center justify-center w-20 ml-1 text-xs whitespace-nowrap",
+                  "text-gray-500 bg-gray-50 border-l border-gray-200"
+                )}
+              >
+                Reactor
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label
+              htmlFor='doublingTime'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Doubling Time
+            </label>
+            <div
+              className={cn(
+                "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700",
+                { "opacity-50": availableDoublingTimes.length === 0 }
+              )}
+            >
+              <select
+                id='doublingTime'
+                value={doublingTime}
+                onChange={handleDoublingTimeChange}
+                className={cn(
+                  "flex-grow w-full px-4 py-1.5 text-sm",
+                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer",
+                  { "cursor-not-allowed": availableDoublingTimes.length === 0 }
+                )}
+                disabled={availableDoublingTimes.length === 0}
+              >
+                {availableDoublingTimes.map((time) => (
+                  <option key={time} value={time} className='cursor-pointer'>
+                    {time.replace("h", "")}
+                  </option>
+                ))}
+              </select>
+              <div
+                className={cn(
+                  "flex items-center justify-center w-20 ml-1 text-xs",
+                  "text-gray-500 bg-gray-50 border-l border-gray-200"
+                )}
+              >
+                hours
+              </div>
+            </div>
+          </div>
+
+          <div className='form-group'>
+            <label
+              htmlFor='density'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Cell Density
+            </label>
+            <div
+              className={cn(
+                "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700",
+                { "opacity-50": availableDensities.length === 0 }
+              )}
+            >
+              <select
+                id='density'
+                value={density}
+                onChange={handleDensityChange}
+                className={cn(
+                  "flex-grow w-full px-4 py-1.5 text-sm",
+                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer",
+                  { "cursor-not-allowed": availableDensities.length === 0 }
+                )}
+                disabled={availableDensities.length === 0}
+              >
+                {availableDensities.map((dens) => (
+                  <option key={dens} value={dens} className='cursor-pointer'>
+                    {dens.replace("gpl", "")}
+                  </option>
+                ))}
+              </select>
+              <div
+                className={cn(
+                  "flex items-center justify-center w-20 ml-1 text-xs",
+                  "text-gray-500 bg-gray-50 border-l border-gray-200"
+                )}
+              >
+                g/L
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='space-y-3'>
+          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-gray-300'>
+            Cost Parameters
+          </div>
           {costInputs.map((param) => (
             <div key={param.id} className='form-group'>
               <label
@@ -236,8 +429,7 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-
-        <div className='flex items-center justify-center xl:justify-start text-md xl:text-lg 2xl:text-xl font-semibold text-slate-700 border-b-1 border-gray-300'>
+        <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-gray-300'>
           Utilities
         </div>
 

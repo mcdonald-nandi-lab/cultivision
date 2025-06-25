@@ -20,12 +20,12 @@ const URL_COPIED_EVENT = "urlCopied";
 const Navbar = () => {
   const pathname = usePathname();
   const { openModal } = useModal();
-  const { activeReactorId, setActiveReactorId, expenses, costs } =
+  const { activeReactorId, expenses, costs, doublingTime, density } =
     useCalculations();
 
   const [isCopied, setIsCopied] = useState<boolean>(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false);
 
   const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
 
@@ -37,15 +37,15 @@ const Navbar = () => {
 
       if (!target) return;
 
-      if (
-        !target.closest(".dropdown-container") &&
-        !target.closest(".dropdown-button")
-      ) {
-        setIsDropdownOpen(false);
-      }
-
       if (!target.closest(".sidebar") && !target.closest(".hamburger-button")) {
         setIsSidebarOpen(false);
+      }
+
+      if (
+        !target.closest(".options-dropdown") &&
+        !target.closest(".options-button")
+      ) {
+        setIsOptionsOpen(false);
       }
     };
 
@@ -62,27 +62,21 @@ const Navbar = () => {
     }
   }, [isCopied]);
 
-  const handleSelect = (id: string) => {
-    setActiveReactorId(id);
-    setIsDropdownOpen(false);
-
-    const selectedReactor = bioreactors.find((r) => r.id === id);
-    trackUserBehavior("bioreactor_selection", {
-      reactor_id: id,
-      reactor_name: selectedReactor?.name ?? "Unknown",
-    });
-  };
-
   const handleDownloadCsv = () => {
     if (expenses && activeReactor) {
       exportToCsv(expenses, activeReactor);
       trackDownload("csv", `${activeReactor.name}-expenses.csv`);
     }
-    setIsSidebarOpen(false);
+    setIsOptionsOpen(false);
   };
 
   const handleSaveSettings = async () => {
-    const shareableUrl = createShareableUrl(costs, activeReactorId);
+    const shareableUrl = createShareableUrl(
+      costs,
+      activeReactorId,
+      doublingTime,
+      density
+    );
 
     try {
       await navigator.clipboard.writeText(shareableUrl);
@@ -90,6 +84,8 @@ const Navbar = () => {
       window.dispatchEvent(new Event(URL_COPIED_EVENT));
       trackUserBehavior("save_settings", {
         reactor_id: activeReactorId,
+        doubling_time: doublingTime,
+        density: density,
         success: true,
       });
     } catch (err) {
@@ -103,6 +99,8 @@ const Navbar = () => {
       textarea.select();
       trackUserBehavior("save_settings", {
         reactor_id: activeReactorId,
+        doubling_time: doublingTime,
+        density: density,
         success: document.execCommand("copy"),
       });
 
@@ -118,7 +116,12 @@ const Navbar = () => {
       document.body.removeChild(textarea);
     }
 
-    setIsSidebarOpen(false);
+    setIsOptionsOpen(false);
+  };
+
+  const handleDiagramClick = () => {
+    openModal();
+    setIsOptionsOpen(false);
   };
 
   const toggleSidebar = () => {
@@ -126,9 +129,21 @@ const Navbar = () => {
     trackUserBehavior("toggle_sidebar", { opened: !isSidebarOpen });
   };
 
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-    trackUserBehavior("toggle_dropdown", { opened: !isDropdownOpen });
+  const toggleOptions = () => {
+    setIsOptionsOpen(!isOptionsOpen);
+    trackUserBehavior("toggle_options", { opened: !isOptionsOpen });
+  };
+
+  const getDisplayText = () => {
+    if (!activeReactor) return "Select";
+    let text = activeReactor.name;
+    if (doublingTime) {
+      text += ` • ${doublingTime.replace("h", "")}h`;
+    }
+    if (density) {
+      text += ` • ${density.replace("gpl", "")} g/L`;
+    }
+    return text;
   };
 
   return (
@@ -165,69 +180,24 @@ const Navbar = () => {
             </div>
           </Link>
 
+          {isHome && (
+            <div className='relative dropdown-container'>
+              <button
+                className='dropdown-button flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-700'
+                aria-controls='reactor-configuration'
+                aria-haspopup='listbox'
+              >
+                <span className='font-semibold hidden sm:inline'>
+                  Configuration:
+                </span>
+                <span className='font-medium text-green-700 text-xs sm:text-sm'>
+                  {getDisplayText()}
+                </span>
+              </button>
+            </div>
+          )}
+
           <div className='flex items-center justify-around gap-4'>
-            {isHome && (
-              <div className='relative dropdown-container'>
-                <button
-                  onClick={toggleDropdown}
-                  className='dropdown-button cursor-pointer flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2  focus:outline-none focus:ring-1 focus:ring-slate-600 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
-                  aria-expanded={isDropdownOpen}
-                  aria-controls='reactor-dropdown'
-                  aria-haspopup='listbox'
-                >
-                  <span className='font-semibold'>Bioreactor:</span>
-                  <span className='font-medium text-green-700'>
-                    {activeReactor?.name || "Select"}
-                  </span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    className={cn(
-                      "h-5 w-5 transition-transform duration-200 ease-in-out",
-                      {
-                        "rotate-180": isDropdownOpen,
-                      }
-                    )}
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M19 9l-7 7-7-7'
-                    />
-                  </svg>
-                </button>
-                <div
-                  className={cn(
-                    `absolute top-full right-0 mt-2 py-2 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out`,
-                    {
-                      "opacity-100 visible translate-y-0": isDropdownOpen,
-                    },
-                    { "opacity-0 invisible -translate-y-2": !isDropdownOpen }
-                  )}
-                  id='reactor-dropdown'
-                  role='listbox'
-                >
-                  {bioreactors.map((reactor) => (
-                    <button
-                      key={reactor.id}
-                      onClick={() => handleSelect(reactor.id)}
-                      className={cn(
-                        "block w-full text-left px-4 py-2 hover:bg-blue-50 text-sm cursor-pointer",
-                        {
-                          "bg-blue-50 font-medium":
-                            activeReactorId === reactor.id,
-                        }
-                      )}
-                    >
-                      {reactor.name}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
             <button
               onClick={toggleSidebar}
               className='hamburger-button block xl:hidden md:p-2 focus:outline-none cursor-pointer'
@@ -252,60 +222,69 @@ const Navbar = () => {
               })}
             >
               {isHome && (
-                <button
-                  className={cn(
-                    "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
-                  )}
-                  onClick={openModal}
-                >
-                  <svg
-                    className='h-4 w-4'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
+                <div className='relative options-dropdown'>
+                  <button
+                    onClick={toggleOptions}
+                    className='options-button flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
+                    aria-expanded={isOptionsOpen}
+                    aria-controls='options-dropdown'
+                    aria-haspopup='menu'
                   >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-                    />
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                    />
-                  </svg>
-                  Diagram
-                </button>
-              )}
-              {isHome && (
-                <button
-                  onClick={handleSaveSettings}
-                  className={cn(
-                    "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
-                  )}
-                >
-                  {isCopied ? (
-                    <>
-                      <svg
-                        className='h-4 w-4 text-green-600'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M5 13l4 4L19 7'
-                        />
-                      </svg>
-                      <span className='text-green-600'>URL Copied!</span>
-                    </>
-                  ) : (
-                    <>
+                    <svg
+                      className='h-4 w-4'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'
+                      />
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                      />
+                    </svg>
+                    <span>Options</span>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className={cn(
+                        "h-4 w-4 transition-transform duration-200 ease-in-out",
+                        {
+                          "rotate-180": isOptionsOpen,
+                        }
+                      )}
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M19 9l-7 7-7-7'
+                      />
+                    </svg>
+                  </button>
+                  <div
+                    className={cn(
+                      `absolute top-full right-0 mt-2 py-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out flex flex-col gap-y-1`,
+                      {
+                        "opacity-100 visible translate-y-0": isOptionsOpen,
+                      },
+                      { "opacity-0 invisible -translate-y-2": !isOptionsOpen }
+                    )}
+                    id='options-dropdown'
+                    role='menu'
+                  >
+                    <button
+                      onClick={handleDiagramClick}
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer'
+                    >
                       <svg
                         className='h-4 w-4'
                         fill='none'
@@ -316,35 +295,79 @@ const Navbar = () => {
                           strokeLinecap='round'
                           strokeLinejoin='round'
                           strokeWidth={2}
-                          d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                          d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                        />
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
                         />
                       </svg>
-                      <span>Share</span>
-                    </>
-                  )}
-                </button>
-              )}
-              {isHome && (
-                <button
-                  onClick={handleDownloadCsv}
-                  disabled={!expenses}
-                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
-                >
-                  <svg
-                    className='h-4 w-4'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    stroke='currentColor'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      strokeWidth={2}
-                      d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-                    />
-                  </svg>
-                  <span>Download CSV</span>
-                </button>
+                      View Diagram
+                    </button>
+                    <button
+                      onClick={handleSaveSettings}
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer'
+                    >
+                      {isCopied ? (
+                        <>
+                          <svg
+                            className='h-4 w-4 text-green-600'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            stroke='currentColor'
+                          >
+                            <path
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                              strokeWidth={2}
+                              d='M5 13l4 4L19 7'
+                            />
+                          </svg>
+                          <span className='text-green-600'>URL Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg
+                            className='h-4 w-4'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            stroke='currentColor'
+                          >
+                            <path
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                              strokeWidth={2}
+                              d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+                            />
+                          </svg>
+                          <span>Share Link</span>
+                        </>
+                      )}
+                    </button>
+                    <button
+                      onClick={handleDownloadCsv}
+                      disabled={!expenses}
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+                    >
+                      <svg
+                        className='h-4 w-4'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke='currentColor'
+                      >
+                        <path
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
+                          strokeWidth={2}
+                          d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                        />
+                      </svg>
+                      Download CSV
+                    </button>
+                  </div>
+                </div>
               )}
               {!isHome && (
                 <Link

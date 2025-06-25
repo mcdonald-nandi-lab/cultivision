@@ -1,4 +1,3 @@
-// lib/url-params.ts
 import { ProductionCosts } from "@/types";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 
@@ -72,15 +71,21 @@ export function decodeProductionCosts(encoded: string): ProductionCosts | null {
 
 export function createShareableUrl(
   costs: ProductionCosts,
-  bioreactorId: string
+  bioreactorId: string,
+  doublingTime: string,
+  density: string
 ): string {
   const encoded = encodeProductionCosts(costs);
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
-  if (!encoded) {
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-    return `${window.location.origin}${basePath}?r=${bioreactorId}`;
+  const params = new URLSearchParams();
+  params.set("r", bioreactorId);
+  params.set("t", doublingTime);
+  params.set("d", density);
+
+  if (encoded) {
+    params.set("p", encoded);
   }
 
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  return `${window.location.origin}${basePath}?p=${encoded}&r=${bioreactorId}`;
+  return `${window.location.origin}${basePath}?${params.toString()}`;
 }

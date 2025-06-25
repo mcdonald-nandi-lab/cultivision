@@ -1,4 +1,4 @@
-// lib/labor-costs.ts
+import { getBioreactorById, getBioreactorData } from "./bioreactors";
 
 export interface LaborHours {
   upstream: number;
@@ -15,7 +15,7 @@ export interface HourlyRate {
 export interface LaborCostResult {
   hourlyRates: HourlyRate;
   totalAnnualCost: number;
-  absolutePercentage: number; 
+  absolutePercentage: number;
 }
 
 export interface LaborCostTable {
@@ -32,25 +32,20 @@ export const baseHourlyCosts: HourlyRate = {
   downstream: 57.5,
 };
 
-export const laborHoursByReactor: Record<string, LaborHours> = {
-  "40K_STR": {
-    upstream: 24076,
-    main: 722,
-    downstream: 261,
-  },
-  "210K_STR": {
-    upstream: 20302,
-    main: 1443,
-    downstream: 261,
-  },
-  "260K_ALR": {
-    upstream: 20353,
-    main: 2756,
-    downstream: 261,
-  },
-};
+export function getLaborHours(
+  bioreactorId: string,
+  doublingTime: string,
+  density: string
+): LaborHours | null {
+  const bioreactor = getBioreactorById(bioreactorId);
+  if (!bioreactor) return null;
 
-// Modified hourly rates with percentage change
+  const data = getBioreactorData(bioreactor, doublingTime, density);
+  if (!data || !data.laborHours) return null;
+
+  return data.laborHours;
+}
+
 export function calculateModifiedRates(
   percentageChange: number = 0
 ): HourlyRate {
@@ -61,7 +56,6 @@ export function calculateModifiedRates(
   };
 }
 
-// Total annual labor cost with percentage change
 export function calculateTotalAnnualCost(
   hours: LaborHours,
   rates: HourlyRate
@@ -73,12 +67,15 @@ export function calculateTotalAnnualCost(
   );
 }
 
-// Generate labor cost table data
 export function generateLaborCostTable(
   bioreactorId: string,
+  doublingTime: string,
+  density: string,
   currentLaborCostPercentage: number
-): LaborCostTable {
-  const laborHours = laborHoursByReactor[bioreactorId];
+): LaborCostTable | null {
+  const laborHours = getLaborHours(bioreactorId, doublingTime, density);
+  if (!laborHours) return null;
+
   const relativePercentages = [-2, -1, 0, 1, 2];
 
   const results: Record<string, LaborCostResult> = {};
