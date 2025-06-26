@@ -1,12 +1,12 @@
 "use client";
 
-import { PRIVACY_POL_LINK, TERMS_LINK } from "@/lib/constants";
+import { useCookieConsent } from "@/context/cookie-consent-context";
+import { PRIVACY_POL_LINK } from "@/lib/constants";
 import Link from "next/link";
 import Container from "../container";
-import { useCookieConsent } from "@/context/cookie-consent-context";
 
 const CookieConsent = () => {
-  const { showConsentBanner, handleAccept, handleReject } = useCookieConsent();
+  const { showConsentBanner, handleAccept } = useCookieConsent();
 
   return (
     <>
@@ -33,9 +33,7 @@ const CookieConsent = () => {
               We do not share or sell any data to third parties or use it to
               track individual users
             </span>
-            . This website uses cookies and google analytics to improve user
-            experience, collecting <u>anonymous</u> data on page views and
-            interactions. You can checkout our{" "}
+            . This website uses cookies and google analytics to make the site work properly and improve user experience. You can checkout our{" "}
             <Link
               href={PRIVACY_POL_LINK}
               target='_blank'
@@ -45,30 +43,14 @@ const CookieConsent = () => {
             >
               privacy policy
             </Link>{" "}
-            <span>and the </span>
-            <Link
-              href={TERMS_LINK}
-              target='_blank'
-              rel='noreferrer nofollow'
-              aria-label='Link to checkout the privacy policy'
-              className='hover:underline text-green-500'
-            >
-              terms of use
-            </Link>{" "}
             for more information.
           </div>
           <div className='flex items-center justify-center mt-4 gap-4'>
             <button
-              onClick={handleReject}
-              className='bg-transparent border-2 border-solid border-gray-400 text-gray-400 text-sm py-1 px-2 rounded-md cursor-pointer hover:border-red-400 hover:text-red-400'
-            >
-              Reject
-            </button>
-            <button
               onClick={handleAccept}
-              className='bg-transparent border-2 border-solid border-gray-400 text-gray-400 text-sm py-1 px-2 rounded-md cursor-pointer hover:border-green-500 hover:text-green-500'
+              className='bg-transparent border-1 border-solid border-gray-700 text-gray-700 text-sm py-1 px-2 rounded-md cursor-pointer hover:border-green-500 hover:text-green-500'
             >
-              Accept
+              Okay
             </button>
           </div>
         </Container>
