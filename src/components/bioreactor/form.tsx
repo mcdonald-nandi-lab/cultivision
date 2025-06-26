@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import {
   defaultProductionCosts,
@@ -96,6 +96,13 @@ const ParameterForm = () => {
   const [realTimeUpdates, setRealTimeUpdates] = useState(false);
   const [urlParamsSet, setUrlParamsSet] = useState(false);
 
+  const [isReactorOpen, setIsReactorOpen] = useState(false);
+  const [isDoublingOpen, setIsDoublingOpen] = useState(false);
+  const [isDensityOpen, setIsDensityOpen] = useState(false);
+  const reactorRef = useRef<HTMLDivElement>(null);
+  const doublingRef = useRef<HTMLDivElement>(null);
+  const densityRef = useRef<HTMLDivElement>(null);
+
   const activeReactor = getBioreactorById(activeReactorId);
   const availableDoublingTimes = activeReactor
     ? getAvailableDoublingTimes(activeReactor)
@@ -111,6 +118,32 @@ const ParameterForm = () => {
       setUrlParamsSet(true);
     }
   }, [costs, isUrlParamProcessed, urlParamsSet]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        reactorRef.current &&
+        !reactorRef.current.contains(e.target as Node)
+      ) {
+        setIsReactorOpen(false);
+      }
+      if (
+        doublingRef.current &&
+        !doublingRef.current.contains(e.target as Node)
+      ) {
+        setIsDoublingOpen(false);
+      }
+      if (
+        densityRef.current &&
+        !densityRef.current.contains(e.target as Node)
+      ) {
+        setIsDensityOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleReactorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setActiveReactorId(e.target.value);
@@ -248,50 +281,81 @@ const ParameterForm = () => {
           <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
             Bioreactor Configuration
           </div>
-          <div className='form-group'>
+          <div className='form-group' ref={reactorRef}>
             <label
               htmlFor='bioreactor'
               className='block mb-1 text-xs font-semibold text-gray-500'
             >
               Type
             </label>
-            <div
-              className={cn(
-                "flex w-full rounded-md border border-gray-300 overflow-hidden",
-                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
-              )}
-            >
-              <select
-                id='bioreactor'
-                value={activeReactorId}
-                onChange={handleReactorChange}
+            <div className='relative'>
+              <button
+                type='button'
+                onClick={() => setIsReactorOpen(!isReactorOpen)}
                 className={cn(
-                  "flex-grow w-full px-4 py-1.5 text-sm",
-                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer"
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer"
+                )}
+              >
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {bioreactors.find((r) => r.id === activeReactorId)?.name ||
+                    "Select"}
+                </div>
+                <div className='flex items-center justify-center w-20 px-2 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>Reactor</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isReactorOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              <div
+                className={cn(
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isReactorOpen,
+                    "opacity-0 invisible -translate-y-2": !isReactorOpen,
+                  }
                 )}
               >
                 {bioreactors.map((reactor) => (
-                  <option
+                  <button
                     key={reactor.id}
-                    value={reactor.id}
-                    className='cursor-pointer'
+                    type='button'
+                    onClick={() => {
+                      handleReactorChange({
+                        target: { value: reactor.id },
+                      } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsReactorOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      {
+                        "bg-gray-50 font-medium":
+                          activeReactorId === reactor.id,
+                      }
+                    )}
                   >
                     {reactor.name}
-                  </option>
+                  </button>
                 ))}
-              </select>
-              <div
-                className={cn(
-                  "flex items-center justify-center w-20 ml-1 text-xs whitespace-nowrap",
-                  "text-gray-500 bg-gray-50 border-l border-gray-200"
-                )}
-              >
-                Reactor
               </div>
             </div>
           </div>
-
-          <div className='form-group'>
+          <div className='form-group' ref={doublingRef}>
             <label
               htmlFor='doublingTime'
               className='block mb-1 text-xs font-semibold text-gray-500'
@@ -299,41 +363,78 @@ const ParameterForm = () => {
               Doubling Time
             </label>
             <div
-              className={cn(
-                "flex w-full rounded-md border border-gray-300 overflow-hidden",
-                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700",
-                { "opacity-50": availableDoublingTimes.length === 0 }
-              )}
+              className={cn("relative", {
+                "opacity-50": availableDoublingTimes.length === 0,
+              })}
             >
-              <select
-                id='doublingTime'
-                value={doublingTime}
-                onChange={handleDoublingTimeChange}
+              <button
+                type='button'
+                onClick={() =>
+                  availableDoublingTimes.length > 0 &&
+                  setIsDoublingOpen(!isDoublingOpen)
+                }
+                disabled={availableDoublingTimes.length === 0}
                 className={cn(
-                  "flex-grow w-full px-4 py-1.5 text-sm",
-                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer",
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer",
                   { "cursor-not-allowed": availableDoublingTimes.length === 0 }
                 )}
-                disabled={availableDoublingTimes.length === 0}
               >
-                {availableDoublingTimes.map((time) => (
-                  <option key={time} value={time} className='cursor-pointer'>
-                    {time.replace("h", "")}
-                  </option>
-                ))}
-              </select>
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {doublingTime.replace("h", "")}
+                </div>
+                <div className='flex items-center justify-center w-20 px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>hours</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isDoublingOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
               <div
                 className={cn(
-                  "flex items-center justify-center w-20 ml-1 text-xs",
-                  "text-gray-500 bg-gray-50 border-l border-gray-200"
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isDoublingOpen,
+                    "opacity-0 invisible -translate-y-2": !isDoublingOpen,
+                  }
                 )}
               >
-                hours
+                {availableDoublingTimes.map((time) => (
+                  <button
+                    key={time}
+                    type='button'
+                    onClick={() => {
+                      handleDoublingTimeChange({
+                        target: { value: time }
+                      } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsDoublingOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      { "bg-gray-50 font-medium": doublingTime === time }
+                    )}
+                  >
+                    {time.replace("h", "")}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
-
-          <div className='form-group'>
+          <div className='form-group' ref={densityRef}>
             <label
               htmlFor='density'
               className='block mb-1 text-xs font-semibold text-gray-500'
@@ -341,36 +442,72 @@ const ParameterForm = () => {
               Cell Density
             </label>
             <div
-              className={cn(
-                "flex w-full rounded-md border border-gray-300 overflow-hidden",
-                "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700",
-                { "opacity-50": availableDensities.length === 0 }
-              )}
+              className={cn("relative", {
+                "opacity-50": availableDensities.length === 0,
+              })}
             >
-              <select
-                id='density'
-                value={density}
-                onChange={handleDensityChange}
+              <button
+                type='button'
+                onClick={() =>
+                  availableDensities.length > 0 &&
+                  setIsDensityOpen(!isDensityOpen)
+                }
+                disabled={availableDensities.length === 0}
                 className={cn(
-                  "flex-grow w-full px-4 py-1.5 text-sm",
-                  "focus:outline-none text-gray-600 border-0 bg-white cursor-pointer",
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer",
                   { "cursor-not-allowed": availableDensities.length === 0 }
                 )}
-                disabled={availableDensities.length === 0}
               >
-                {availableDensities.map((dens) => (
-                  <option key={dens} value={dens} className='cursor-pointer'>
-                    {dens.replace("gpl", "")}
-                  </option>
-                ))}
-              </select>
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {density.replace("gpl", "")}
+                </div>
+                <div className='flex items-center justify-center w-20 px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>g/L</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isDensityOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
               <div
                 className={cn(
-                  "flex items-center justify-center w-20 ml-1 text-xs",
-                  "text-gray-500 bg-gray-50 border-l border-gray-200"
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isDensityOpen,
+                    "opacity-0 invisible -translate-y-2": !isDensityOpen,
+                  }
                 )}
               >
-                g/L
+                {availableDensities.map((dens) => (
+                  <button
+                    key={dens}
+                    type='button'
+                    onClick={() => {
+                      handleDensityChange({ target: { value: dens } } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsDensityOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      { "bg-gray-50 font-medium": density === dens }
+                    )}
+                  >
+                    {dens.replace("gpl", "")}
+                  </button>
+                ))}
               </div>
             </div>
           </div>

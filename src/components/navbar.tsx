@@ -171,8 +171,11 @@ const Navbar = () => {
                 { hidden: isHome }
               )}
             >
-              <div className='text-xl font-semibold text-slate-700'>
+              <div className='text-xl font-semibold text-slate-700 relative'>
                 CultiVision
+                <div className='absolute top-0 right-[-27px] text-green-800 rounded-sm text-xs italic'>
+                  Beta
+                </div>
               </div>
               <div className='text-xs font-medium italic'>
                 Cultivated Meat Dashboard
