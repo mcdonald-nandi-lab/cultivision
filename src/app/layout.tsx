@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cultivision | Cultivated Meat Insights & Analytics",
+  title: "Cultivated Meat Insights & Analytics - Cultivision",
   description:
     "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance.",
   authors: {
