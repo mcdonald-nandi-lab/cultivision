@@ -1,11 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
-import { defaultProductionCosts } from "@/lib/bioreactors";
+import {
+  defaultProductionCosts,
+  getBioreactorById,
+  getAvailableDoublingTimes,
+  getAvailableDensities,
+  bioreactors,
+} from "@/lib/bioreactors";
 import Title from "@/components/title";
 import cn from "classnames";
-import { trackButtonClick, trackFormSubmission, trackUserBehavior } from "@/lib/analytics";
+import {
+  trackButtonClick,
+  trackFormSubmission,
+  trackUserBehavior,
+} from "@/lib/analytics";
 
 interface ParameterProps {
   id: string;
@@ -32,7 +42,7 @@ const costInputs: ParameterProps[] = [
     step: "1",
     default: defaultProductionCosts.laborCost,
     description: "Labor cost as a percent difference from base labor cost",
-  }
+  },
 ];
 
 const utilitiesInput: ParameterProps[] = [
@@ -71,10 +81,36 @@ const utilitiesInput: ParameterProps[] = [
 ];
 
 const ParameterForm = () => {
-  const { costs, setCosts, isUrlParamProcessed } = useCalculations();
+  const {
+    costs,
+    setCosts,
+    isUrlParamProcessed,
+    activeReactorId,
+    setActiveReactorId,
+    doublingTime,
+    setDoublingTime,
+    density,
+    setDensity,
+  } = useCalculations();
   const [localCosts, setLocalCosts] = useState(costs);
   const [realTimeUpdates, setRealTimeUpdates] = useState(false);
   const [urlParamsSet, setUrlParamsSet] = useState(false);
+
+  const [isReactorOpen, setIsReactorOpen] = useState(false);
+  const [isDoublingOpen, setIsDoublingOpen] = useState(false);
+  const [isDensityOpen, setIsDensityOpen] = useState(false);
+  const reactorRef = useRef<HTMLDivElement>(null);
+  const doublingRef = useRef<HTMLDivElement>(null);
+  const densityRef = useRef<HTMLDivElement>(null);
+
+  const activeReactor = getBioreactorById(activeReactorId);
+  const availableDoublingTimes = activeReactor
+    ? getAvailableDoublingTimes(activeReactor)
+    : [];
+  const availableDensities =
+    activeReactor && doublingTime
+      ? getAvailableDensities(activeReactor, doublingTime)
+      : [];
 
   useEffect(() => {
     if ((isUrlParamProcessed && !urlParamsSet) || !urlParamsSet) {
@@ -82,6 +118,60 @@ const ParameterForm = () => {
       setUrlParamsSet(true);
     }
   }, [costs, isUrlParamProcessed, urlParamsSet]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        reactorRef.current &&
+        !reactorRef.current.contains(e.target as Node)
+      ) {
+        setIsReactorOpen(false);
+      }
+      if (
+        doublingRef.current &&
+        !doublingRef.current.contains(e.target as Node)
+      ) {
+        setIsDoublingOpen(false);
+      }
+      if (
+        densityRef.current &&
+        !densityRef.current.contains(e.target as Node)
+      ) {
+        setIsDensityOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleReactorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setActiveReactorId(e.target.value);
+    trackUserBehavior("bioreactor_selection", {
+      reactor_id: e.target.value,
+      reactor_name:
+        bioreactors.find((r) => r.id === e.target.value)?.name || "Unknown",
+    });
+  };
+
+  const handleDoublingTimeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setDoublingTime(e.target.value);
+    trackUserBehavior("doubling_time_selection", {
+      reactor_id: activeReactorId,
+      doubling_time: e.target.value,
+    });
+  };
+
+  const handleDensityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDensity(e.target.value);
+    trackUserBehavior("density_selection", {
+      reactor_id: activeReactorId,
+      doubling_time: doublingTime,
+      density: e.target.value,
+    });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -109,8 +199,8 @@ const ParameterForm = () => {
     setCosts(defaultCosts);
     trackButtonClick("reset_form", "Reset", {
       form_id: "cost_parameters",
-      button_text: 'hasCustomSettings',
-    });  
+      button_text: "hasCustomSettings",
+    });
   };
 
   const toggleRealTimeUpdates = () => {
@@ -130,9 +220,9 @@ const ParameterForm = () => {
 
   return (
     <div className='h-full flex flex-col gap-y-4'>
-      <div className='flex flex-col gap-y-2 pb-2 border-b border-gray-200'>
+      <div className='flex flex-col gap-y-2 pb-2 mb-1 border-b border-slate-300'>
         <div className='flex flex-col xl:flex-row justify-between items-center gap-2'>
-          <Title title='Cost' />
+          <Title title='Parameters' />
           <div className='flex gap-x-2'>
             <button
               type='button'
@@ -187,7 +277,246 @@ const ParameterForm = () => {
           "pb-4": realTimeUpdates,
         })}
       >
-        <div className='flex-1 space-y-3'>
+        <div className='space-y-3'>
+          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
+            Bioreactor Configuration
+          </div>
+          <div className='form-group' ref={reactorRef}>
+            <label
+              htmlFor='bioreactor'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Type
+            </label>
+            <div className='relative'>
+              <button
+                type='button'
+                onClick={() => setIsReactorOpen(!isReactorOpen)}
+                className={cn(
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer"
+                )}
+              >
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {bioreactors.find((r) => r.id === activeReactorId)?.name ||
+                    "Select"}
+                </div>
+                <div className='flex items-center justify-center w-20 px-2 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>Reactor</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isReactorOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              <div
+                className={cn(
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isReactorOpen,
+                    "opacity-0 invisible -translate-y-2": !isReactorOpen,
+                  }
+                )}
+              >
+                {bioreactors.map((reactor) => (
+                  <button
+                    key={reactor.id}
+                    type='button'
+                    onClick={() => {
+                      handleReactorChange({
+                        target: { value: reactor.id },
+                      } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsReactorOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      {
+                        "bg-gray-50 font-medium":
+                          activeReactorId === reactor.id,
+                      }
+                    )}
+                  >
+                    {reactor.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className='form-group' ref={doublingRef}>
+            <label
+              htmlFor='doublingTime'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Doubling Time
+            </label>
+            <div
+              className={cn("relative", {
+                "opacity-50": availableDoublingTimes.length === 0,
+              })}
+            >
+              <button
+                type='button'
+                onClick={() =>
+                  availableDoublingTimes.length > 0 &&
+                  setIsDoublingOpen(!isDoublingOpen)
+                }
+                disabled={availableDoublingTimes.length === 0}
+                className={cn(
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer",
+                  { "cursor-not-allowed": availableDoublingTimes.length === 0 }
+                )}
+              >
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {doublingTime.replace("h", "")}
+                </div>
+                <div className='flex items-center justify-center w-20 px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>hours</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isDoublingOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              <div
+                className={cn(
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isDoublingOpen,
+                    "opacity-0 invisible -translate-y-2": !isDoublingOpen,
+                  }
+                )}
+              >
+                {availableDoublingTimes.map((time) => (
+                  <button
+                    key={time}
+                    type='button'
+                    onClick={() => {
+                      handleDoublingTimeChange({
+                        target: { value: time }
+                      } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsDoublingOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      { "bg-gray-50 font-medium": doublingTime === time }
+                    )}
+                  >
+                    {time.replace("h", "")}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className='form-group' ref={densityRef}>
+            <label
+              htmlFor='density'
+              className='block mb-1 text-xs font-semibold text-gray-500'
+            >
+              Cell Density
+            </label>
+            <div
+              className={cn("relative", {
+                "opacity-50": availableDensities.length === 0,
+              })}
+            >
+              <button
+                type='button'
+                onClick={() =>
+                  availableDensities.length > 0 &&
+                  setIsDensityOpen(!isDensityOpen)
+                }
+                disabled={availableDensities.length === 0}
+                className={cn(
+                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
+                  "hover:border-gray-400 cursor-pointer",
+                  { "cursor-not-allowed": availableDensities.length === 0 }
+                )}
+              >
+                <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
+                  {density.replace("gpl", "")}
+                </div>
+                <div className='flex items-center justify-center w-20 px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
+                  <span>g/L</span>
+                  <svg
+                    className={cn("h-3 w-3 transition-transform duration-200", {
+                      "rotate-180": isDensityOpen,
+                    })}
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M19 9l-7 7-7-7'
+                    />
+                  </svg>
+                </div>
+              </button>
+
+              <div
+                className={cn(
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  {
+                    "opacity-100 visible translate-y-0": isDensityOpen,
+                    "opacity-0 invisible -translate-y-2": !isDensityOpen,
+                  }
+                )}
+              >
+                {availableDensities.map((dens) => (
+                  <button
+                    key={dens}
+                    type='button'
+                    onClick={() => {
+                      handleDensityChange({ target: { value: dens } } as React.ChangeEvent<HTMLSelectElement>);
+                      setIsDensityOpen(false);
+                    }}
+                    className={cn(
+                      "w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer",
+                      { "bg-gray-50 font-medium": density === dens }
+                    )}
+                  >
+                    {dens.replace("gpl", "")}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='space-y-3'>
+          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
+            Cost Parameters
+          </div>
           {costInputs.map((param) => (
             <div key={param.id} className='form-group'>
               <label
@@ -236,8 +565,7 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-
-        <div className='flex items-center justify-center xl:justify-start text-md xl:text-lg 2xl:text-xl font-semibold text-slate-700 border-b-1 border-gray-300'>
+        <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
           Utilities
         </div>
 

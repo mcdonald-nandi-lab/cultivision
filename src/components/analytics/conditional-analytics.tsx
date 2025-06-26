@@ -6,7 +6,7 @@ import { useCookieConsent } from "@/context/cookie-consent-context";
 export default function ConditionalAnalytics() {
   const { cookieConsent, isConsentProcessed } = useCookieConsent();
 
-  if (isConsentProcessed && cookieConsent === true) {
+  if (isConsentProcessed && cookieConsent) {
     return (
       <GoogleAnalytics
         gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? ""}

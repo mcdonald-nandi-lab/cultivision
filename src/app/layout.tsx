@@ -21,7 +21,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Cultivision | Cultivated Meat Insights & Analytics",
+  title: "Cultivated Meat Insights & Analytics - Cultivision",
   description:
     "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance.",
   authors: {
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Cultivision",
     description: "Track cultivated meat production and sustainability data.",
-    url: "https://aunshx.github.io/cultivision/",
+    url: "https://mcdonald-nandi-lab.github.io/cultivision/",
     siteName: "Cultivision",
     images: [
       {

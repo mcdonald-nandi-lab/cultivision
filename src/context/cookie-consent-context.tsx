@@ -15,7 +15,6 @@ interface CookieConsentContextType {
   showConsentBanner: boolean;
   setShowConsentBanner: (show: boolean) => void;
   handleAccept: () => void;
-  handleReject: () => void;
   isConsentProcessed: boolean;
 }
 
@@ -36,7 +35,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
         setShowConsentBanner(true);
         setCookieConsent(null);
       } else {
-        setCookieConsent(storedConsent === "true");
+        setCookieConsent(true);
         setShowConsentBanner(false);
       }
 
@@ -48,14 +47,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("cookieConsent", "true");
     setCookieConsent(true);
     setShowConsentBanner(false);
-    trackUserBehavior("consent_given");
-  };
-
-  const handleReject = () => {
-    localStorage.setItem("cookieConsent", "false");
-    setCookieConsent(false);
-    setShowConsentBanner(false);
-    trackUserBehavior("consent_not_given");
+    trackUserBehavior("cookie_consent_accepted");
   };
 
   return (
@@ -66,7 +58,6 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
         showConsentBanner,
         setShowConsentBanner,
         handleAccept,
-        handleReject,
         isConsentProcessed,
       }}
     >

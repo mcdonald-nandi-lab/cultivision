@@ -130,10 +130,10 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
     };
   }, [expenses]);
 
-  const totalExpenses = Object.values(expenses.chartData || {}).reduce(
-    (sum, value) => sum + value,
-    0
-  );
+  // const totalExpenses = Object.values(expenses.chartData || {}).reduce(
+  //   (sum, value) => sum + value,
+  //   0
+  // );
 
   return (
     <div className='h-full flex flex-col pb-2'>
@@ -160,10 +160,10 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
-
+{/* 
       <div className='text-center text-sm mt-2 text-slate-500'>
         Total Operating Expenses: {formatCurrency(totalExpenses)}
-      </div>
+      </div> */}
     </div>
   );
 };
