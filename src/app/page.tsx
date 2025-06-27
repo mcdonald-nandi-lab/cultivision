@@ -6,6 +6,7 @@ import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hour
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
 import ParameterForm from "@/components/bioreactor/form";
 import ImageModal from "@/components/bioreactor/image-modal";
+import SingleValueCard from "@/components/bioreactor/sv-card";
 import ExpenseTable from "@/components/bioreactor/tables/cost-breakdown";
 import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
 import MetricsTable from "@/components/bioreactor/tables/summary";
@@ -19,6 +20,31 @@ import { useEffect, useState } from "react";
 import Loading from "./loading";
 
 const URL_COPIED_EVENT = "urlCopied";
+
+type ExpenseKeys =
+  | "cogsWithDepreciation"
+  | "cogsWithoutDepreciation"
+  | "facilitiesNeeded"
+  | "operatingExpenses";
+
+const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
+  cogsWithDepreciation: {
+    title: "COGS with depreciation",
+    unit: "$/kg",
+  },
+  cogsWithoutDepreciation: {
+    title: "COGS without depreciation",
+    unit: "$/kg",
+  },
+  facilitiesNeeded: {
+    title: "Facilities Needed for 100M kg/yr",
+    unit: "",
+  },
+  operatingExpenses: {
+    title: "Operating Expenses",
+    unit: "million $/yr",
+  },
+};
 
 const Home = () => {
   const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
@@ -62,9 +88,7 @@ const Home = () => {
 
   return (
     <main className='min-h-screen'>
-      <div
-        className='flex flex-col lg:flex-row h-full pt-18 gap-2'
-      >
+      <div className='flex flex-col lg:flex-row h-full pt-18 gap-2'>
         <div
           className='w-full lg:w-1/4 pt-6 px-0 lg:p lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-16 flex flex-col md:items-center md:justify-start gap-6 mr-2'
           aria-label='Input Form and Bioreactor View'
@@ -104,6 +128,17 @@ const Home = () => {
               <Container>
                 <ExpenseTable expenses={expenses} />
               </Container>
+            </div>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+              {Object.entries(svcValues).map(([key, value]) => (
+                <Container key={key}>
+                  <SingleValueCard
+                    title={value.title}
+                    unit={value.unit}
+                    value={expenses[key as ExpenseKeys]}
+                  />
+                </Container>
+              ))}
             </div>
 
             <div className='grid grid-cols-1 gap-4'>
