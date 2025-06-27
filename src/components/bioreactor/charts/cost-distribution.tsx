@@ -27,14 +27,15 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
 
   const { downloadChart } = useChartDownload();
 
-  const formatCurrency = (value: number, digits: number = 0): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: digits,
-      maximumFractionDigits: digits,
-    }).format(value);
-  };
+  // TODO: Check what needs to be done. DO we keep this or not.
+  // const formatCurrency = (value: number, digits: number = 0): string => {
+  //   return new Intl.NumberFormat("en-US", {
+  //     style: "currency",
+  //     currency: "USD",
+  //     minimumFractionDigits: digits,
+  //     maximumFractionDigits: digits,
+  //   }).format(value);
+  // };
 
   const calculatePercentages = (chartData: Record<string, number>) => {
     const total = Object.values(chartData).reduce(
@@ -146,11 +147,11 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
             filename='cost-distribution-chart.png'
           />
         </div>
-        <div className='text-right'>
+        {/* <div className='text-right'>
           <div className='text-sm font-semibold text-slate-700'>
             COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div

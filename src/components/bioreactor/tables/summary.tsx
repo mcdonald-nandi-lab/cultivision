@@ -9,12 +9,11 @@ interface SummaryTableProps {
   expenses: CalculatedExpenses;
 }
 
-const formatNumber = (num: number, fixed=1): string => {
+export const formatNumber = (num: number, fixed=1): string => {
   return num.toLocaleString(undefined, { maximumFractionDigits: fixed });
 };
 
 const SummaryTable = ({ expenses }: SummaryTableProps) => {
-
 
   const metrics = [
     {
