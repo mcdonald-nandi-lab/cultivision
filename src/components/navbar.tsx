@@ -30,28 +30,33 @@ const Navbar = () => {
   const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
 
   const isHome = pathname === "/";
+  const isAccessPage = pathname === '/access';
+  
+    useEffect(() => {
+      const handleClickOutside = (e: MouseEvent) => {
+        const target = e.target as HTMLElement | null;
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement | null;
+        if (!target) return;
 
-      if (!target) return;
+        if (
+          !target.closest(".sidebar") &&
+          !target.closest(".hamburger-button")
+        ) {
+          setIsSidebarOpen(false);
+        }
 
-      if (!target.closest(".sidebar") && !target.closest(".hamburger-button")) {
-        setIsSidebarOpen(false);
-      }
+        if (
+          !target.closest(".options-dropdown") &&
+          !target.closest(".options-button")
+        ) {
+          setIsOptionsOpen(false);
+        }
+      };
 
-      if (
-        !target.closest(".options-dropdown") &&
-        !target.closest(".options-button")
-      ) {
-        setIsOptionsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+      document.addEventListener("mousedown", handleClickOutside);
+      return () =>
+        document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
   useEffect(() => {
     if (isCopied) {
@@ -154,7 +159,7 @@ const Navbar = () => {
         aria-label='Main Navigation'
       >
         <div className='container mx-auto flex items-center justify-between px-4'>
-          <Link href='/' className='flex items-center justify-start gap-x-1 '>
+          <Link href={isAccessPage ? '' : '/'} className='flex items-center justify-start gap-x-1'>
             <Image
               src={`${
                 process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -372,7 +377,7 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
-              {!isHome && (
+              {(!isHome && !isAccessPage) && (
                 <Link
                   href={"/"}
                   className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
@@ -437,7 +442,8 @@ const Navbar = () => {
           <div
             className={cn("flex flex-col space-y-8", { "space-y-4": isHome })}
           >
-            <button
+            {(isHome && !isAccessPage) && (
+              <button
               className={cn(
                 "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
               )}
@@ -464,6 +470,7 @@ const Navbar = () => {
               </svg>
               Diagram
             </button>
+            )}
             {isHome && (
               <button
                 onClick={handleSaveSettings}
@@ -530,7 +537,7 @@ const Navbar = () => {
                 <span>Download CSV</span>
               </button>
             )}
-            {!isHome && (
+            {(!isHome && !isAccessPage) && (
               <Link
                 href={"/"}
                 className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
