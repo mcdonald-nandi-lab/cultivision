@@ -107,12 +107,12 @@ const Access = () => {
             link.
           </div>
           <div className='text-gray-700'>
-            Please click below to complete the contact form and get a new link.
+            Please click below to complete the contact form and get a new access link.
           </div>
           <a
             href={CULTIVISION_LAB_PAGE}
             rel='noreferrer nofollow'
-            className='flex items-center space-x-1 md:space-x-2 border-2 border-gray-500 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-600 hover:border-green-500'
+            className='flex items-center space-x-1 md:space-x-2 border-2 border-gray-500 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-600 hover:border-green-500 hover:text-green-500'
           >
             Get New Link
           </a>
