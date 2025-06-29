@@ -1,7 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
+import { useRouter } from "next/navigation";
 import { WORDPRESS_API_URL } from "@/lib/constants";
 
 interface AccessContextType {
@@ -31,7 +37,6 @@ export function AccessControlProvider({
   const [isLoading, setIsLoading] = useState(true);
   const [tokenInfo, setTokenInfo] = useState<TokenInfo | null>(null);
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const verifyToken = async (
     token: string
@@ -70,10 +75,16 @@ export function AccessControlProvider({
     }
   };
 
-  const checkAccess = async () => {
+  const checkAccess = useCallback(async () => {
     setIsLoading(true);
 
-    const urlToken = searchParams.get("token");
+    if (typeof window === "undefined") {
+      setIsLoading(false);
+      return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlToken = urlParams.get("token");
 
     if (urlToken) {
       const { valid, info } = await verifyToken(urlToken);
@@ -82,6 +93,7 @@ export function AccessControlProvider({
         localStorage.setItem("cultivision_access_token", urlToken);
         localStorage.setItem("cultivision_token_info", JSON.stringify(info));
 
+        // Clean URL
         const newUrl = new URL(window.location.href);
         newUrl.searchParams.delete("token");
         window.history.replaceState({}, "", newUrl.toString());
@@ -92,7 +104,6 @@ export function AccessControlProvider({
         return;
       }
     }
-
     const storedToken = localStorage.getItem("cultivision_access_token");
 
     if (storedToken) {
@@ -113,15 +124,15 @@ export function AccessControlProvider({
     }
 
     setIsLoading(false);
-  };
+  }, []);
 
-  const clearAccess = () => {
+  const clearAccess = useCallback(() => {
     localStorage.removeItem("cultivision_access_token");
     localStorage.removeItem("cultivision_token_info");
     setIsValidAccess(false);
     setTokenInfo(null);
     router.push("/access");
-  };
+  }, [router]);
 
   useEffect(() => {
     if (tokenInfo && !tokenInfo.ismaster) {
@@ -129,15 +140,29 @@ export function AccessControlProvider({
         if (Date.now() > tokenInfo.expires) {
           clearAccess();
         }
-      }, 3600000); // Check every minute
+      }, 3600000); // Check every hour
 
       return () => clearInterval(checkExpiration);
     }
-  }, [tokenInfo]);
+  }, [clearAccess, tokenInfo]);
 
   useEffect(() => {
     checkAccess();
-  }, [searchParams]);
+  }, [checkAccess]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const handleUrlChange = () => {
+      checkAccess();
+    };
+
+    window.addEventListener("popstate", handleUrlChange);
+
+    return () => {
+      window.removeEventListener("popstate", handleUrlChange);
+    };
+  }, [checkAccess]);
 
   return (
     <AccessContext.Provider
@@ -162,4 +187,4 @@ export const useAccessControl = () => {
     );
   }
   return context;
-}; 
+};
