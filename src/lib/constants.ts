@@ -11,6 +11,8 @@ export const METADATA_IMG: string =
 
 export const WORDPRESS_API_URL:string = "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/verify-token"
 
+export const AUTHOR_LINK: string = 'https://aun.sh'
+
 export const BRAND_COLORS = {
   media: "#659C46",         // Brand-rich green
   rawMaterials: "#8CBF63",  // Olive-sage
