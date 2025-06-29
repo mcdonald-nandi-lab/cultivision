@@ -2,13 +2,14 @@ import ConditionalAnalytics from "@/components/analytics/conditional-analytics";
 import CookieConsent from "@/components/analytics/cookie-constent";
 import Navbar from "@/components/navbar";
 import { CalculationProvider } from "@/context/calculation-context";
-import { METADATA_IMG } from "@/lib/constants";
+import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CookieConsentProvider } from "@/context/cookie-consent-context";
 import ComposeProviders from "@/context/compose-providers";
 import { ModalProvider } from "@/context/modal-context";
+import { AccessControlProvider } from "@/context/access-control-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
   description:
     "Explore real-time data and insights on cultivated meat production, sustainability metrics, and bioreactor performance.",
   authors: {
-    url: "https://aunsh.dev",
+    url: AUTHOR_LINK,
     name: "Aunsh Bandivadekar",
   },
   keywords: [
@@ -61,7 +62,12 @@ export const metadata: Metadata = {
   },
 };
 
-const providers = [CookieConsentProvider, CalculationProvider, ModalProvider];
+const providers = [
+  CookieConsentProvider,
+  CalculationProvider,
+  ModalProvider,
+  AccessControlProvider,
+];
 
 const RootLayout = ({
   children,
