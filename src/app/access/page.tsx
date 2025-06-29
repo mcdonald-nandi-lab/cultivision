@@ -1,6 +1,7 @@
 'use client'
 
 import { useAccessControl } from "@/context/access-control-context";
+import { CULTIVISION_LAB_PAGE } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
@@ -102,13 +103,14 @@ const Access = () => {
           <OopsIcon size={120} />
           <div className='text-6xl text-gray-700 font-bold'>OOPS!</div>
           <div className='text-xl text-gray-700'>
-            It looks like you are trying to access Cultivision without a valid link.
+            It looks like you are trying to access Cultivision without a valid
+            link.
           </div>
           <div className='text-gray-700'>
             Please click below to complete the contact form and get a new link.
           </div>
           <a
-            href='#'
+            href={CULTIVISION_LAB_PAGE}
             rel='noreferrer nofollow'
             className='flex items-center space-x-1 md:space-x-2 border-2 border-gray-500 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-600 hover:border-green-500'
           >

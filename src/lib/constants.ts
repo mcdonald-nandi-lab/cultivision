@@ -11,6 +11,9 @@ export const METADATA_IMG: string =
 
 export const WORDPRESS_API_URL:string = "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/verify-token"
 
+export const CULTIVISION_LAB_PAGE: string =
+  "https://mcdonald-nandi.ech.ucdavis.edu/tools/cultivated-meat-dashboard/";
+
 export const AUTHOR_LINK: string = 'https://aun.sh'
 
 export const BRAND_COLORS = {
