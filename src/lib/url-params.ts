@@ -1,10 +1,6 @@
 import { ProductionCosts } from "@/types";
 import { defaultProductionCosts } from "@/lib/bioreactors";
 
-/**
- * Encodes production costs into a URL-safe string
- * Only includes parameters that differ from default values
- */
 export function encodeProductionCosts(costs: ProductionCosts): string {
   const orderedKeys = [
     "mediaCost",
@@ -46,13 +42,9 @@ export function decodeProductionCosts(encoded: string): ProductionCosts | null {
     if (!encoded) {
       return { ...defaultProductionCosts };
     }
-
     const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
-
     const jsonStr = atob(base64);
-
     const changedParams = JSON.parse(jsonStr);
-
     const costs = { ...defaultProductionCosts };
 
     Object.entries(changedParams).forEach(([key, value]) => {
@@ -73,7 +65,8 @@ export function createShareableUrl(
   costs: ProductionCosts,
   bioreactorId: string,
   doublingTime: string,
-  density: string
+  density: string,
+  includeToken: boolean = false
 ): string {
   const encoded = encodeProductionCosts(costs);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
@@ -85,6 +78,13 @@ export function createShareableUrl(
 
   if (encoded) {
     params.set("p", encoded);
+  }
+
+  if (includeToken) {
+    const token = localStorage.getItem("cultivision_access_token");
+    if (token) {
+      params.set("token", token);
+    }
   }
 
   return `${window.location.origin}${basePath}?${params.toString()}`;
