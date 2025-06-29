@@ -9,6 +9,8 @@ export const UCD_EXT_LINK: string = 'https://ucdavis.edu';
 export const METADATA_IMG: string =
   "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto/avrbdmte5govwwrrwz8n";
 
+export const WORDPRESS_API_URL:string = "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/verify-token"
+
 export const BRAND_COLORS = {
   media: "#659C46",         // Brand-rich green
   rawMaterials: "#8CBF63",  // Olive-sage

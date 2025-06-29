@@ -9,6 +9,7 @@ import "./globals.css";
 import { CookieConsentProvider } from "@/context/cookie-consent-context";
 import ComposeProviders from "@/context/compose-providers";
 import { ModalProvider } from "@/context/modal-context";
+import { AccessControlProvider } from "@/context/access-control-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -61,7 +62,12 @@ export const metadata: Metadata = {
   },
 };
 
-const providers = [CookieConsentProvider, CalculationProvider, ModalProvider];
+const providers = [
+  CookieConsentProvider,
+  CalculationProvider,
+  ModalProvider,
+  AccessControlProvider,
+];
 
 const RootLayout = ({
   children,

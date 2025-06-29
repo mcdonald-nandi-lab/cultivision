@@ -1,4 +1,8 @@
-import React from "react";
+'use client'
+
+import { useAccessControl } from "@/context/access-control-context";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 const OopsIcon = ({ size = 120, className = "" }) => {
   return (
@@ -81,8 +85,16 @@ const OopsIcon = ({ size = 120, className = "" }) => {
   );
 };
 
-// Example usage in your Access component
 const Access = () => {
+    const { isValidAccess } = useAccessControl();
+    const router = useRouter();
+
+    useEffect(() => {
+      if (isValidAccess) {
+        router.push("/");
+      }
+    }, [isValidAccess, router]);
+
   return (
     <main className='min-h-screen min-w-screen flex flex-col items-center justify-center'>
       <div>
@@ -90,7 +102,7 @@ const Access = () => {
           <OopsIcon size={120} />
           <div className='text-6xl text-gray-700 font-bold'>OOPS!</div>
           <div className='text-xl text-gray-700'>
-            It looks like your Cultivision access link is no longer valid.
+            It looks like you are trying to access Cultivision without a valid link.
           </div>
           <div className='text-gray-700'>
             Please click below to complete the contact form and get a new link.
