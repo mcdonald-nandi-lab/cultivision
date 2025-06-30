@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import Icon from "./icon";
 import { useModal } from "@/context/modal-context";
 import { useAccessControl } from "@/context/access-control-context";
+import { useToast } from "@/context/toast-context";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -24,6 +25,7 @@ const Navbar = () => {
   const { openModal } = useModal();
   const { activeReactorId, expenses, costs, doublingTime, density } =
     useCalculations();
+  const { activateToast } = useToast();
   const [includeTokenInShare, setIncludeTokenInShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const {tokenInfo} = useAccessControl();
@@ -131,6 +133,7 @@ const Navbar = () => {
 
       setShowShareModal(false);
       setIncludeTokenInShare(false);
+      activateToast("Input URL copied to clipboard!", "success");
 
       setTimeout(() => setIsCopied(false), 4000);
     } catch (err) {
@@ -156,9 +159,11 @@ const Navbar = () => {
         });
         setShowShareModal(false);
         setIncludeTokenInShare(false);
+        activateToast("Input URL copied to clipboard!", "success");
       } catch (err) {
         console.error("Fallback: Failed to copy URL: ", err);
         alert("Please copy this URL manually: " + shareableUrl);
+        activateToast("Failed to copy URL", "error");
       }
 
       document.body.removeChild(textarea);

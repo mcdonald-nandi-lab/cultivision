@@ -1,15 +1,8 @@
 "use client";
 
+import { useToast } from "@/context/toast-context";
 import cn from "classnames";
-import { JSX, useEffect, useState } from "react";
-
-interface ToastProps {
-  message: string;
-  type: "success" | "error" | "info";
-  duration?: number;
-  show: boolean;
-  onClose: () => void;
-}
+import { JSX } from "react";
 
 type NotificationType = "success" | "error" | "info";
 
@@ -51,45 +44,31 @@ const typeToIcon: IconMapping = {
   ),
 };
 
-const Toast = ({ message, type='info', duration = 4000, show, onClose }: ToastProps) => {
-  const [isVisible, setIsVisible] = useState(false);
+const Toast = () => {
 
-  useEffect(() => {
-    if (show) {
-      setIsVisible(true);
-      const timer = setTimeout(() => {
-        setIsVisible(false);
-        setTimeout(onClose, 300);
-      }, duration);
-
-      return () => clearTimeout(timer);
-    }
-  }, [show, duration, onClose]);
+  const { toastMessage, toastType, showToast, deactivateToast } = useToast();
 
   return (
     <div
       className={cn(
         "fixed bottom-4 right-4 z-50 transform transition-all duration-300",
         {
-          "translate-y-0 opacity-100": isVisible,
+          "translate-y-0 opacity-100": showToast,
         },
-        { "translate-y-12 opacity-0": !isVisible }
+        { "translate-y-12 opacity-0": !showToast }
       )}
       role='status'
       aria-live='polite'
     >
       <div
-        className={`flex items-center p-4 rounded-lg shadow-lg ${typeToBgColor[type]}`}
+        className={`flex items-center p-4 rounded-lg shadow-lg ${typeToBgColor[toastType]}`}
       >
-        <div className='flex-shrink-0'>{typeToIcon[type]}</div>
-        <div className='ml-3 text-white font-medium'>{message}</div>
+        <div className='flex-shrink-0'>{typeToIcon[toastType]}</div>
+        <div className='ml-3 text-white font-medium'>{toastMessage}</div>
         <button
           type='button'
           className='ml-5 bg-transparent text-white focus:outline-none cursor-pointer'
-          onClick={() => {
-            setIsVisible(false);
-            setTimeout(onClose, 300);
-          }}
+          onClick={deactivateToast}
         >
           <svg className='h-4 w-4' fill='currentColor' viewBox='0 0 20 20'>
             <path
