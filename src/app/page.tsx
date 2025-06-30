@@ -13,14 +13,13 @@ import MetricsTable from "@/components/bioreactor/tables/summary";
 import Container from "@/components/container";
 import Footer from "@/components/footer";
 import ProtectedRoute from "@/components/protected-route";
-import Toast from "@/components/toast";
+import { useAccessControl } from "@/context/access-control-context";
 import { useCalculations } from "@/context/calculation-context";
 import { useModal } from "@/context/modal-context";
+import { useToast } from "@/context/toast-context";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Loading from "./loading";
-
-const URL_COPIED_EVENT = "urlCopied";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
@@ -49,39 +48,23 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
 
 const Home = () => {
   const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
+  const { isLoading } =
+      useAccessControl();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState<"success" | "error" | "info">(
-    "success"
-  );
+  const { activateToast } = useToast();
 
   usePageViewTracking();
 
   useEffect(() => {
-    const handleUrlCopied = () => {
-      setToastMessage("Input URL copied to clipboard!");
-      setToastType("success");
-      setShowToast(true);
-    };
-
-    window.addEventListener(URL_COPIED_EVENT, handleUrlCopied);
-
-    return () => {
-      window.removeEventListener(URL_COPIED_EVENT, handleUrlCopied);
-    };
-  }, []);
-
-  useEffect(() => {
     if (
       isUrlParamProcessed &&
-      new URLSearchParams(window.location.search).has("p")
+      new URLSearchParams(window.location.search).has("r") &&
+      !isLoading
     ) {
-      setToastMessage("Dashboard loaded with saved inputs!");
-      setToastType("info");
-      setShowToast(true);
+      activateToast("Dashboard loaded with saved inputs!", "info");
     }
-  }, [isUrlParamProcessed]);
+  }, [isUrlParamProcessed, isLoading]);
+
 
   if (!expenses) {
     return <Loading />;
@@ -178,14 +161,6 @@ const Home = () => {
           {isModalOpen && (
             <ImageModal bioreactorId={activeReactorId} onClose={closeModal} />
           )}
-
-          <Toast
-            message={toastMessage}
-            type={toastType}
-            show={showToast}
-            onClose={() => setShowToast(false)}
-            duration={3000}
-          />
         </main>
       </ProtectedRoute>
     );

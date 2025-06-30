@@ -10,6 +10,7 @@ import { CookieConsentProvider } from "@/context/cookie-consent-context";
 import ComposeProviders from "@/context/compose-providers";
 import { ModalProvider } from "@/context/modal-context";
 import { AccessControlProvider } from "@/context/access-control-context";
+import { ToastProvider } from "@/context/toast-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +68,7 @@ const providers = [
   CalculationProvider,
   ModalProvider,
   AccessControlProvider,
+  ToastProvider,
 ];
 
 const RootLayout = ({
