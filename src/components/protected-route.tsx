@@ -14,9 +14,8 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({
   children,
   fallback,
-  showStatus = true,
 }: ProtectedRouteProps) {
-  const { isValidAccess, isLoading, tokenInfo } =
+  const { isValidAccess, isLoading } =
     useAccessControl();
   const router = useRouter();
 
@@ -26,26 +25,12 @@ export default function ProtectedRoute({
     }
   }, [isValidAccess, isLoading, router]);
 
-  if (isLoading) {
-    return (
-      <Loading />
-    );
-  }
+  if (isLoading) return <Loading />;
 
-  if (!isValidAccess) {
-    return fallback || null;
-  }
+  if (!isValidAccess) return fallback || null;
 
   return (
     <>
-      {showStatus && tokenInfo && tokenInfo.ismaster && (
-        <div className='fixed top-20 right-4 bg-white shadow-md rounded-lg p-3 z-50 border border-gray-200'>
-          <div className='flex items-center gap-2'>
-            <div className={`w-2 h-2 rounded-full bg-blue-500`}></div>
-            <span className='text-sm text-gray-600'>God Mode</span>
-          </div>
-        </div>
-      )}
       {children}
     </>
   );
