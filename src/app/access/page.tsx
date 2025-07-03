@@ -44,7 +44,7 @@ const Access = () => {
     }, [isValidAccess, router]);
 
   return (
-    <main className='min-h-screen bg-gradient-to-br from-green-50 via-white to-green-200 flex items-center justify-center p-4 pt-28'>
+    <main className='min-h-screen flex items-center justify-center p-4 pt-28'>
       <div className='w-full max-w-4xl'>
         <div className='text-center mb-8'>
           <h1 className='text-5xl md:text-6xl text-gray-800 font-bold mb-6 tracking-tight'>
@@ -56,7 +56,7 @@ const Access = () => {
           </p>
         </div>
 
-        <div className='bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8'>
+        <div className='bg-white rounded-2xl shadow-lg p-8 md:p-12 mb-8'>
           <div className='text-center mb-10'>
             <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
               🔐 Secure Access Required
