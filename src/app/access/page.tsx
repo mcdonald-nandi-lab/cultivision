@@ -5,86 +5,33 @@ import { CULTIVISION_LAB_PAGE } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const OopsIcon = ({ size = 120, className = "" }) => {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox='0 0 120 120'
-      fill='none'
-      xmlns='http://www.w3.org/2000/svg'
-      className={className}
+const ProcessStep = ({
+  number,
+  title,
+  description,
+}: {
+  number: string;
+  title: string;
+  description: string;
+}) => (
+  <div
+    className={`flex items-start space-x-4 p-4 rounded-lg transition-all border border-1 border-green-700`}
+  >
+    <div
+      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white bg-green-700`}
     >
-      <circle
-        cx='60'
-        cy='60'
-        r='55'
-        fill='#E8F5E5'
-        stroke='#3F6E33'
-        strokeWidth='2'
-        strokeDasharray='5 5'
-        className='animate-pulse'
-      />
-      <g className='animate-bounce' style={{ animationDuration: "2s" }}>
-        <path
-          d='M25 50 Q20 50 20 55 Q20 60 25 60 L35 60 Q40 60 40 55 Q40 50 35 50 Z'
-          fill='none'
-          stroke='#2D5226'
-          strokeWidth='3'
-          strokeLinecap='round'
-        />
-        <path
-          d='M35 55 L45 55'
-          stroke='#2D5226'
-          strokeWidth='3'
-          strokeLinecap='round'
-          strokeDasharray='2 2'
-          opacity='0.5'
-        />
-
-        <path
-          d='M85 50 Q90 50 90 55 Q90 60 85 60 L75 60 Q70 60 70 55 Q70 50 75 50 Z'
-          fill='none'
-          stroke='#2D5226'
-          strokeWidth='3'
-          strokeLinecap='round'
-        />
-        <path
-          d='M75 55 L65 55'
-          stroke='#2D5226'
-          strokeWidth='3'
-          strokeLinecap='round'
-          strokeDasharray='2 2'
-          opacity='0.5'
-        />
-      </g>
-      <g>
-        <circle cx='45' cy='65' r='3' fill='#1F3A19' />
-        <circle cx='75' cy='65' r='3' fill='#1F3A19' />
-        <ellipse
-          cx='60'
-          cy='80'
-          rx='8'
-          ry='10'
-          fill='#1F3A19'
-          className='animate-pulse'
-          style={{ animationDuration: "1.5s" }}
-        />
-      </g>
-      <g
-        className='animate-bounce'
-        style={{ animationDelay: "0.5s", animationDuration: "2s" }}
+      {number}
+    </div>
+    <div>
+      <h3
+        className={`font-semibold text-green-700 `}
       >
-        <text x='15' y='30' fontSize='16' fill='#3F6E33' fontWeight='bold'>
-          !
-        </text>
-        <text x='95' y='30' fontSize='16' fill='#3F6E33' fontWeight='bold'>
-          !
-        </text>
-      </g>
-    </svg>
-  );
-};
+        {title}
+      </h3>
+      <p className='text-sm text-gray-600 mt-1'>{description}</p>
+    </div>
+  </div>
+);
 
 const Access = () => {
     const { isValidAccess } = useAccessControl();
@@ -97,25 +44,75 @@ const Access = () => {
     }, [isValidAccess, router]);
 
   return (
-    <main className='min-h-screen min-w-screen flex flex-col items-center justify-center'>
-      <div>
-        <div className='flex flex-col items-center justify-center gap-8 p-4 text-center'>
-          <OopsIcon size={120} />
-          <div className='text-6xl text-gray-700 font-bold'>OOPS!</div>
-          <div className='text-xl text-gray-700'>
-            It looks like you are trying to access Cultivision without a valid
-            link.
+    <main className='min-h-screen bg-gradient-to-br from-green-50 via-white to-green-200 flex items-center justify-center p-4 pt-28'>
+      <div className='w-full max-w-4xl'>
+        <div className='text-center mb-8'>
+          <h1 className='text-5xl md:text-6xl text-gray-800 font-bold mb-6 tracking-tight'>
+            Welcome to <span className='text-[#41932B]'>CultiVision</span>
+          </h1>
+
+          <p className='text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed'>
+            Your gateway to Cultivated Meat Analytics
+          </p>
+        </div>
+
+        <div className='bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-8'>
+          <div className='text-center mb-10'>
+            <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
+              🔐 Secure Access Required
+            </h2>
+            <p className='text-gray-600 max-w-2xl mx-auto'>
+              To maintain security and ensure optimal performance, CultiVision
+              requires a personalized access link. This system helps us provide
+              the best experience for authorized researchers and industry
+              professionals.
+            </p>
           </div>
-          <div className='text-gray-700'>
-            Please click below to complete the contact form and get a new access link.
+
+          <div className='grid md:grid-cols-3 gap-6 mb-10'>
+            <ProcessStep
+              number='1'
+              title='Click Below'
+              description='Visit our lab website to get started'
+            />
+            <ProcessStep
+              number='2'
+              title='Complete Form'
+              description='Fill out our Request Access form with your details'
+            />
+            <ProcessStep
+              number='3'
+              title='Receive Link'
+              description='Get your secure access link via email'
+            />
           </div>
-          <a
-            href={CULTIVISION_LAB_PAGE}
-            rel='noreferrer nofollow'
-            className='flex items-center space-x-1 md:space-x-2 border-2 border-gray-500 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-600 hover:border-green-500 hover:text-green-500'
-          >
-            Get New Link
-          </a>
+
+          <div className='text-center'>
+            <a
+              href={CULTIVISION_LAB_PAGE}
+              rel='noreferrer nofollow'
+              className='inline-flex items-center space-x-3 bg-white text-green-700 hover:text-white bg-gradient-to-r hover:bg-[#41932B] font-semibold px-8 py-4 rounded-xl transition-all duration-300 border border-2 border-green-700 hover:border-[#41932B] transform hover:-translate-y-1 text-lg'
+            >
+              <span>Request Access Link</span>
+              <svg
+                className='w-5 h-5'
+                fill='none'
+                stroke='currentColor'
+                viewBox='0 0 24 24'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  strokeWidth={2}
+                  d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
+                />
+              </svg>
+            </a>
+
+            <p className='text-sm text-gray-500 mt-4'>
+              This will open our lab website in a new tab
+            </p>
+          </div>
         </div>
       </div>
     </main>
