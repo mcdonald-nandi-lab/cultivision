@@ -14,7 +14,7 @@ const SingleValueCard = ({ title, value, unit }: SingleValueCardProps) => {
         <div className='text-2xl font-bold text-gray-600'>
           {formatNumber(value, 2)}
         </div>
-        <div className='text-sm mb-2'>{unit}</div>
+        <div className='text-sm mb-2 text-gray-400'>{unit}</div>
       </div>
       <div className='text-sm text-center'>{title}</div>
     </div>
