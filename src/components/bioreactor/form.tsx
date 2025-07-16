@@ -277,8 +277,8 @@ const ParameterForm = () => {
         })}
       >
         <div className='space-y-3'>
-          <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
-            Bioreactor Configuration
+          <div className='flex items-center justify-center text-sm font-semibold text-slate-700 mb-[-0.2em]'>
+            &#183; Bioreactor Configuration &#183;
           </div>
           <div className='form-group' ref={reactorRef}>
             <label
@@ -515,8 +515,8 @@ const ParameterForm = () => {
         </div>
 
         <div className='space-y-3'>
-          <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
-            Cost Parameters
+          <div className='flex items-center justify-center text-sm font-semibold text-slate-700 mb-[-0.2em]'>
+            &#183; Cost Parameters &#183;
           </div>
           {costInputs.map((param) => (
             <div key={param.id} className='form-group'>
@@ -566,8 +566,8 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-        <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
-          Utilities
+        <div className='flex items-center justify-center text-sm font-semibold text-slate-700 mb-[-0.5em]'>
+          &#183; Utilities &#183;
         </div>
 
         <div className='flex-1 space-y-3'>
