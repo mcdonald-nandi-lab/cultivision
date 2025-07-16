@@ -3,6 +3,7 @@ export interface BasicObject {
 }
 
 export interface BioreactorData {
+  image: string,
   annualProduction: number;
   mediaVolume: number;
   otherMaterialsCost: number;
@@ -25,7 +26,6 @@ export interface BioreactorData {
 export interface Bioreactor {
   id: string;
   name: string;
-  image: string;
   reactors: {
     [timeKey: string]: {
       [densityKey: string]: Partial<BioreactorData>;

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { getBioreactorById } from "@/lib/bioreactors";
 import Title from '@/components/title'
+import { useCalculations } from "@/context/calculation-context";
 
 interface FlowDiagramProps {
   bioreactorId: string;
@@ -10,10 +11,15 @@ interface FlowDiagramProps {
 }
 
 const FlowDiagram = ({
-  bioreactorId,
   showTitle = true,
 }: FlowDiagramProps) => {
-  const bioreactor = getBioreactorById(bioreactorId);
+  const {
+        activeReactorId,
+        doublingTime,
+        density,
+  } = useCalculations();
+
+  const bioreactor = getBioreactorById(activeReactorId);
 
   if (!bioreactor) {
     return <div className='text-center p-4'>Bioreactor not found</div>;
@@ -28,7 +34,9 @@ const FlowDiagram = ({
       )}
       <div className='relative w-full h-96 lg:h-36'>
         <Image
-          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${bioreactor.image}`}
+          src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+            bioreactor.reactors[doublingTime][density].image
+          }`}
           alt={`${bioreactor.name} Flow Diagram`}
           fill
           priority
