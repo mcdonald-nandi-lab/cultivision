@@ -277,7 +277,7 @@ const ParameterForm = () => {
         })}
       >
         <div className='space-y-3'>
-          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
+          <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
             Bioreactor Configuration
           </div>
           <div className='form-group' ref={reactorRef}>
@@ -418,7 +418,7 @@ const ParameterForm = () => {
                     type='button'
                     onClick={() => {
                       handleDoublingTimeChange({
-                        target: { value: time }
+                        target: { value: time },
                       } as React.ChangeEvent<HTMLSelectElement>);
                       setIsDoublingOpen(false);
                     }}
@@ -496,7 +496,9 @@ const ParameterForm = () => {
                     key={dens}
                     type='button'
                     onClick={() => {
-                      handleDensityChange({ target: { value: dens } } as React.ChangeEvent<HTMLSelectElement>);
+                      handleDensityChange({
+                        target: { value: dens },
+                      } as React.ChangeEvent<HTMLSelectElement>);
                       setIsDensityOpen(false);
                     }}
                     className={cn(
@@ -513,7 +515,7 @@ const ParameterForm = () => {
         </div>
 
         <div className='space-y-3'>
-          <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
+          <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
             Cost Parameters
           </div>
           {costInputs.map((param) => (
@@ -564,7 +566,7 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-        <div className='flex items-center justify-center xl:justify-start text-sm font-semibold text-slate-700 border-b-1 border-slate-200 pb-0.5'>
+        <div className='flex items-center justify-center text-sm font-semibold text-slate-700'>
           Utilities
         </div>
 

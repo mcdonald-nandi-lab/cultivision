@@ -13,7 +13,7 @@ const Container = ({
   className = "",
 }: ContainerProps) => {
   return (
-    <div className={cn(`bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 ${className}`)}>
+    <div className={cn(`bg-white rounded-lg shadow-sm p-4 border border-solid border-gray-100 ${className}`)}>
       {children}
     </div>
   );
