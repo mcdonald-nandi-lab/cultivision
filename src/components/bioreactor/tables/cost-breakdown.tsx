@@ -158,7 +158,11 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
               {sortedExpenseItems.map(({ id, color, name, value }) => (
-                <tr key={id} className='hover:bg-gray-50'>
+                <tr
+                  key={id}
+                  className='hover:bg-gray-50 cursor-pointer'
+                  onClick={() => handleInfoClick(id)}
+                >
                   <td className='px-6 py-4 whitespace-nowrap'>
                     <div className='flex items-center gap-x-2'>
                       <div
@@ -169,20 +173,21 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
                         {name}
                       </div>
                       <button
-                        onClick={() => handleInfoClick(id)}
                         className='text-gray-400 hover:text-blue-600 cursor-pointer transition-colors'
                         aria-label={`More information about ${name}`}
                       >
                         <svg
-                          width='14'
-                          height='14'
+                          width='10'
+                          height='10'
                           viewBox='0 0 24 24'
-                          fill='none'
+                          fill='currentColor'
+                          className='font-bold'
                         >
                           <circle
                             cx='12'
                             cy='12'
                             r='10'
+                            fill='none'
                             stroke='currentColor'
                             strokeWidth='2'
                           />
@@ -194,14 +199,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
                             stroke='currentColor'
                             strokeWidth='2'
                           />
-                          <line
-                            x1='12'
-                            y1='8'
-                            x2='12.01'
-                            y2='8'
-                            stroke='currentColor'
-                            strokeWidth='2'
-                          />
+                          <circle cx='12' cy='9' r='1' fill='currentColor' />
                         </svg>
                       </button>
                     </div>
