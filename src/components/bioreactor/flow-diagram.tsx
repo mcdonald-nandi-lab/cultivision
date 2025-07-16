@@ -29,7 +29,7 @@ const FlowDiagram = ({
     <div className='w-full border border-gray-200 rounded-lg'>
       {showTitle && (
         <div className='mb-4'>
-          <Title title={`Flow Diagram: ${bioreactor.name}`} />
+          <Title title={`Process Flow Diagram: ${bioreactor.name}`} />
         </div>
       )}
       <div className='relative w-full h-96 lg:h-36'>
