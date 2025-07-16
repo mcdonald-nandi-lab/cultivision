@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getBioreactorById, getBioreactorData } from "@/lib/bioreactors";
 import cn from "classnames";
 import Image from "next/image";
+import { useCalculations } from "@/context/calculation-context";
 
 interface ImageModalProps {
   bioreactorId: string;
@@ -13,9 +14,6 @@ interface ImageModalProps {
 }
 
 const ImageModal = ({
-  bioreactorId,
-  doublingTime,
-  density,
   onClose,
 }: ImageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
@@ -23,7 +21,13 @@ const ImageModal = ({
   const [transformOrigin, setTransformOrigin] = useState("center center");
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const bioreactor = getBioreactorById(bioreactorId);
+  const {
+      activeReactorId,
+      doublingTime,
+      density,
+    } = useCalculations();
+
+  const bioreactor = getBioreactorById(activeReactorId);
   const bioreactorData =
     bioreactor && doublingTime && density
       ? getBioreactorData(bioreactor, doublingTime, density)
@@ -72,7 +76,12 @@ const ImageModal = ({
   const handleMouseLeave = () => {
     setIsZoomed(false);
   };
-
+              
+                console.log(
+                  "jkneg",
+                  bioreactor.reactors[doublingTime][density].image
+                );
+              
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30'
@@ -118,7 +127,7 @@ const ImageModal = ({
           >
             <Image
               src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${
-                bioreactor.image
+                bioreactor.reactors[doublingTime][density].image
               }`}
               alt={`${bioreactor.name} Flow Diagram`}
               fill

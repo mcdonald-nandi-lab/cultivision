@@ -79,12 +79,12 @@ export const bioreactors: Bioreactor[] = [
   //   },
   // },
   {
-    id: "210K_ALR",
-    name: "210,000 L Airlift",
-    image: "/images/260K_ALR.png",
+    id: "210K_STR",
+    name: "210,000 L Stirred",
     reactors: {
       "17h": {
         "100gpl": {
+          image: "/images/210K_STR_17h_100gpl.jpg",
           annualProduction: 20000664,
           capitalExpense: 1052455000,
           otherFacilityCosts: 183510000,
@@ -106,6 +106,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "20h": {
         "100gpl": {
+          image: "/images/210K_STR_20h_100gpl.jpg",
           annualProduction: 20000664,
           capitalExpense: 1055726000,
           otherFacilityCosts: 184092000,
@@ -127,6 +128,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "23h": {
         "100gpl": {
+          image: "/images/210K_STR_23h_100gpl.jpg",
           annualProduction: 20000000,
           capitalExpense: 1062062000,
           otherFacilityCosts: 185214000,
@@ -148,6 +150,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "26h": {
         "100gpl": {
+          image: "/images/210K_STR_26h_100gpl.jpg",
           annualProduction: 20000000,
           capitalExpense: 1158191000,
           otherFacilityCosts: 202406000,
@@ -208,10 +211,10 @@ export const bioreactors: Bioreactor[] = [
   {
     id: "260K_ALR",
     name: "262,000 L Airlift",
-    image: "/images/260K_ALR.png",
     reactors: {
       "17h": {
         "100gpl": {
+          image: "/images/260K_ALR_17h_100gpl.jpg",
           annualProduction: 25000024,
           capitalExpense: 327992000,
           mediaVolume: 253319331,
@@ -233,6 +236,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "20h": {
         "100gpl": {
+          image: "/images/260K_ALR_20h_100gpl.jpg",
           annualProduction: 25000008,
           capitalExpense: 331912000,
           mediaVolume: 253484625,
@@ -254,6 +258,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "23h": {
         "100gpl": {
+          image: "/images/260K_ALR_23h_100gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 345079000,
           otherFacilityCosts: 59461000,
@@ -275,6 +280,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "26h": {
         "100gpl": {
+          image: "/images/260K_ALR_26h_100gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 368828000,
           mediaVolume: 253591939,
@@ -296,6 +302,7 @@ export const bioreactors: Bioreactor[] = [
       },
       "29h": {
         "100gpl": {
+          image: "/images/260K_ALR_29h_100gpl.jpg",
           annualProduction: 25000007,
           capitalExpense: 430281000,
           otherFacilityCosts: 70935000,
