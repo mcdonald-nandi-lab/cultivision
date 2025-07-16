@@ -69,8 +69,9 @@ export default function Terms() {
               but not limited to academic, educational, research, or personal
               use) requires proper attribution to CultiVision and the
               McDonald-Nandi Lab at the University of California, Davis.
-              Attribution must include: (i) the name &quot;CultiVision - McDonald-Nandi Lab, UC Davis&quot;, (ii) a link to this Site, and (iii)
-              indication if changes were made.
+              Attribution must include: (i) the name &quot;CultiVision -
+              McDonald-Nandi Lab, UC Davis&quot;, (ii) a link to this Site, and
+              (iii) indication if changes were made.
             </p>
             <p className='mb-4'>
               <strong>
@@ -145,10 +146,10 @@ export default function Terms() {
               re-export, or transfer, directly or indirectly, any restricted
               content from this Site to: (i) any country subject to U.S. trade
               sanctions, (ii) any individual or entity on the U.S. Treasury
-              Department&apos;s list of Specially Designated Nationals or the U.S.
-              Department of Commerce Denied Persons List, or (iii) any end-use
-              prohibited by U.S. export laws. You represent and warrant that you
-              are not located in any such country or on any such list.
+              Department&apos;s list of Specially Designated Nationals or the
+              U.S. Department of Commerce Denied Persons List, or (iii) any
+              end-use prohibited by U.S. export laws. You represent and warrant
+              that you are not located in any such country or on any such list.
             </p>
 
             <h2 className='text-xl font-bold mt-6 mb-2 text-gray-900'>
@@ -305,7 +306,7 @@ export default function Terms() {
               contact us at:
             </p>
             <p className='mb-1'>
-              <strong>Email:</strong> snandi@ucdavis.edu
+              <strong>Email:</strong> snandi@ucdavis.edu | kamcdonald@ucdavis.edu
             </p>
             <p className='mb-1'>
               <strong>Address:</strong> McDonald-Nandi Lab

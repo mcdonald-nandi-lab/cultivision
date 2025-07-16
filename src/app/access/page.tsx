@@ -15,16 +15,16 @@ const ProcessStep = ({
   description: string;
 }) => (
   <div
-    className={`flex items-start space-x-4 p-4 rounded-lg transition-all border border-1 border-green-700`}
+    className={`flex items-start space-x-4 p-4 rounded-lg transition-all border border-1 border-gray-500`}
   >
     <div
-      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white bg-green-700`}
+      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white bg-gray-500`}
     >
       {number}
     </div>
     <div>
       <h3
-        className={`font-semibold text-green-700 `}
+        className={`font-semibold text-gray-500 `}
       >
         {title}
       </h3>
