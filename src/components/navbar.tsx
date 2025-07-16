@@ -2,7 +2,6 @@
 
 import { useCalculations } from "@/context/calculation-context";
 import { trackDownload, trackUserBehavior } from "@/lib/analytics";
-import { bioreactors } from "@/lib/bioreactors";
 import { LAB_EXT_LINK } from "@/lib/constants";
 import { exportToCsv } from "@/lib/csv-export";
 import { houseLogo, topRightCornerArrowLogo } from "@/lib/icons";
@@ -16,6 +15,7 @@ import Icon from "./icon";
 import { useModal } from "@/context/modal-context";
 import { useAccessControl } from "@/context/access-control-context";
 import { useToast } from "@/context/toast-context";
+import { BIOREACTORS } from "@/lib/data";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -34,7 +34,7 @@ const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false);
 
-  const activeReactor = bioreactors.find((r) => r.id === activeReactorId);
+  const activeReactor = BIOREACTORS.find((r) => r.id === activeReactorId);
 
   const isHome = pathname === "/";
   const isAccessPage = pathname === "/access";

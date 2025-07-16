@@ -1,5 +1,5 @@
 import { ProductionCosts } from "@/types";
-import { defaultProductionCosts } from "@/lib/bioreactors";
+import { DEFAULT_PRODUCTION_COSTS } from "./data";
 
 export function encodeProductionCosts(costs: ProductionCosts): string {
   const orderedKeys = [
@@ -14,7 +14,7 @@ export function encodeProductionCosts(costs: ProductionCosts): string {
   const changedParams: Record<string, number> = {};
 
   orderedKeys.forEach((key) => {
-    const defaultValue = defaultProductionCosts[key];
+    const defaultValue = DEFAULT_PRODUCTION_COSTS[key];
     const currentValue = costs[key];
 
     if (Math.abs(currentValue - defaultValue) > 0.001) {
@@ -40,12 +40,12 @@ export function encodeProductionCosts(costs: ProductionCosts): string {
 export function decodeProductionCosts(encoded: string): ProductionCosts | null {
   try {
     if (!encoded) {
-      return { ...defaultProductionCosts };
+      return { ...DEFAULT_PRODUCTION_COSTS };
     }
     const base64 = encoded.replace(/-/g, "+").replace(/_/g, "/");
     const jsonStr = atob(base64);
     const changedParams = JSON.parse(jsonStr);
-    const costs = { ...defaultProductionCosts };
+    const costs = { ...DEFAULT_PRODUCTION_COSTS };
 
     Object.entries(changedParams).forEach(([key, value]) => {
       if (key in costs) {

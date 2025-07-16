@@ -1,9 +1,7 @@
 "use client";
 
 import {
-  bioreactors,
   calculateExpenses,
-  defaultProductionCosts,
   getBioreactorById,
   getAvailableDoublingTimes,
   getAvailableDensities,
@@ -19,6 +17,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { BIOREACTORS, DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
 
 interface CalculationContextType {
   activeReactorId: string;
@@ -40,11 +39,11 @@ const CalculationContext = createContext<CalculationContextType | undefined>(
 
 export function CalculationProvider({ children }: { children: ReactNode }) {
   const [activeReactorId, setActiveReactorId] = useState(
-    bioreactors[0]?.id ?? ""
+    BIOREACTORS[0]?.id ?? ""
   );
   const [doublingTime, setDoublingTime] = useState("");
   const [density, setDensity] = useState("");
-  const [costs, setCosts] = useState<ProductionCosts>(defaultProductionCosts);
+  const [costs, setCosts] = useState<ProductionCosts>(DEFAULT_PRODUCTION_COSTS);
   const [expenses, setExpenses] = useState<CalculatedExpenses | null>(null);
   const [laborCostTable, setLaborCostTable] = useState<LaborCostTable | null>(
     null
@@ -89,7 +88,7 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
           setCosts(decodedCosts);
         }
       }
-      if (reactorId && bioreactors.some((r) => r.id === reactorId)) {
+      if (reactorId && BIOREACTORS.some((r) => r.id === reactorId)) {
         setActiveReactorId(reactorId);
       }
       if (timeParam) {
