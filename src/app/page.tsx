@@ -37,8 +37,8 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
     unit: "$/kg",
   },
   facilitiesNeeded: {
-    title: "Facilities Needed for 100M kg/yr",
-    unit: "",
+    title: "Needed for 100M kg/yr",
+    unit: "Facilities",
   },
   operatingExpenses: {
     title: "Operating Expenses",
@@ -75,7 +75,7 @@ const Home = () => {
           <div className='flex flex-col lg:flex-row h-full pt-18 gap-2'>
             <div
               className='w-full lg:w-1/4 pt-6 px-0 lg:p lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-16 flex flex-col md:items-center md:justify-start gap-6 mr-2'
-              aria-label='Input Form and Bioreactor View'
+              aria-label='Input Form and Process Flow Diagram'
             >
               <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 lg:w-full'>
                 <ParameterForm />
@@ -85,7 +85,7 @@ const Home = () => {
                 onClick={openModal}
               >
                 <h3 className='text-lg font-semibold text-gray-700 text-center'>
-                  Bioreactor View
+                  Process Flow Diagram
                 </h3>
                 <div className='hover:opacity-90 transition-opacity'>
                   <FlowDiagram

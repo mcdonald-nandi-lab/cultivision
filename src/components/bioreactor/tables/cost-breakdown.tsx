@@ -379,14 +379,14 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
                   </td>
                 </tr>
               ))}
-              <tr className='bg-gray-50 max-h-4'>
+              <tr className='bg-gray-50 max-h-12'>
                 <td className='px-6 py-2 whitespace-nowrap'>
                   <div className='text-sm font-bold text-gray-900'>Total</div>
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 font-bold'>
+                <td className='px-6 whitespace-nowrap text-right text-sm text-gray-900 font-bold'>
                   {formatCurrency(total)}
                 </td>
-                <td className='px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 font-bold'>
+                <td className='px-6 whitespace-nowrap text-right text-sm text-gray-900 font-bold'>
                   100%
                 </td>
               </tr>
