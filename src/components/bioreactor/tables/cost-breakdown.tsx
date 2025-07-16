@@ -379,7 +379,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
                   </td>
                 </tr>
               ))}
-              <tr className='bg-gray-50'>
+              <tr className='bg-gray-50 max-h-4'>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <div className='text-sm font-bold text-gray-900'>Total</div>
                 </td>

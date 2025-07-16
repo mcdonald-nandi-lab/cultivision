@@ -103,19 +103,9 @@ const Home = () => {
               </div>
             </div>
 
-            <div
-              className='w-full lg:w-3/4 lg:ml-[26%] pt-5 px-0 lg:p-4 overflow-y-auto'
-            >
-              <div className='flex flex-col gap-4'>
-                <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                  <Container>
-                    <BioreactorChart expenses={expenses} />
-                  </Container>
-                  <Container>
-                    <ExpenseTable expenses={expenses} />
-                  </Container>
-                </div>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+            <div className='w-full lg:w-3/4 lg:ml-[26%] pt-5 px-0 lg:p-4 overflow-y-auto'>
+              <div className='flex flex-col gap-3'>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3'>
                   {Object.entries(svcValues).map(([key, value]) => (
                     <Container key={key}>
                       <SingleValueCard
@@ -125,6 +115,14 @@ const Home = () => {
                       />
                     </Container>
                   ))}
+                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+                  <Container>
+                    <BioreactorChart expenses={expenses} />
+                  </Container>
+                  <Container>
+                    <ExpenseTable expenses={expenses} />
+                  </Container>
                 </div>
 
                 <div className='grid grid-cols-1 gap-4'>
