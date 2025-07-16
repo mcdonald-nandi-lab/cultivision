@@ -3,11 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useCalculations } from "@/context/calculation-context";
 import {
-  defaultProductionCosts,
   getBioreactorById,
   getAvailableDoublingTimes,
   getAvailableDensities,
-  bioreactors,
 } from "@/lib/bioreactors";
 import Title from "@/components/title";
 import cn from "classnames";
@@ -16,6 +14,7 @@ import {
   trackFormSubmission,
   trackUserBehavior,
 } from "@/lib/analytics";
+import { BIOREACTORS, DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
 
 interface ParameterProps {
   id: string;
@@ -32,15 +31,15 @@ const costInputs: ParameterProps[] = [
     label: "Media Cost",
     unit: "$/L",
     step: "0.1",
-    default: defaultProductionCosts.mediaCost,
-    description: `Base case cost: $${defaultProductionCosts.mediaCost}/L`,
+    default: DEFAULT_PRODUCTION_COSTS.mediaCost,
+    description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.mediaCost}/L`,
   },
   {
     id: "laborCost",
     label: "Labor Cost Change",
     unit: "%",
     step: "1",
-    default: defaultProductionCosts.laborCost,
+    default: DEFAULT_PRODUCTION_COSTS.laborCost,
     description: "Labor cost as a percent difference from base labor cost",
   },
 ];
@@ -51,32 +50,32 @@ const utilitiesInput: ParameterProps[] = [
     label: "Electricity",
     unit: "$/kWh",
     step: "0.01",
-    default: defaultProductionCosts.electricityCost,
-    description: `Base case cost: $${defaultProductionCosts.electricityCost}/kW-h`,
+    default: DEFAULT_PRODUCTION_COSTS.electricityCost,
+    description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.electricityCost}/kW-h`,
   },
   {
     id: "steamCost",
     label: "Steam",
     unit: "$/MT",
     step: "0.1",
-    default: defaultProductionCosts.steamCost,
-    description: `Base case cost: $${defaultProductionCosts.steamCost}/MT`,
+    default: DEFAULT_PRODUCTION_COSTS.steamCost,
+    description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.steamCost}/MT`,
   },
   {
     id: "coolingWaterCost",
     label: "Cooling Water",
     unit: "$/MT",
     step: "0.01",
-    default: defaultProductionCosts.coolingWaterCost,
-    description: `Base case cost: $${defaultProductionCosts.coolingWaterCost}/MT`,
+    default: DEFAULT_PRODUCTION_COSTS.coolingWaterCost,
+    description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.coolingWaterCost}/MT`,
   },
   {
     id: "chilledWaterCost",
     label: "Chilled Water",
     unit: "$/MT",
     step: "0.01",
-    default: defaultProductionCosts.chilledWaterCost,
-    description: `Base case cost: $${defaultProductionCosts.chilledWaterCost}/MT`,
+    default: DEFAULT_PRODUCTION_COSTS.chilledWaterCost,
+    description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.chilledWaterCost}/MT`,
   },
 ];
 
@@ -150,7 +149,7 @@ const ParameterForm = () => {
     trackUserBehavior("bioreactor_selection", {
       reactor_id: e.target.value,
       reactor_name:
-        bioreactors.find((r) => r.id === e.target.value)?.name || "Unknown",
+        BIOREACTORS.find((r) => r.id === e.target.value)?.name || "Unknown",
     });
   };
 
@@ -194,7 +193,7 @@ const ParameterForm = () => {
   };
 
   const handleReset = () => {
-    const defaultCosts = defaultProductionCosts;
+    const defaultCosts = DEFAULT_PRODUCTION_COSTS;
     setLocalCosts(defaultCosts);
     setCosts(defaultCosts);
     trackButtonClick("reset_form", "Reset", {
@@ -215,7 +214,7 @@ const ParameterForm = () => {
   const hasCustomSettings = Object.entries(localCosts).some(
     ([key, value]) =>
       value !==
-      defaultProductionCosts[key as keyof typeof defaultProductionCosts]
+      DEFAULT_PRODUCTION_COSTS[key as keyof typeof DEFAULT_PRODUCTION_COSTS]
   );
 
   return (
@@ -299,7 +298,7 @@ const ParameterForm = () => {
                 )}
               >
                 <div className='flex-grow px-4 py-1.5 text-sm text-left text-gray-600 bg-white'>
-                  {bioreactors.find((r) => r.id === activeReactorId)?.name ||
+                  {BIOREACTORS.find((r) => r.id === activeReactorId)?.name ||
                     "Select"}
                 </div>
                 <div className='flex items-center justify-center w-20 px-2 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 gap-2'>
@@ -331,7 +330,7 @@ const ParameterForm = () => {
                   }
                 )}
               >
-                {bioreactors.map((reactor) => (
+                {BIOREACTORS.map((reactor) => (
                   <button
                     key={reactor.id}
                     type='button'

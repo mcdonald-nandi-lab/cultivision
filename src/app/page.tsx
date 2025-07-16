@@ -65,7 +65,6 @@ const Home = () => {
     }
   }, [isUrlParamProcessed, isLoading]);
 
-
   if (!expenses) {
     return <Loading />;
   }
@@ -104,12 +103,11 @@ const Home = () => {
               </div>
             </div>
 
-            <div className='w-full lg:w-3/4 lg:ml-[26%] pt-5 px-0 lg:p-4 overflow-y-auto'>
+            <div
+              className='w-full lg:w-3/4 lg:ml-[26%] pt-5 px-0 lg:p-4 overflow-y-auto'
+            >
               <div className='flex flex-col gap-4'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                  {/* <Container>
-                <BioreactorBarChart expenses={expenses} />
-              </Container> */}
                   <Container>
                     <BioreactorChart expenses={expenses} />
                   </Container>

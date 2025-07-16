@@ -2,8 +2,16 @@ export interface BasicObject {
   [key: string]: string;
 }
 
+export interface OtherFacilityCostsSplit {
+    depreciation: number;
+    maintenance: number;
+    insurance: number;
+    localTaxes: number;
+    factoryExpense: number
+}
+
 export interface BioreactorData {
-  image: string,
+  image: string;
   annualProduction: number;
   mediaVolume: number;
   otherMaterialsCost: number;
@@ -15,12 +23,12 @@ export interface BioreactorData {
   coolingWaterUsage: number;
   chilledWaterUsage: number;
   capitalExpense: number;
-  depreciation: number;
   laborHours: {
     main: number;
     upstream: number;
     downstream: number;
   };
+  otherFacilityCostsSplit: OtherFacilityCostsSplit
 }
 
 export interface Bioreactor {
@@ -28,7 +36,7 @@ export interface Bioreactor {
   name: string;
   reactors: {
     [timeKey: string]: {
-      [densityKey: string]: Partial<BioreactorData>;
+      [densityKey: string]: BioreactorData;
     };
   };
 }
@@ -50,6 +58,7 @@ export interface ExpenseBreakdown {
   facility: number;
   consumables: number;
   utilities: number;
+  otherFacilityCostsSplit: OtherFacilityCostsSplit;
 }
 
 export interface CalculatedExpenses {
