@@ -144,32 +144,40 @@ const ImageModal = ({
         </div>
 
         {bioreactorData && (
-          <div className='p-4 border-t'>
-            <div className='grid grid-cols-2 md:grid-cols-3 gap-4 text-sm'>
+          <div className='py-4 px-8 border-t'>
+            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-sm'>
               <div className='flex flex-col'>
-                <span className='font-medium text-slate-600'>
-                  Configuration:
-                </span>
-                <span>
-                  {doublingTime} • {density}
-                </span>
+                <div className='font-medium text-slate-600'>
+                  Doubling Time:
+                </div>
+                <div className="">
+                  {doublingTime}
+                </div>
               </div>
               <div className='flex flex-col'>
-                <span className='font-medium text-slate-600'>
+                <div className='font-medium text-slate-600'>
+                  Cell Density:
+                </div>
+                <div>
+                  {density}
+                </div>
+              </div>
+              <div className='flex flex-col'>
+                <div className='font-medium text-slate-600'>
                   Annual Production:
-                </span>
-                <span>
+                </div>
+                <div>
                   {bioreactorData.annualProduction?.toLocaleString()} kg/yr
-                </span>
+                </div>
               </div>
               <div className='flex flex-col'>
-                <span className='font-medium text-slate-600'>
+                <div className='font-medium text-slate-600'>
                   Media Volume:
-                </span>
-                <span>
+                </div>
+                <div>
                   {((bioreactorData.mediaVolume || 0) / 1_000_000).toFixed(1)}M
                   L
-                </span>
+                </div>
               </div>
             </div>
           </div>
