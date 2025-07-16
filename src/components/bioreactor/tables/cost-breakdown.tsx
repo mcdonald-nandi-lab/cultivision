@@ -296,9 +296,9 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
           />
         </div>
 
-        <div className='overflow-scroll border border-gray-200 rounded-lg'>
+        <div className='overflow-scroll border border-gray-200 rounded-lg h-full'>
           <table
-            className='min-w-full divide-y divide-gray-200'
+            className='min-w-full divide-y divide-gray-200 h-full'
             aria-label='Table showing detailed cost breakdown by category, cost in dollars, and percentage'
           >
             <thead className='bg-gray-50'>
