@@ -12,8 +12,6 @@ interface ExpenseTableProps {
 const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
   const chartData = expenses.chartData;
 
-  const total = Object.values(chartData).reduce((sum, value) => sum + value, 0);
-
   const expenseItems = [
     { name: "Media", value: chartData.media, color: BRAND_COLORS.media },
     {
@@ -43,6 +41,8 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
       color: BRAND_COLORS.utilities,
     },
   ];
+
+  const total = expenseItems.reduce((sum, item) => sum + item.value, 0);
 
   expenseItems.sort((a, b) => b.value - a.value);
 

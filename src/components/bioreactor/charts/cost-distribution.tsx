@@ -27,27 +27,28 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
 
   const { downloadChart } = useChartDownload();
 
-  // TODO: Check what needs to be done. DO we keep this or not.
-  // const formatCurrency = (value: number, digits: number = 0): string => {
-  //   return new Intl.NumberFormat("en-US", {
-  //     style: "currency",
-  //     currency: "USD",
-  //     minimumFractionDigits: digits,
-  //     maximumFractionDigits: digits,
-  //   }).format(value);
-  // };
+  const calculatePercentages = (chartData: CalculatedExpenses["chartData"]) => {
+    const expenseValues = [
+      chartData.media,
+      chartData.otherMaterials,
+      chartData.labor,
+      chartData.waste,
+      chartData.facility,
+      chartData.consumables,
+      chartData.utilities,
+    ];
 
-  const calculatePercentages = (chartData: Record<string, number>) => {
-    const total = Object.values(chartData).reduce(
-      (sum, value) => sum + value,
-      0
-    );
-    return Object.fromEntries(
-      Object.entries(chartData).map(([key, value]) => [
-        key,
-        (value / total) * 100,
-      ])
-    );
+    const total = expenseValues.reduce((sum, value) => sum + value, 0);
+
+    return {
+      media: (chartData.media / total) * 100,
+      otherMaterials: (chartData.otherMaterials / total) * 100,
+      labor: (chartData.labor / total) * 100,
+      waste: (chartData.waste / total) * 100,
+      facility: (chartData.facility / total) * 100,
+      consumables: (chartData.consumables / total) * 100,
+      utilities: (chartData.utilities / total) * 100,
+    };
   };
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
     const ctx = chartRef.current.getContext("2d");
     if (!ctx) return;
 
-    const chartData = expenses.chartData as unknown as Record<string, number>;
+    const chartData = expenses.chartData;
     const percentages = calculatePercentages(chartData);
 
     const data = {
@@ -131,11 +132,6 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
     };
   }, [expenses]);
 
-  // const totalExpenses = Object.values(expenses.chartData || {}).reduce(
-  //   (sum, value) => sum + value,
-  //   0
-  // );
-
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-between items-start w-full'>
@@ -147,24 +143,15 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
             filename='cost-distribution-chart.png'
           />
         </div>
-        {/* <div className='text-right'>
-          <div className='text-sm font-semibold text-slate-700'>
-            COGS: {formatCurrency(expenses.cogsWithDepreciation, 2)}/kg
-          </div>
-        </div> */}
       </div>
 
       <div
         className='flex-1 relative'
         aria-label='Doughnut chart showing percentage distribution of operational expenses'
-        style={{ minHeight: "300px"}}
+        style={{ minHeight: "300px" }}
       >
         <canvas ref={chartRef} className='w-full h-full' />
       </div>
-{/* 
-      <div className='text-center text-sm mt-2 text-slate-500'>
-        Total Operating Expenses: {formatCurrency(totalExpenses)}
-      </div> */}
     </div>
   );
 };

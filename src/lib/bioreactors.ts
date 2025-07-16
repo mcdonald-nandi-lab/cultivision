@@ -13,50 +13,6 @@ const baseLaborUnitCost: Record<string, number> = {
 
 export const bioreactors: Bioreactor[] = [
   // {
-  //   id: "52K_STR",
-  //   name: "52,000 L Stirred Tank",
-  //   image: "",
-  //   reactors: {
-  //     "17h": {
-  //       "100gpl": {},
-  //     },
-  //     "20h": {
-  //       "100gpl": {},
-  //     },
-  //     "23h": {
-  //       "100gpl": {},
-  //     },
-  //     "26h": {
-  //       "100gpl": {},
-  //     },
-  //     "29h": {
-  //       "100gpl": {},
-  //     },
-  //   },
-  // },
-  // {
-  //   id: "105K_STR",
-  //   name: "105,000 L Stirred Tank",
-  //   image: "",
-  //   reactors: {
-  //     "17h": {
-  //       "100gpl": {},
-  //     },
-  //     "20h": {
-  //       "100gpl": {},
-  //     },
-  //     "23h": {
-  //       "100gpl": {},
-  //     },
-  //     "26h": {
-  //       "100gpl": {},
-  //     },
-  //     "29h": {
-  //       "100gpl": {},
-  //     },
-  //   },
-  // },
-  // {
   //   id: "150K_STR",
   //   name: "150,000 L Stirred Tank",
   //   image: "",
@@ -88,6 +44,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 20000664,
           capitalExpense: 1052455000,
           otherFacilityCosts: 183510000,
+          otherFacilityCostsSplit: {
+            depreciation: 92811000,
+            maintenance: 12542000,
+            insurance: 9770000,
+            localTaxes: 19539000,
+            factoryExpense: 48848000,
+          },
           mediaVolume: 203278987,
           otherMaterialsCost: 85235082,
           powerUsage: 6438012,
@@ -96,7 +59,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 88696,
           consumableCosts: 262000,
           wasteTreatmentCost: 2491000,
-          depreciation: 92811000,
           laborHours: {
             main: 1537,
             upstream: 19444,
@@ -110,6 +72,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 20000664,
           capitalExpense: 1055726000,
           otherFacilityCosts: 184092000,
+          otherFacilityCostsSplit: {
+            depreciation: 93106000,
+            maintenance: 12581000,
+            insurance: 9801000,
+            localTaxes: 19601000,
+            factoryExpense: 49003000,
+          },
           mediaVolume: 203326673,
           otherMaterialsCost: 85125016,
           powerUsage: 7554962,
@@ -118,7 +87,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 88696,
           consumableCosts: 254000,
           wasteTreatmentCost: 2473000,
-          depreciation: 93106000,
           laborHours: {
             main: 1490,
             upstream: 19888,
@@ -132,6 +100,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 20000000,
           capitalExpense: 1062062000,
           otherFacilityCosts: 185214000,
+          otherFacilityCostsSplit: {
+            depreciation: 93675000,
+            maintenance: 12654000,
+            insurance: 9861000,
+            localTaxes: 19721000,
+            factoryExpense: 49303000,
+          },
           mediaVolume: 203489229,
           otherMaterialsCost: 85130545,
           powerUsage: 8717255,
@@ -140,7 +115,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 88693,
           consumableCosts: 246000,
           wasteTreatmentCost: 2468000,
-          depreciation: 93675000,
           laborHours: {
             main: 1443,
             upstream: 20302,
@@ -154,6 +128,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 20000000,
           capitalExpense: 1158191000,
           otherFacilityCosts: 202406000,
+          otherFacilityCostsSplit: {
+            depreciation: 102370000,
+            maintenance: 13831000,
+            insurance: 10776000,
+            localTaxes: 21552000,
+            factoryExpense: 53879000,
+          },
           mediaVolume: 203407037,
           otherMaterialsCost: 85023210,
           powerUsage: 9768730,
@@ -162,7 +143,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 88693,
           consumableCosts: 224000,
           wasteTreatmentCost: 2456000,
-          depreciation: 102370000,
           laborHours: {
             main: 1314,
             upstream: 19355,
@@ -170,42 +150,48 @@ export const bioreactors: Bioreactor[] = [
           },
         },
       },
-      // "29h": {
-      //   // ! TODO: Change the below data using the right .xlsx file
-      //   "100gpl": {
-      //     // 1. EXECUTIVE SUMMARY (2021 prices) - Cost Basis Annual Rate
-      //     annualProduction: 25000000,
-      //     // 1. EXECUTIVE SUMMARY (2021 prices) - Total Capital Investment
-      //     capitalExpense: 345079000,
-      //     // 4. FACILITY-DEPENDENT COST - PROCESS SUMMARY - TOTAL - Annual Cost ($)
-      //     otherFacilityCosts: 59461000,
-      //     // 5. MATERIALS COST - PROCESS SUMMARY - Annual Amount - Beefy R Enhance
-      //     mediaVolume: 253758783,
-      //     // 5. MATERIALS COST - PROCESS SUMMARY - (Annual Cost ($) minus Beefy R Enhance Annual Amount)
-      //     otherMaterialsCost: 105953161,
-      //     // 6. UTILITY - Annual Amount- Std Power
-      //     powerUsage: 3116542,
-      //     // 6. UTILITY - Annual Amount - Steam
-      //     steamUsage: 35198,
-      //     // 6. UTILITY - Annual Amount - Cooling Water
-      //     coolingWaterUsage: 1264953,
-      //     // 6. UTILITY -  Annual Amount - Chilled Water
-      //     chilledWaterUsage: 110527,
-      //     // 7. LABOR COST - PROCESS SUMMARY - "Unit Cost ($/h)" * "Annual Amount(h)"
-      //     // Operator (Annual Amount * Unit Cost) + USP Operator (Annual Amount * Unit Cost)  + DSP Operator (Annual Amount * Unit Cost)
-      //     laborHours: {
-      //       main: 1314,
-      //       upstream: 19355,
-      //       downstream: 238,
-      //     },
-      //     // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Depreciation - $
-      //     depreciation: 28220000,
-      //     // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Consumables - $
-      //     consumableCosts: 246000,
-      //     // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Waste Treatment/Disposal - $
-      //     wasteTreatmentCost: 3034000,
-      //   }
-      // }
+      "29h": {
+        "100gpl": {
+          image: "/images/210K_STR_29h_100gpl.jpg",
+          // 1. EXECUTIVE SUMMARY (2021 prices) - Cost Basis Annual Rate
+          annualProduction: 20000000,
+          // 1. EXECUTIVE SUMMARY (2021 prices) - Total Capital Investment
+          capitalExpense: 1294860000,
+          // 4. FACILITY-DEPENDENT COST - PROCESS SUMMARY - TOTAL - Annual Cost ($)
+          otherFacilityCosts: 226837000,
+          // 4. FACILITY-DEPENDENT COST - PROCESS SUMMARY - Annual Amount ($) Individual of all Cost Items
+          otherFacilityCostsSplit: {
+            depreciation: 114726000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
+          // 5. MATERIALS COST - PROCESS SUMMARY - Annual Amount - Beefy R Enhance
+          mediaVolume: 203184922,
+          // 5. MATERIALS COST - PROCESS SUMMARY - (Annual Cost ($) minus Beefy R Enhance Annual Amount)
+          otherMaterialsCost: 84865004,
+          // 6. UTILITY - Annual Amount- Std Power
+          powerUsage: 10866766,
+          // 6. UTILITY - Annual Amount - Steam
+          steamUsage: 28387,
+          // 6. UTILITY - Annual Amount - Cooling Water
+          coolingWaterUsage: 2225103,
+          // 6. UTILITY -  Annual Amount - Chilled Water
+          chilledWaterUsage: 88693,
+          // 7. LABOR COST - PROCESS SUMMARY - "Unit Cost ($/h)" * "Annual Amount(h)"
+          // Operator (Annual Amount * Unit Cost) + USP Operator (Annual Amount * Unit Cost)  + DSP Operator (Annual Amount * Unit Cost)
+          laborHours: {
+            main: 1173,
+            upstream: 18098,
+            downstream: 213,
+          },
+          // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Consumables - $
+          consumableCosts: 300000,
+          // 10. ANNUAL OPERATING COST (2021 prices) - PROCESS SUMMARY - Waste Treatment/Disposal - $
+          wasteTreatmentCost: 2446000,
+        },
+      },
     },
   },
   {
@@ -226,7 +212,13 @@ export const bioreactors: Bioreactor[] = [
           consumableCosts: 131000,
           wasteTreatmentCost: 3039000,
           otherFacilityCosts: 52701000,
-          depreciation: 26682000,
+          otherFacilityCostsSplit: {
+            depreciation: 26682000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
           laborHours: {
             main: 2934,
             upstream: 19499,
@@ -248,7 +240,13 @@ export const bioreactors: Bioreactor[] = [
           consumableCosts: 127000,
           wasteTreatmentCost: 3020000,
           otherFacilityCosts: 53397000,
-          depreciation: 27035000,
+          otherFacilityCostsSplit: {
+            depreciation: 27035000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
           laborHours: {
             main: 2845,
             upstream: 19941,
@@ -262,6 +260,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 25000000,
           capitalExpense: 345079000,
           otherFacilityCosts: 59461000,
+          otherFacilityCostsSplit: {
+            depreciation: 28220000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
           mediaVolume: 253758783,
           otherMaterialsCost: 105953161,
           powerUsage: 3116542,
@@ -270,7 +275,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 110527,
           consumableCosts: 246000,
           wasteTreatmentCost: 3034000,
-          depreciation: 28220000,
           laborHours: {
             main: 2755,
             upstream: 20353,
@@ -292,7 +296,13 @@ export const bioreactors: Bioreactor[] = [
           consumableCosts: 224000,
           wasteTreatmentCost: 3019000,
           otherFacilityCosts: 59975000,
-          depreciation: 30366000,
+          otherFacilityCostsSplit: {
+            depreciation: 30366000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
           laborHours: {
             main: 2509,
             upstream: 19402,
@@ -306,6 +316,13 @@ export const bioreactors: Bioreactor[] = [
           annualProduction: 25000007,
           capitalExpense: 430281000,
           otherFacilityCosts: 70935000,
+          otherFacilityCostsSplit: {
+            depreciation: 35912000,
+            maintenance: 15500000,
+            insurance: 12076000,
+            localTaxes: 24153000,
+            factoryExpense: 60382000,
+          },
           mediaVolume: 253396983,
           otherMaterialsCost: 105862734,
           powerUsage: 3847186,
@@ -314,7 +331,6 @@ export const bioreactors: Bioreactor[] = [
           chilledWaterUsage: 110527,
           consumableCosts: 200000,
           wasteTreatmentCost: 3040000,
-          depreciation: 35912000,
           laborHours: {
             main: 2240,
             upstream: 18140,
@@ -356,7 +372,7 @@ export function getBioreactorData(
   bioreactor: Bioreactor,
   doublingTime: string,
   density: string
-): Partial<BioreactorData> | null {
+): BioreactorData | null {
   const timeData = bioreactor.reactors[doublingTime];
   if (!timeData) return null;
 
@@ -411,7 +427,7 @@ export function calculateExpenses(
     media + otherMaterials + labor + waste + facility + consumables + utilities;
 
   const operatingExpensesWithoutDepreciation =
-    operatingExpenses - bioreactorData.depreciation!;
+    operatingExpenses - bioreactorData.otherFacilityCostsSplit.depreciation!;
 
   // Capital expense
   const capitalExpense = bioreactorData.capitalExpense!;
@@ -426,6 +442,8 @@ export function calculateExpenses(
   const facilitiesNeeded = Math.ceil(
     100000000 / bioreactorData.annualProduction!
   );
+
+  const otherFacilityCostsSplit = bioreactorData.otherFacilityCostsSplit;
 
   return {
     annualProduction: bioreactorData.annualProduction!,
@@ -442,6 +460,7 @@ export function calculateExpenses(
       facility,
       consumables,
       utilities,
+      otherFacilityCostsSplit,
     },
   };
 }
