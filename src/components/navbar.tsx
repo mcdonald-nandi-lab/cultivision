@@ -180,7 +180,7 @@ const Navbar = () => {
       >
         <div className='container mx-auto flex items-center justify-between px-4'>
           <Link
-            href={isValidAccess ? "/" : ""}
+            href={'/'}
             className='flex items-center justify-start gap-x-1'
           >
             <Image

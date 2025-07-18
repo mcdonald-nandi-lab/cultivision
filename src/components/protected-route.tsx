@@ -17,6 +17,7 @@ export default function ProtectedRoute({
 }: ProtectedRouteProps) {
   const { isValidAccess, isLoading } =
     useAccessControl();
+  console.log(isValidAccess, 'HELO')
   const router = useRouter();
 
   useEffect(() => {

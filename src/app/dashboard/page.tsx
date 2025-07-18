@@ -46,7 +46,7 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
   },
 };
 
-const Home = () => {
+const Dashboard = () => {
   const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
   const { isLoading } =
       useAccessControl();
@@ -162,4 +162,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Dashboard;
