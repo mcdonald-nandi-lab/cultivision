@@ -35,3 +35,4 @@ export const BRAND_COLOR_ORDER = [
   BRAND_COLORS.consumables,
   BRAND_COLORS.utilities,
 ];
+
