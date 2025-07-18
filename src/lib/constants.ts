@@ -7,7 +7,7 @@ export const TERMS_LINK: string = "/terms";
 export const UCD_EXT_LINK: string = 'https://ucdavis.edu';
 
 export const METADATA_IMG: string =
-  "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto,c_limit,w_1200/Cultivision/cv-meta-image_rgvulo.png";
+  "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto,c_limit,w_1200/Cultivision/cv-meta-image_jgzxbq.png";
 
 export const WORDPRESS_API_URL: string =
     "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/verify-token";
