@@ -3,7 +3,7 @@ import { LAB_EXT_LINK, PRIVACY_POL_LINK, TERMS_LINK, UCD_EXT_LINK } from '@/lib/
 import Image from 'next/image';
 import Link from 'next/link';
 
-const trackFooterLinkClick = (linkName: string) => {
+export const trackFooterLinkClick = (linkName: string) => {
   trackButtonClick("footer_link", linkName);
 };
 

@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const activeReactor = BIOREACTORS.find((r) => r.id === activeReactorId);
 
-  const isHome = pathname === "/";
+  const isDashboard = pathname === "/dashboard";
   const isAccessPage = pathname === "/access";
 
   useEffect(() => {
@@ -196,7 +196,7 @@ const Navbar = () => {
             <div
               className={cn(
                 "flex flex-col items-start justify-center sm:flex",
-                { hidden: isHome }
+                { hidden: isDashboard }
               )}
             >
               <div className='text-xl font-semibold text-slate-700 relative'>
@@ -211,7 +211,7 @@ const Navbar = () => {
             </div>
           </Link>
 
-          {isHome && isValidAccess && (
+          {isDashboard && isValidAccess && (
             <div className='relative dropdown-container'>
               <button
                 className='dropdown-button flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-700'
@@ -249,10 +249,10 @@ const Navbar = () => {
             </button>
             <div
               className={cn("hidden xl:flex items-center gap-4", {
-                "gap-8": !isHome,
+                "gap-8": !isDashboard,
               })}
             >
-              {isHome && isValidAccess && (
+              {isDashboard && isValidAccess && (
                 <div className='relative options-dropdown'>
                   <button
                     onClick={toggleOptions}
@@ -400,7 +400,7 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
-              {!isHome && !isAccessPage && (
+              {!isDashboard && !isAccessPage && (
                 <Link
                   href={"/"}
                   className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
@@ -463,9 +463,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={cn("flex flex-col space-y-8", { "space-y-4": isHome })}
+            className={cn("flex flex-col space-y-8", { "space-y-4": isDashboard })}
           >
-            {isHome && !isAccessPage && (
+            {isDashboard && !isAccessPage && (
               <button
                 className={cn(
                   "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
@@ -494,7 +494,7 @@ const Navbar = () => {
                 Diagram
               </button>
             )}
-            {isHome && (
+            {isDashboard && (
               <button
                 onClick={handleSaveSettings}
                 className={cn(
@@ -538,7 +538,7 @@ const Navbar = () => {
                 )}
               </button>
             )}
-            {isHome && (
+            {isDashboard && (
               <button
                 onClick={handleDownloadCsv}
                 disabled={!expenses}
@@ -560,7 +560,7 @@ const Navbar = () => {
                 <span>Download CSV</span>
               </button>
             )}
-            {!isHome && !isAccessPage && (
+            {!isDashboard && !isAccessPage && (
               <Link
                 href={"/"}
                 className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'

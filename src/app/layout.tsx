@@ -1,16 +1,15 @@
 import ConditionalAnalytics from "@/components/analytics/conditional-analytics";
 import CookieConsent from "@/components/analytics/cookie-constent";
-import Navbar from "@/components/navbar";
+import { AccessControlProvider } from "@/context/access-control-context";
 import { CalculationProvider } from "@/context/calculation-context";
+import ComposeProviders from "@/context/compose-providers";
+import { CookieConsentProvider } from "@/context/cookie-consent-context";
+import { ModalProvider } from "@/context/modal-context";
+import { ToastProvider } from "@/context/toast-context";
 import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { CookieConsentProvider } from "@/context/cookie-consent-context";
-import ComposeProviders from "@/context/compose-providers";
-import { ModalProvider } from "@/context/modal-context";
-import { AccessControlProvider } from "@/context/access-control-context";
-import { ToastProvider } from "@/context/toast-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -82,7 +81,6 @@ const RootLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ComposeProviders providers={providers}>
-          <Navbar />
           {children}
           <CookieConsent />
           <ConditionalAnalytics />

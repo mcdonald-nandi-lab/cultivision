@@ -35,3 +35,11 @@ export const BRAND_COLOR_ORDER = [
   BRAND_COLORS.consumables,
   BRAND_COLORS.utilities,
 ];
+
+export const STATS = [
+  { value: "100M+", label: "kg/yr production capacity analysis" },
+  { value: "Multiple", label: "Bioreactor configurations" },
+  { value: "Real-time", label: "Cost calculations" },
+  { value: "Export", label: "Ready data and visualizations" },
+];
+

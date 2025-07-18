@@ -20,6 +20,18 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.bg-brand-light {
+  background-color: var(--background);
+}
+
+.bg-brand {
+  background-color: var(--logo-color);
+}
+
+.text-brand {
+  color: var(--logo-color);
+}
+
 
 .loader {
   height: 100px;
