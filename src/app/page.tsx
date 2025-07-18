@@ -4,6 +4,7 @@ import HomeNavbar from "@/components/home-navbar";
 import {
   LAB_EXT_LINK,
   PRIVACY_POL_LINK,
+  STATS,
   TERMS_LINK,
   UCD_EXT_LINK,
 } from "@/lib/constants";
@@ -11,22 +12,10 @@ import { trackFooterLinkClick } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
 
-const stats = [
-  { value: "100M+", label: "kg/yr production capacity analysis" },
-  { value: "Multiple", label: "Bioreactor configurations" },
-  { value: "Real-time", label: "Cost calculations" },
-  { value: "Export", label: "Ready data and visualizations" },
-];
-
-const features = [
+const FEATURES = [
   {
     icon: (
-      <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
-      >
+      <svg className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'>
         <path
           strokeLinecap='round'
           strokeLinejoin='round'
@@ -42,10 +31,7 @@ const features = [
   {
     icon: (
       <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -68,10 +54,7 @@ const features = [
   {
     icon: (
       <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -88,10 +71,7 @@ const features = [
   {
     icon: (
       <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -108,10 +88,7 @@ const features = [
   {
     icon: (
       <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -128,10 +105,7 @@ const features = [
   {
     icon: (
       <svg
-        className='w-6 h-6 text-brand'
-        fill='none'
-        stroke='currentColor'
-        viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -149,156 +123,96 @@ const features = [
 
 const LandingPage = () => {
   return (
-    <div className='min-h-screen bg-brand-light'>
+    <div className='bg-white'>
       <HomeNavbar />
 
-      <section className='relative pt-16 min-h-screen flex items-center overflow-hidden'>
+      <section
+        className='relative pt-48 pb-30 flex items-center overflow-hidden'
+        style={{
+          backgroundImage:
+            "linear-gradient(to left bottom, #c6f6c3, #caf6cc, #d0f6d4, #d6f6db, #dcf6e2, #e0f7e7, #e4f7ec, #e9f8f0, #edf9f4, #f0fbf7, #f5fcfa, #f9fdfc)",
+        }}
+      >
         <div className='max-w-7xl mx-auto w-full relative z-10'>
-          <div className='lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center h-full'>
-            <div className='px-4 sm:px-6 lg:px-8'>
-              <div className='max-w-xl mx-auto lg:mx-0'>
-                <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl'>
-                  <span className='block'>Cultivated Meat</span>
-                  <span className='block text-brand'>Analytics</span>
-                </h1>
-                <p className='mt-6 text-lg text-gray-500 sm:text-xl lg:text-lg xl:text-xl'>
-                  Interactive dashboard for analyzing cultivated meat production
-                  costs, bioreactor performance, and sustainability metrics.
-                  Developed by the McDonald-Nandi Lab at UC Davis.
-                </p>
-                <div className='mt-8 sm:flex sm:gap-4'>
-                  <div className='rounded-md shadow'>
-                    <Link
-                      href='/dashboard'
-                      className='w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-[#357026] transition-colors'
-                    >
-                      Launch Dashboard
-                    </Link>
-                  </div>
-                  <div className='mt-3 sm:mt-0'>
-                    <button
-                      onClick={() => {
-                        const element = document.getElementById("features");
-                        if (element)
-                          element.scrollIntoView({ behavior: "smooth" });
-                      }}
-                      className='w-full flex items-center justify-center px-8 py-4 border border-brand text-base font-medium rounded-md text-brand bg-white hover:bg-gray-50 transition-colors cursor-pointer'
-                    >
-                      Learn More
-                    </button>
-                  </div>
+          <div className='text-center px-4 sm:px-6 lg:px-8'>
+            <div className='max-w-4xl mx-auto mb-16'>
+              <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
+                <span className='block'>Cultivated Meat</span>
+                <span className='block text-brand'>Analytics</span>
+              </h1>
+              <p className='mt-6 text-lg text-gray-500 sm:text-xl max-w-3xl mx-auto'>
+                Interactive dashboard for analyzing cultivated meat production
+                costs, bioreactor performance, and sustainability metrics.
+              </p>
+              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4'>
+                <div className='rounded-md shadow'>
+                  <Link
+                    href='/dashboard'
+                    className='w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-[#357026] transition-colors'
+                  >
+                    Launch Dashboard
+                  </Link>
+                </div>
+                <div>
+                  <button
+                    onClick={() => {
+                      const element = document.getElementById("features");
+                      if (element)
+                        element.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className='w-full flex items-center justify-center px-8 py-4 border border-brand text-base font-medium rounded-md text-brand bg-white hover:bg-gray-50 transition-colors cursor-pointer'
+                  >
+                    Learn More
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div className='mt-16 lg:mt-0 px-4 sm:px-6 lg:px-8'>
-              <div className='max-w-lg mx-auto lg:max-w-none'>
-                <div className='bg-white rounded-xl shadow-2xl overflow-hidden'>
-                  <div className='bg-gray-800 px-4 py-3 flex items-center'>
-                    <div className='flex space-x-2'>
-                      <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                      <div className='w-3 h-3 bg-yellow-500 rounded-full'></div>
-                      <div className='w-3 h-3 bg-green-500 rounded-full'></div>
-                    </div>
-                    <div className='ml-4 text-gray-300 text-sm'>
-                      cultivision.dashboard
-                    </div>
+            <div className='max-w-5xl mx-auto mt-4 p-4'>
+              <div className='bg-white rounded-xl shadow-2xl overflow-hidden'>
+                <div className='bg-gray-800 px-4 py-3 flex items-center'>
+                  <div className='flex space-x-2'>
+                    <div className='w-3 h-3 bg-red-500 rounded-full'></div>
+                    <div className='w-3 h-3 bg-yellow-500 rounded-full'></div>
+                    <div className='w-3 h-3 bg-green-500 rounded-full'></div>
                   </div>
-
-                  <div className='p-6 bg-gradient-to-br from-gray-50 to-white'>
-                    <div className='grid grid-cols-2 gap-4 mb-6'>
-                      <div className='bg-white p-4 rounded-lg shadow border'>
-                        <div className='text-2xl font-bold text-gray-900'>
-                          $27.91
-                        </div>
-                        <div className='text-sm text-gray-500'>COGS $/kg</div>
-                      </div>
-                      <div className='bg-white p-4 rounded-lg shadow border'>
-                        <div className='text-2xl font-bold text-gray-900'>
-                          5
-                        </div>
-                        <div className='text-sm text-gray-500'>Facilities</div>
-                      </div>
-                    </div>
-
-                    {/* Chart Preview */}
-                    <div className='bg-white p-4 rounded-lg shadow border'>
-                      <div className='flex items-center justify-between mb-3'>
-                        <div className='text-sm font-medium text-gray-700'>
-                          Cost Distribution
-                        </div>
-                        <div className='w-3 h-3 bg-brand rounded-full'></div>
-                      </div>
-                      <div className='space-y-2'>
-                        <div className='flex items-center'>
-                          <div className='w-3 h-3 bg-brand rounded mr-2'></div>
-                          <div className='flex-1 bg-gray-200 rounded-full h-2'>
-                            <div
-                              className='bg-brand h-2 rounded-full'
-                              style={{ width: "45%" }}
-                            ></div>
-                          </div>
-                        </div>
-                        <div className='flex items-center'>
-                          <div className='w-3 h-3 bg-blue-500 rounded mr-2'></div>
-                          <div className='flex-1 bg-gray-200 rounded-full h-2'>
-                            <div
-                              className='bg-blue-500 h-2 rounded-full'
-                              style={{ width: "30%" }}
-                            ></div>
-                          </div>
-                        </div>
-                        <div className='flex items-center'>
-                          <div className='w-3 h-3 bg-orange-500 rounded mr-2'></div>
-                          <div className='flex-1 bg-gray-200 rounded-full h-2'>
-                            <div
-                              className='bg-orange-500 h-2 rounded-full'
-                              style={{ width: "25%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className='mt-4 text-center'>
-                      <div className='text-sm text-gray-600'>
-                        Interactive cost analysis
-                      </div>
-                    </div>
+                  <div className='ml-4 text-gray-300 text-sm'>
+                    cultivision.dashboard
                   </div>
                 </div>
+                <Image
+                  src={`${
+                    process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+                  }/images/dashboard-preview.png`}
+                  alt='CultiVision Dashboard Preview'
+                  width={1200}
+                  height={800}
+                  className='w-full h-auto object-contain'
+                  priority
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className='relative bg-brand overflow-hidden'>
-        <div
-          className='absolute inset-0 opacity-20'
-          style={{
-            backgroundImage:
-              "linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%)",
-            backgroundSize: "60px 60px",
-          }}
-        ></div>
-
+      <section className='relative bg-[#C6F6C3] overflow-hidden rounded-b-4xl rounded-4xl shadow-lg'>
         <div className='max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8 relative z-10'>
           <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-3xl font-extrabold text-white sm:text-4xl'>
+            <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl'>
               Comprehensive Production Analysis
             </h2>
-            <p className='mt-4 text-xl text-green-100'>
+            <p className='mt-4 text-xl text-slate-700'>
               Everything you need to understand cultivated meat economics
             </p>
           </div>
           <dl className='mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-            {stats.map((stat, index) => (
+            {STATS.map((stat, index) => (
               <div key={index} className='text-center'>
-                <dd className='order-1 text-5xl font-extrabold text-white'>
+                <dd className='order-1 text-2xl lg:text-5xl font-extrabold text-gray-800'>
                   {stat.value}
                 </dd>
-                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-green-100'>
+                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-slate-700'>
                   {stat.label}
                 </dt>
               </div>
@@ -309,7 +223,7 @@ const LandingPage = () => {
 
       <section id='features' className='relative py-20 overflow-hidden'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='lg:text-center'>
+          <div className='text-center'>
             <h2 className='text-base text-brand font-semibold tracking-wide uppercase'>
               Features
             </h2>
@@ -325,15 +239,18 @@ const LandingPage = () => {
 
           <div className='mt-20'>
             <div className='grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3'>
-              {features.map((feature, index) => (
+              {FEATURES.map((feature, index) => (
                 <div
                   key={index}
-                  className='text-center shadow-lg rounded-lg p-4 bg-white'
+                  className='text-center rounded-xl p-4 bg-white'
+                  style={{
+                    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                  }}
                 >
-                  <div className='flex items-center justify-center h-16 w-16 rounded-md bg-green-50 mx-auto mb-6'>
+                  <div className='flex items-center justify-center h-12 w-12 rounded-md bg-brand mx-auto mb-6'>
                     {feature.icon}
                   </div>
-                  <h3 className='text-lg font-medium text-gray-900 mb-4'>
+                  <h3 className='text-lg font-semibold text-gray-800 mb-4'>
                     {feature.title}
                   </h3>
                   <p className='text-base text-gray-500 leading-relaxed'>
@@ -348,29 +265,15 @@ const LandingPage = () => {
 
       <section
         id='about'
-        className='relative py-20 bg-brand overflow-hidden rounded-2xl'
-        style={{
-          background: `
-          linear-gradient(90deg, #f9fafb 1px, transparent 1px),
-          linear-gradient(#f9fafb 1px, transparent 1px)
-        `,
-          backgroundSize: "40px 40px",
-        }}
+        className='relative py-4 bg-[#C6F6C3] overflow-hidden rounded-4xl shadow-lg'
       >
-        <div
-          className='absolute inset-0 opacity-15'
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.1) 40px, rgba(255,255,255,0.1) 80px)",
-          }}
-        ></div>
-        <div className='w-full mx-auto p-8 sm:px-6 lg:px-8 relative z-10 bg-brand flex items-center justify-center'>
+        <div className='w-full mx-auto p-8 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center'>
           <div className='lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center max-w-5xl'>
             <div>
-              <h2 className='text-3xl font-extrabold text-white sm:text-4xl'>
+              <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl text-center md:text-left'>
                 Research-Grade Analytics
               </h2>
-              <p className='mt-4 text-lg text-gray-200'>
+              <p className='mt-4 text-lg text-slate-700 text-center md:text-left'>
                 CultiVision is developed by the McDonald-Nandi Lab at UC Davis,
                 bringing together cutting-edge research in cellular agriculture
                 with practical industry applications.
@@ -393,10 +296,10 @@ const LandingPage = () => {
                     </div>
                   </div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-bold text-white'>
+                    <h3 className='text-lg font-bold text-gray-800'>
                       Validated Methodologies
                     </h3>
-                    <p className='mt-2 text-base text-gray-200'>
+                    <p className='mt-2 text-base text-slate-700'>
                       Based on peer-reviewed research and industry-standard
                       calculations for accurate cost modeling.
                     </p>
@@ -419,10 +322,10 @@ const LandingPage = () => {
                     </div>
                   </div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-bold text-white'>
+                    <h3 className='text-lg font-bold text-gray-800'>
                       Industry Applications
                     </h3>
-                    <p className='mt-2 text-base text-gray-200'>
+                    <p className='mt-2 text-base text-slate-700'>
                       Used by researchers, investors, and industry professionals
                       for strategic decision-making.
                     </p>
@@ -431,7 +334,7 @@ const LandingPage = () => {
               </div>
             </div>
             <div className='mt-12 lg:mt-0'>
-              <div className='bg-white rounded-lg shadow-lg p-8 text-center'>
+              <div className='bg-white rounded-xl shadow-lg p-8 text-center'>
                 <div className='text-6xl mb-4'>🧬</div>
                 <h3 className='text-xl font-semibold text-gray-900 mb-3'>
                   UC Davis McDonald-Nandi Lab
@@ -467,12 +370,12 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className='relative overflow-hidden p-4'>
-        <div className='max-w-4xl mx-auto text-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8 relative z-10 shadow-lg rounded-xl bg-white'>
-          <h2 className='text-3xl font-extrabold text-gray-700 sm:text-4xl'>
+      <section className='relative overflow-hidden p-4 mt-16'>
+        <div className='max-w-4xl mx-auto text-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8 relative z-10'>
+          <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl'>
             Ready to analyze your production costs?
           </h2>
-          <p className='mt-4 text-lg leading-6 text-gray-600'>
+          <p className='mt-4 text-lg leading-6 text-gray-700'>
             Start exploring the economics of cultivated meat production with our
             interactive dashboard.
           </p>
@@ -485,7 +388,12 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <div className='w-full flex items-center justify-center border-t-2 border-gray-200 shadow-2xl rounded-3xl bg-white mt-24'>
+      <div
+        className='w-full flex items-center justify-center rounded-3xl bg-white mt-24'
+        style={{
+          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+        }}
+      >
         <footer className='flex flex-col gap-6 w-6xl p-8' role='contentinfo'>
           <div className='grid md:grid-cols-2 gap-8 items-start justify-center w-full'>
             <div className='flex flex-col items-start justify-center gap-8'>
@@ -569,21 +477,20 @@ const LandingPage = () => {
               </Link>
             </div>
           </div>
-
-          <div
-            className='text-xs text-gray-400 text-center px-2 md:px-4'
-            aria-describedby='info'
-            aria-label='Copyright of the The Regents of the University of California'
-          >
-            <div className='mb-4 text-sm text-gray-500'>
-              Made with ❤️ for sustainable food production.
-            </div>
-            <div className='text-gray-400'>
-              © 2025{" "}
+          <div className='flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-2'>
+            <div
+              className='text-xs text-gray-400 text-center'
+              aria-describedby='info'
+              aria-label='Copyright of the The Regents of the University of California'
+            >
+              <span>© 2025 </span>
               <Link href={UCD_EXT_LINK} className='hover:underline'>
-                The Regents of the University of California
+                The Regents of the University of California.
               </Link>
-              . <span>All Rights Reserved.</span>
+              <span> All Rights Reserved.</span>
+            </div>
+            <div className='text-xs text-gray-500 text-right'>
+              Made with ❤️ for sustainable food production.
             </div>
           </div>
         </footer>
