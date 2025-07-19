@@ -127,7 +127,7 @@ const LandingPage = () => {
       <HomeNavbar />
 
       <section
-        className='relative pt-48 pb-30 flex items-center overflow-hidden'
+        className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden'
         style={{
           backgroundImage:
             "linear-gradient(to left bottom, #c6f6c3, #caf6cc, #d0f6d4, #d6f6db, #dcf6e2, #e0f7e7, #e4f7ec, #e9f8f0, #edf9f4, #f0fbf7, #f5fcfa, #f9fdfc)",
@@ -136,24 +136,24 @@ const LandingPage = () => {
         <div className='max-w-7xl mx-auto w-full relative z-10'>
           <div className='text-center px-4 sm:px-6 lg:px-8'>
             <div className='max-w-4xl mx-auto mb-16'>
-              <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
+              <h1 className='text-6xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
                 <span className='block'>Cultivated Meat</span>
                 <span className='block text-brand'>Analytics</span>
               </h1>
-              <p className='mt-6 text-lg text-gray-500 sm:text-xl max-w-3xl mx-auto'>
+              <p className='mt-6 text-lg text-gray-500 px-2 md:text-xl max-w-2xl mx-auto'>
                 Interactive dashboard for analyzing cultivated meat production
                 costs, bioreactor performance, and sustainability metrics.
               </p>
-              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4'>
-                <div className='rounded-md shadow'>
+              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4 items-center'>
+                <div className='rounded-md shadow w-48 md:w-64'>
                   <Link
                     href='/dashboard'
-                    className='w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-[#357026] transition-colors'
+                    className='w-full flex items-center justify-center px-4 md:px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-[#357026] transition-colors'
                   >
                     Launch Dashboard
                   </Link>
                 </div>
-                <div>
+                <div className='w-48 md:w-64'>
                   <button
                     onClick={() => {
                       const element = document.getElementById("features");
@@ -196,7 +196,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className='relative bg-[#C6F6C3] overflow-hidden rounded-b-4xl rounded-4xl shadow-lg'>
+      <section className='relative bg-[#C6F6C3] overflow-hidden rounded-b-4xl shadow-lg'>
         <div className='max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8 relative z-10'>
           <div className='max-w-4xl mx-auto text-center'>
             <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl'>
@@ -271,7 +271,7 @@ const LandingPage = () => {
           <div className='lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center max-w-5xl'>
             <div>
               <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl text-center md:text-left'>
-                Research-Grade Analytics
+                Research-Grade Insights
               </h2>
               <p className='mt-4 text-lg text-slate-700 text-center md:text-left'>
                 CultiVision is developed by the McDonald-Nandi Lab at UC Davis,
