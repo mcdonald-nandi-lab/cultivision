@@ -159,7 +159,7 @@ const LandingPage = () => {
             <div className='max-w-4xl mx-auto mb-16'>
               <h1 className='animate-fade-in-up text-6xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
                 <span className='block'>Cultivated Meat</span>
-                <span className='block text-brand bg-gradient-to-r from-green-200 to-green-700 bg-clip-text'>
+                <span className='block text-green-600 bg-gradient-to-r from-green-200 to-green-700 bg-clip-text'>
                   Analytics
                 </span>
               </h1>
