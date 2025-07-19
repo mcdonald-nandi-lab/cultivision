@@ -205,7 +205,7 @@ const Access = () => {
         <div className='bg-white rounded-2xl shadow-xl p-8 mb-8'>
           <div className='text-center mb-10'>
             <h2 className='text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center space-x-2'>
-              <span className='text-3xl animate-bounce'>🔐</span>
+              <span className='text-3xl'>🔐</span>
               <span>Secure Access Required</span>
             </h2>
             <p className='text-gray-600 max-w-2xl mx-auto'>

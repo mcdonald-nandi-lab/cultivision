@@ -107,23 +107,39 @@ const HomeNavbar = () => {
               </button>
               <Link
                 href='/dashboard'
-                className='flex items-center gap-x-2 rounded-md bg-brand py-2 px-4 text-sm transition-all hover:shadow-md text-white font-medium hover:shadow-lg'
+                className='group inline-flex items-center gap-x-2 rounded-md py-2 px-4 text-sm text-white font-medium bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300'
               >
-                <svg
-                  className='h-4 w-4'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth={2}
-                    d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
-                  />
-                </svg>
+                <div className='relative h-4 w-4'>
+                  <svg
+                    className='absolute inset-0 h-4 w-4 transition-all duration-300 group-hover:opacity-0 group-hover:scale-75'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z'
+                    />
+                  </svg>
+                  <svg
+                    className='absolute inset-0 h-4 w-4 transition-all duration-300 opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100'
+                    fill='none'
+                    viewBox='0 0 24 24'
+                    stroke='currentColor'
+                  >
+                    <path
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                      strokeWidth={2}
+                      d='M13 7l5 5m0 0l-5 5m5-5H6'
+                    />
+                  </svg>
+                </div>
                 <span>Dashboard</span>
               </Link>
+
               <Link
                 href={LAB_EXT_LINK}
                 target='_blank'
@@ -217,7 +233,7 @@ const HomeNavbar = () => {
 
             <Link
               href='/dashboard'
-              className='flex items-center gap-x-2 rounded-md border border-green-500 bg-green-600 hover:bg-green-700 py-2 px-3 text-sm transition-all hover:shadow-md text-white font-medium w-full justify-start'
+              className='flex items-center gap-x-2 rounded-md py-2 px-4 text-sm text-white font-medium bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300'
               onClick={() => setIsSidebarOpen(false)}
             >
               <svg
