@@ -11,11 +11,23 @@ import {
 import { trackFooterLinkClick } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
-const FEATURES = [
+interface featureProps {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}
+
+const FEATURES: featureProps[] = [
   {
     icon: (
-      <svg className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'>
+      <svg
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
+      >
         <path
           strokeLinecap='round'
           strokeLinejoin='round'
@@ -31,7 +43,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -54,7 +69,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -71,7 +89,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -88,7 +109,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -105,7 +129,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -122,59 +149,68 @@ const FEATURES = [
 ];
 
 const LandingPage = () => {
+
   return (
     <div className='bg-white'>
       <HomeNavbar />
-
-      <section
-        className='relative pt-48 pb-30 flex items-center overflow-hidden'
-        style={{
-          backgroundImage:
-            "linear-gradient(to left bottom, #c6f6c3, #caf6cc, #d0f6d4, #d6f6db, #dcf6e2, #e0f7e7, #e4f7ec, #e9f8f0, #edf9f4, #f0fbf7, #f5fcfa, #f9fdfc)",
-        }}
-      >
+      <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50'>
         <div className='max-w-7xl mx-auto w-full relative z-10'>
           <div className='text-center px-4 sm:px-6 lg:px-8'>
             <div className='max-w-4xl mx-auto mb-16'>
-              <h1 className='text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
+              <h1 className='animate-fade-in-up text-6xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
                 <span className='block'>Cultivated Meat</span>
-                <span className='block text-brand'>Analytics</span>
+                <span className='block text-brand bg-gradient-to-r from-green-200 to-green-700 bg-clip-text'>
+                  Analytics
+                </span>
               </h1>
-              <p className='mt-6 text-lg text-gray-500 sm:text-xl max-w-3xl mx-auto'>
+              <p className='mt-6 text-lg text-gray-500 px-2 md:text-xl max-w-2xl mx-auto animate-fade-in-up animation-delay-200'>
                 Interactive dashboard for analyzing cultivated meat production
                 costs, bioreactor performance, and sustainability metrics.
               </p>
-              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4'>
-                <div className='rounded-md shadow'>
+              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4 items-center animate-fade-in-up animation-delay-300'>
+                <div className='rounded-md shadow w-48 md:w-64'>
                   <Link
                     href='/dashboard'
-                    className='w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-[#357026] transition-colors'
+                    className='group relative overflow-hidden w-full flex items-center justify-center px-4 md:px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1'
                   >
-                    Launch Dashboard
+                    <span className='relative z-10'>Launch Dashboard</span>
                   </Link>
                 </div>
-                <div>
+                <div className='w-48 md:w-64'>
                   <button
                     onClick={() => {
                       const element = document.getElementById("features");
                       if (element)
                         element.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className='w-full flex items-center justify-center px-8 py-4 border border-brand text-base font-medium rounded-md text-brand bg-white hover:bg-gray-50 transition-colors cursor-pointer'
+                    className='group w-full flex items-center justify-center px-8 py-4 border-2 border-green-500 text-base font-medium rounded-md text-green-500 bg-white hover:bg-green-500 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer'
                   >
                     Learn More
+                    <svg
+                      className='ml-2 w-4 h-4 group-hover:animate-bounce'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M19 14l-7 7m0 0l-7-7m7 7V3'
+                      />
+                    </svg>
                   </button>
                 </div>
               </div>
             </div>
 
-            <div className='max-w-5xl mx-auto mt-4 p-4'>
-              <div className='bg-white rounded-xl shadow-2xl overflow-hidden'>
+            <div className='max-w-5xl mx-auto mt-4 p-4 animate-fade-in-up animation-delay-500'>
+              <div className='bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500'>
                 <div className='bg-gray-800 px-4 py-3 flex items-center'>
                   <div className='flex space-x-2'>
-                    <div className='w-3 h-3 bg-red-500 rounded-full'></div>
-                    <div className='w-3 h-3 bg-yellow-500 rounded-full'></div>
-                    <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                    <div className='w-3 h-3 bg-red-500 rounded-full animate-pulse'></div>
+                    <div className='w-3 h-3 bg-yellow-500 rounded-full animate-pulse animate-delay-75'></div>
+                    <div className='w-3 h-3 bg-green-500 rounded-full animate-pulse animate-delay-150'></div>
                   </div>
                   <div className='ml-4 text-gray-300 text-sm'>
                     cultivision.dashboard
@@ -196,23 +232,27 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className='relative bg-[#C6F6C3] overflow-hidden rounded-b-4xl rounded-4xl shadow-lg'>
+      <section className='relative bg-gradient-to-r from-green-100 to-green-200 overflow-hidden rounded-b-4xl shadow-lg'>
         <div className='max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8 relative z-10'>
           <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl'>
+            <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl animate-fade-in-left'>
               Comprehensive Production Analysis
             </h2>
-            <p className='mt-4 text-xl text-slate-700'>
+            <p className='mt-4 text-xl text-slate-700 animate-fade-in-up animation-delay-100'>
               Everything you need to understand cultivated meat economics
             </p>
           </div>
           <dl className='mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
             {STATS.map((stat, index) => (
-              <div key={index} className='text-center'>
-                <dd className='order-1 text-2xl lg:text-5xl font-extrabold text-gray-800'>
+              <div
+                key={index}
+                className='text-center group cursor-pointer animate-fade-in-up'
+                style={{ animationDelay: `${(index + 2) * 100}ms` }}
+              >
+                <dd className='order-1 text-2xl lg:text-5xl font-extrabold text-gray-800 group-hover:text-green-600 transition-colors duration-300 group-hover:scale-110 transform'>
                   {stat.value}
                 </dd>
-                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-slate-700'>
+                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-slate-700 group-hover:text-slate-800 transition-colors duration-300'>
                   {stat.label}
                 </dt>
               </div>
@@ -224,13 +264,13 @@ const LandingPage = () => {
       <section id='features' className='relative py-20 overflow-hidden'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='text-center'>
-            <h2 className='text-base text-brand font-semibold tracking-wide uppercase'>
+            <h2 className='text-base text-brand font-semibold tracking-wide uppercase animate-fade-in-up'>
               Features
             </h2>
-            <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl'>
+            <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl animate-fade-in-up animation-delay-100'>
               Powerful Analytics for Cultivated Meat
             </p>
-            <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto'>
+            <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto animate-fade-in-up animation-delay-200'>
               Comprehensive tools for analyzing production costs, comparing
               bioreactor configurations, and understanding the economics of
               cellular agriculture.
@@ -242,20 +282,31 @@ const LandingPage = () => {
               {FEATURES.map((feature, index) => (
                 <div
                   key={index}
-                  className='text-center rounded-xl p-4 bg-white'
+                  className='group text-center rounded-xl p-8 bg-white transition-all duration-500 transform hover:-translate-y-3 hover:shadow-2xl border border-gray-100 hover:border-transparent cursor-pointer animate-fade-in-up relative'
                   style={{
-                    boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                    boxShadow: "rgba(0, 0, 0, 0.1) 0px 10px 15px -3px",
+                    animationDelay: `${(index + 3) * 100}ms`,
                   }}
                 >
-                  <div className='flex items-center justify-center h-12 w-12 rounded-md bg-brand mx-auto mb-6'>
+                  <div className='absolute top-4 right-4 w-2 h-2 bg-green-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-300' />
+                  <div className='absolute bottom-6 left-6 w-1 h-1 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-300 animate-delay-75' />
+                  <div className='absolute top-1/2 right-8 w-1.5 h-1.5 bg-purple-400 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-bounce transition-opacity duration-300 animate-delay-150' />
+
+                  <div className='absolute inset-0 rounded-xl opacity-0 group-hover:opacity-5 bg-gradient-to-br from-green-500 to-green-600 transition-opacity duration-300' />
+
+                  <div className='relative flex items-center justify-center h-16 w-16 rounded-xl bg-gradient-to-br from-green-500 to-green-600 mx-auto mb-6 transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-6 shadow-lg'>
                     {feature.icon}
+                    <div className='absolute inset-0 rounded-xl bg-gradient-to-br from-green-500 to-green-600 opacity-0 group-hover:animate-ping group-hover:opacity-30 group-hover:scale-125 transition-all duration-500' />
                   </div>
-                  <h3 className='text-lg font-semibold text-gray-800 mb-4'>
+
+                  <h3 className='text-lg font-semibold text-gray-800 mb-4 group-hover:text-gray-900 transition-colors duration-300'>
                     {feature.title}
                   </h3>
-                  <p className='text-base text-gray-500 leading-relaxed'>
+                  <p className='text-base text-gray-500 leading-relaxed group-hover:text-gray-700 transition-colors duration-300'>
                     {feature.description}
                   </p>
+
+                  <div className='mx-auto mt-4 h-1 bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all duration-500 w-0 group-hover:w-16' />
                 </div>
               ))}
             </div>
@@ -265,13 +316,13 @@ const LandingPage = () => {
 
       <section
         id='about'
-        className='relative py-4 bg-[#C6F6C3] overflow-hidden rounded-4xl shadow-lg'
+        className='relative py-4 bg-gradient-to-r from-green-100 to-blue-100 overflow-hidden rounded-4xl shadow-lg'
       >
         <div className='w-full mx-auto p-8 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center'>
           <div className='lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center max-w-5xl'>
-            <div>
+            <div className='animate-fade-in-left'>
               <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl text-center md:text-left'>
-                Research-Grade Analytics
+                Research-Grade Insights
               </h2>
               <p className='mt-4 text-lg text-slate-700 text-center md:text-left'>
                 CultiVision is developed by the McDonald-Nandi Lab at UC Davis,
@@ -279,9 +330,9 @@ const LandingPage = () => {
                 with practical industry applications.
               </p>
               <div className='mt-8 space-y-6'>
-                <div className='flex items-start'>
+                <div className='flex items-start group cursor-pointer'>
                   <div className='flex-shrink-0'>
-                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white'>
+                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
                       <svg
                         className='w-5 h-5'
                         fill='currentColor'
@@ -296,7 +347,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-bold text-gray-800'>
+                    <h3 className='text-lg font-bold text-gray-800 group-hover:text-green-600 transition-colors duration-300'>
                       Validated Methodologies
                     </h3>
                     <p className='mt-2 text-base text-slate-700'>
@@ -305,9 +356,9 @@ const LandingPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className='flex items-start'>
+                <div className='flex items-start group cursor-pointer'>
                   <div className='flex-shrink-0'>
-                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white'>
+                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
                       <svg
                         className='w-5 h-5'
                         fill='currentColor'
@@ -322,7 +373,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                   <div className='ml-4'>
-                    <h3 className='text-lg font-bold text-gray-800'>
+                    <h3 className='text-lg font-bold text-gray-800 group-hover:text-green-600 transition-colors duration-300'>
                       Industry Applications
                     </h3>
                     <p className='mt-2 text-base text-slate-700'>
@@ -333,9 +384,9 @@ const LandingPage = () => {
                 </div>
               </div>
             </div>
-            <div className='mt-12 lg:mt-0'>
-              <div className='bg-white rounded-xl shadow-lg p-8 text-center'>
-                <div className='text-6xl mb-4'>🧬</div>
+            <div className='mt-12 lg:mt-0 animate-fade-in-up animation-delay-200'>
+              <div className='bg-white rounded-xl shadow-lg p-8 text-center transform hover:scale-105 transition-all duration-500 cursor-pointer animate-bounce-slow'>
+                <div className='text-6xl mb-4 animate-pulse'>🧬</div>
                 <h3 className='text-xl font-semibold text-gray-900 mb-3'>
                   UC Davis McDonald-Nandi Lab
                 </h3>
@@ -347,11 +398,11 @@ const LandingPage = () => {
                   href='https://mcdonald-nandi.ech.ucdavis.edu/'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='inline-flex items-center text-brand hover:text-[#357026] font-medium transition-colors'
+                  className='group inline-flex items-center text-brand hover:text-[#357026] font-medium transition-colors'
                 >
                   Visit Lab Website
                   <svg
-                    className='ml-2 w-4 h-4'
+                    className='ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300'
                     fill='none'
                     stroke='currentColor'
                     viewBox='0 0 24 24'
@@ -381,9 +432,10 @@ const LandingPage = () => {
           </p>
           <Link
             href='/dashboard'
-            className='mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-brand hover:bg-gray-50 transition-colors'
+            className='group mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg overflow-hidden'
           >
-            Access Dashboard
+            <div className='absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300 transform -skew-x-12 -translate-x-full group-hover:translate-x-full' />
+            <span className='relative z-10'>Access Dashboard</span>
           </Link>
         </div>
       </section>

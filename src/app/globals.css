@@ -13,9 +13,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
-
 body {
-  background: var(--background);
+  background: linear-gradient(135deg,
+      rgb(240, 253, 244),
+      rgb(239, 246, 255),
+      rgb(250, 245, 255)
+    );
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
