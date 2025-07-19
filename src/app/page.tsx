@@ -11,11 +11,23 @@ import {
 import { trackFooterLinkClick } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactNode } from "react";
 
-const FEATURES = [
+interface featureProps {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}
+
+const FEATURES: featureProps[] = [
   {
     icon: (
-      <svg className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'>
+      <svg
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
+      >
         <path
           strokeLinecap='round'
           strokeLinejoin='round'
@@ -31,7 +43,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -54,7 +69,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -71,7 +89,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -88,7 +109,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -105,7 +129,10 @@ const FEATURES = [
   {
     icon: (
       <svg
-        className='w-6 h-6 rounded-lg' fill='none' stroke='white' viewBox='0 0 24 24'
+        className='w-6 h-6 rounded-lg'
+        fill='none'
+        stroke='white'
+        viewBox='0 0 24 24'
       >
         <path
           strokeLinecap='round'
@@ -125,7 +152,6 @@ const LandingPage = () => {
   return (
     <div className='bg-white'>
       <HomeNavbar />
-
       <section
         className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden'
         style={{
