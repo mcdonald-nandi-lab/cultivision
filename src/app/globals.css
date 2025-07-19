@@ -62,27 +62,18 @@ body {
 }
 
 /* Custom animation classes */
-.fade-down {
-  opacity: 0;
-  transform: translateY(-80px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+@keyframes fadeUpAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(80px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(80px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-right {
-  opacity: 0;
-  transform: translateX(-80px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-.fade-down.animated,
-.fade-up.animated,
-.fade-right.animated {
-  opacity: 1;
-  transform: translate(0);
+.fade-up-animate {
+  animation: fadeUpAnimation 0.6s ease-out;
 }
