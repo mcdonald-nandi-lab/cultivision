@@ -3,6 +3,7 @@ module.exports = {
   siteUrl: "https://mcdonald-nandi-lab.github.io/cultivision",
   generateRobotsTxt: true,
   sitemapSize: 5000,
+  outDir: './out',
   generateIndexSitemap: false,
   transform: async (config, path) => {
     return {
