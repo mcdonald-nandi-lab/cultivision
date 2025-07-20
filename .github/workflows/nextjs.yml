@@ -71,6 +71,14 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: NEXT_PUBLIC_BASE_PATH=/cultivision NEXT_PUBLIC_GOOGLE_ANALYTICS_ID=G-36TY4ZM011 ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Generate sitemap
+        run: ${{ steps.detect-package-manager.outputs.runner }} next-sitemap
+      - name: List build output
+        run: |
+          echo "Contents of ./out directory:"
+          ls -la ./out/
+          echo "Looking for sitemap.xml:"
+          find ./out -name "sitemap.xml" -type f || echo "sitemap.xml not found"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
