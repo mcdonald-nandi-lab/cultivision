@@ -1,3 +1,5 @@
+export const BASE_URL = "https://mcdonald-nandi-lab.github.io/cultivision";
+
 export const LAB_EXT_LINK: string = "https://mcdonald-nandi.ech.ucdavis.edu/";
 
 export const PRIVACY_POL_LINK: string = "https://privacy.ucdavis.edu/web-page-privacy"; 
