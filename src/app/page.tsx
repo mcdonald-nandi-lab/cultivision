@@ -153,7 +153,7 @@ const LandingPage = () => {
   return (
     <div className='bg-white'>
       <HomeNavbar />
-      <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50'>
+      <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 fade-up-animate'>
         <div className='max-w-7xl mx-auto w-full relative z-10'>
           <div className='text-center px-4 sm:px-6 lg:px-8'>
             <div className='max-w-4xl mx-auto mb-16'>

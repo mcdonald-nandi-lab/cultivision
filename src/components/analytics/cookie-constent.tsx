@@ -18,7 +18,7 @@ const CookieConsent = () => {
     return (
       <div className=''>
         {showConsentBanner && (
-          <Container className='fade-up-animate fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 min-w-sm max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700'>
+          <Container className='fade-left-animate fixed bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:bottom-10 md:-translate-x-0 min-w-sm max-w-md bg-white rounded-md shadow-lg p-4 z-50 border-2 border-gray-700'>
             <div className='flex gap-x-1'>
               <svg
                 className='w-5 h-5 mr-2 text-gray-600 flex-shrink-0 mt-0.5'
