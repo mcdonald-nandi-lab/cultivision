@@ -9,9 +9,6 @@ const nextConfig: NextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
-  compress: true,
-  poweredByHeader: false,
-  distDir: "out",
 };
 
 export default nextConfig;
