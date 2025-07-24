@@ -87,7 +87,7 @@ const RootLayout = ({
           {children}
           <CookieConsent />
           <ConditionalAnalytics />
-          <FeedbackButton />
+          {/* <FeedbackButton /> */}
         </ComposeProviders>
       </body>
     </html>

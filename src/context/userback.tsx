@@ -56,5 +56,4 @@ export const UserbackProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to access Userback instance
 export const useUserback = () => useContext(UserbackContext);
