@@ -19,8 +19,7 @@ export const UserbackProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const init = async () => {
-      console.log("🔧 Initializing Userback...");
-      console.log("🔑 Token:", token);
+      console.log("Initializing Userback...");
 
       try {
         const instance = await Userback(token, {
@@ -36,10 +35,10 @@ export const UserbackProvider = ({ children }: { children: ReactNode }) => {
         setUserback(instance);
 
         setTimeout(() => {
-          console.log("🚀 Attempting to show widget...");
+          console.log("Attempting to show widget...");
           if (instance && instance.showLauncher) {
             instance.showLauncher();
-            console.log("👍 showLauncher() called");
+            console.log("Widget Loaded");
           }
         }, 1000);
       } catch (error) {
