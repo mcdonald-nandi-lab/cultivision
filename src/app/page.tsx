@@ -1,5 +1,6 @@
 "use client";
 
+import { trackFooterLinkClick } from "@/components/footer";
 import HomeNavbar from "@/components/home-navbar";
 import {
   LAB_EXT_LINK,
@@ -8,7 +9,6 @@ import {
   TERMS_LINK,
   UCD_EXT_LINK,
 } from "@/lib/constants";
-import { trackFooterLinkClick } from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -151,7 +151,7 @@ const FEATURES: featureProps[] = [
 const LandingPage = () => {
 
   return (
-    <div className='bg-white'>
+    <div className='bg-white'>      
       <HomeNavbar />
       <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 fade-up-animate'>
         <div className='max-w-7xl mx-auto w-full relative z-10'>
