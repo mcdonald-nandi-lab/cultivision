@@ -12,6 +12,7 @@
   "dependencies": {
     "@next/third-parties": "^15.3.2",
     "@radix-ui/react-tooltip": "^1.2.6",
+    "@userback/widget": "^0.3.11",
     "chart.js": "^4.4.9",
     "classnames": "^2.5.1",
     "next": "15.3.1",
