@@ -6,12 +6,11 @@ import ComposeProviders from "@/context/compose-providers";
 import { CookieConsentProvider } from "@/context/cookie-consent-context";
 import { ModalProvider } from "@/context/modal-context";
 import { ToastProvider } from "@/context/toast-context";
+import { UserbackProvider } from "@/context/userback";
 import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { UserbackProvider } from "@/context/userback";
-import FeedbackButton from "@/components/feedback";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
