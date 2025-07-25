@@ -19,8 +19,6 @@ export const UserbackProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const init = async () => {
-      console.log("Initializing Userback...");
-
       try {
         const instance = await Userback(token, {
           custom_data: {
@@ -31,14 +29,11 @@ export const UserbackProvider = ({ children }: { children: ReactNode }) => {
           autohide: false,
         });
 
-        console.log("Userback instance created:", instance);
         setUserback(instance);
 
         setTimeout(() => {
-          console.log("Attempting to show widget...");
           if (instance && instance.showLauncher) {
             instance.showLauncher();
-            console.log("Widget Loaded");
           }
         }, 1000);
       } catch (error) {
