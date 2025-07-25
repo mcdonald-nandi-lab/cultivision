@@ -42,8 +42,6 @@ export function AccessControlProvider({
     token: string
   ): Promise<{ valid: boolean; info?: TokenInfo }> => {
     try {
-      console.log("Verifying token with WordPress API...");
-
       const response = await fetch(WORDPRESS_API_URL, {
         method: "POST",
         headers: {
@@ -60,7 +58,6 @@ export function AccessControlProvider({
       const result = await response.json();
 
       if (result.valid && result.data) {
-        console.log("Token verified successfully!");
         return { valid: true, info: result.data };
       } else {
         console.error(
