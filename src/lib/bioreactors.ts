@@ -20,7 +20,7 @@ export function getAvailableDensities(
 ): string[] {
   const timeData = bioreactor.reactors[doublingTime];
   if (!timeData) return [];
-  return Object.keys(timeData).sort();
+  return Object.keys(timeData).reverse();
 }
 
 export function getBioreactorData(
