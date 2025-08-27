@@ -20,14 +20,16 @@ export const CULTIVISION_LAB_PAGE: string =
 export const AUTHOR_LINK: string = 'https://aun.sh'
 
 export const BRAND_COLORS = {
-  media: "#659C46",         // Brand-rich green
-  rawMaterials: "#8CBF63",  // Olive-sage
-  labor: "#B5D46F",         // Mossy lime
-  waste: "#EBD3A0",         // Golden beige
-  facility: "#CC7A5A",      // Clay rust
-  consumables: "#ED985F",   // Amber peach
-  utilities: "#5DB7A3",     // Calm seafoam teal
+  media: "#5A9C3D", // Slightly deeper green for distinction
+  rawMaterials: "#7FB552", // More yellow-green contrast
+  labor: "#A8D168", // Brighter lime, more separated
+  waste: "#F0D085", // More saturated golden
+  facility: "#D67B52", // More orange-red distinction
+  consumables: "#F2A05C", // Brighter orange, more contrast
+  utilities: "#52B5A8", // More blue-green distinction
 };
+
+
 
 export const BRAND_COLOR_ORDER = [
   BRAND_COLORS.media,
