@@ -1,8 +1,6 @@
 "use client";
 
 import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
-import LaborCostAnnualGraph from "@/components/bioreactor/charts/labor-cost-annual";
-import LaborCostHourlyGraph from "@/components/bioreactor/charts/labor-cost-hourly";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
 import ParameterForm from "@/components/bioreactor/form";
 import ImageModal from "@/components/bioreactor/image-modal";
