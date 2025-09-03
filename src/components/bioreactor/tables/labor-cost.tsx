@@ -17,8 +17,8 @@ const LaborCostTable = () => {
     laborCostTable;
 
     const headers = [
-      "Relative Change (%)",
-      "Applied %",
+      "Values",
+      // "Applied %",
       "USP Operator ($/hr)",
       "Operator ($/hr)",
       "DSP Operator ($/hr)",
@@ -59,14 +59,14 @@ const LaborCostTable = () => {
                 scope='col'
                 className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
-                Relative Change (%)
+                Values
               </th>
-              <th
+              {/* <th
                 scope='col'
                 className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Applied Percentage (%)
-              </th>
+              </th> */}
               <th
                 scope='col'
                 className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
@@ -137,9 +137,9 @@ const LaborCostTable = () => {
                       </span>
                     )}
                   </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
+                  {/* <td className='px-6 py-4 whitespace-nowrap'>
                     {result.absolutePercentage}%
-                  </td>
+                  </td> */}
                   <td className='px-6 py-4 whitespace-nowrap'>
                     {result.hourlyRates.upstream.toFixed(2)}
                   </td>
