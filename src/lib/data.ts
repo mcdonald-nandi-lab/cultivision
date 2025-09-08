@@ -1655,4 +1655,6 @@ export const DEFAULT_PRODUCTION_COSTS: ProductionCosts = {
   steamCost: 12,
   coolingWaterCost: 0.05,
   chilledWaterCost: 0.4,
+  taxRate: 36,
+  projectDuration: 25
 };

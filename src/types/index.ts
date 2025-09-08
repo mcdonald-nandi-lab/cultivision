@@ -48,6 +48,8 @@ export interface ProductionCosts {
   steamCost: number;
   coolingWaterCost: number;
   chilledWaterCost: number;
+  taxRate: number;
+  projectDuration: number;
 }
 
 export interface ExpenseBreakdown {
@@ -68,5 +70,6 @@ export interface CalculatedExpenses {
   operatingExpenses: number;
   cogsWithDepreciation: number;
   cogsWithoutDepreciation: number;
+  minimumSellingPrice: number;
   chartData: ExpenseBreakdown;
 }

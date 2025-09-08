@@ -6,7 +6,7 @@ import {
   getAvailableDoublingTimes,
   getAvailableDensities,
 } from "@/lib/bioreactors";
-import { generateLaborCostTable } from "@/lib/labor-costs";
+import { generateLaborCostTable, generateNewCostTable } from "@/lib/labor-costs";
 import { decodeProductionCosts } from "@/lib/url-params";
 import { CalculatedExpenses, ProductionCosts } from "@/types";
 import { LaborCostTable } from "@/lib/labor-costs";
@@ -113,6 +113,12 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
         density,
         costs.laborCost
       );
+      const newCost = generateNewCostTable(
+        activeReactorId,
+        doublingTime,
+        density
+      );
+      console.log("New Cost", newCost);
       setLaborCostTable(laborTable);
     }
   }, [activeReactorId, doublingTime, density, costs]);
