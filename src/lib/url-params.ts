@@ -91,5 +91,5 @@ export function createShareableUrl(
     }
   }
 
-  return `${window.location.origin}${basePath}?${params.toString()}`;
+  return `${window.location.origin}${basePath}'/dashboard?${params.toString()}`;
 }
