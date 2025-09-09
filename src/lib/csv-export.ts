@@ -91,8 +91,6 @@ export function exportToCsv(
     ],
   ];
 
-  console.log("dfef", bioreactor.name.toString());
-
   const csvContent = [
     [`"Bioreactor: ${bioreactor.name.toString()}"`, "", ""],
     ["", "", ""],
