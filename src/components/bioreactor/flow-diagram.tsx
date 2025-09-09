@@ -6,7 +6,6 @@ import Title from '@/components/title'
 import { useCalculations } from "@/context/calculation-context";
 
 interface FlowDiagramProps {
-  bioreactorId: string;
   showTitle?: boolean;
 }
 
