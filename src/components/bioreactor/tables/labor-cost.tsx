@@ -150,54 +150,58 @@ const LaborCostTable = () => {
                 )}
               </td>
             </tr>
-            <tr>
-              <td className='px-6 py-4 whitespace-nowrap text-center text-green-600'>
-                Updated
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {expenses.laborCostValues.updatedCosts.uspLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {expenses.laborCostValues.updatedCosts.dspLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
-                $
-                {expenses.laborCostValues.updatedCosts.totalCost.toLocaleString(
-                  undefined,
-                  {
-                    maximumFractionDigits: 1,
-                  }
-                )}
-              </td>
-            </tr>
+            {!expenses.laborCostValues.isEqual && (
+              <tr>
+                <td className='px-6 py-4 whitespace-nowrap text-center text-green-600'>
+                  Updated
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-center'>
+                  {expenses.laborCostValues.updatedCosts.uspLaborCostPerHour}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-center'>
+                  {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-center'>
+                  {expenses.laborCostValues.updatedCosts.dspLaborCostPerHour}
+                </td>
+                <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
+                  $
+                  {expenses.laborCostValues.updatedCosts.totalCost.toLocaleString(
+                    undefined,
+                    {
+                      maximumFractionDigits: 1,
+                    }
+                  )}
+                </td>
+              </tr>
+            )}
           </tbody>
-          <tfoot>
-            <tr className='bg-gray-100 text-sm font-semibold'>
-              <td colSpan={6} className='px-6 py-4 whitespace-nowrap'>
-                <div className='flex justify-center gap-6'>
-                  <span>
-                    Difference in Labor Cost due to hourly rate change:
-                  </span>
-                  <span
-                    className={cn(
-                      "text-gray-500",
-                      {
-                        "text-red-500": DIFFERENCE > 0,
-                      },
-                      {
-                        "text-green-600": DIFFERENCE < 0,
-                      }
-                    )}
-                  >
-                    {DIFFERENCE.toFixed(2)}
-                  </span>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
+          {!expenses.laborCostValues.isEqual && (
+            <tfoot>
+              <tr className='bg-gray-100 text-sm font-semibold'>
+                <td colSpan={6} className='px-6 py-4 whitespace-nowrap'>
+                  <div className='flex justify-center gap-6'>
+                    <span>
+                      Difference in Labor Cost due to hourly rate change ($):
+                    </span>
+                    <span
+                      className={cn(
+                        "text-gray-500",
+                        {
+                          "text-red-500": DIFFERENCE > 0,
+                        },
+                        {
+                          "text-green-600": DIFFERENCE < 0,
+                        }
+                      )}
+                    >
+                      {DIFFERENCE.toFixed(2)}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
     </div>

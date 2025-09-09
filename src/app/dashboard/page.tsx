@@ -128,16 +128,6 @@ const Dashboard = () => {
                     <MetricsTable expenses={expenses} />
                   </Container>
                 </div>
-
-                {/* <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
-                  <Container>
-                    <LaborCostHourlyGraph />
-                  </Container>
-                  <Container>
-                    <LaborCostAnnualGraph />
-                  </Container>
-                </div> */}
-
                 <div className='grid grid-cols-1 gap-4'>
                   <Container>
                     <LaborCostTable />
