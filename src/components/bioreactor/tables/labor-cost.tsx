@@ -127,32 +127,9 @@ const LaborCostTable = () => {
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200 text-sm'>
-            <tr className={cn()}>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                Default
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center'>
-                {DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour}
-              </td>
-              <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
-                $
-                {expenses.laborCostValues.baseCosts.totalCost.toLocaleString(
-                  undefined,
-                  {
-                    maximumFractionDigits: 1,
-                  }
-                )}
-              </td>
-            </tr>
             {!expenses.laborCostValues.isEqual && (
               <tr>
-                <td className='px-6 py-4 whitespace-nowrap text-center text-green-600'>
+                <td className='px-6 py-4 whitespace-nowrap text-center text-gray-500 font-semibold'>
                   Updated
                 </td>
                 <td className='px-6 py-4 whitespace-nowrap text-center'>
@@ -175,6 +152,29 @@ const LaborCostTable = () => {
                 </td>
               </tr>
             )}
+            <tr className={cn()}>
+              <td className='px-6 py-4 whitespace-nowrap text-center text-gray-700'>
+                Default
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
+                $
+                {expenses.laborCostValues.baseCosts.totalCost.toLocaleString(
+                  undefined,
+                  {
+                    maximumFractionDigits: 1,
+                  }
+                )}
+              </td>
+            </tr>
           </tbody>
           {!expenses.laborCostValues.isEqual && (
             <tfoot>
