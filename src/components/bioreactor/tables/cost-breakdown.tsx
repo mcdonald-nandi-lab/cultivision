@@ -1,7 +1,7 @@
 "use client";
 
-import { InfoModal } from "@/app/page";
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
+import { InfoModal } from "@/components/info-modal";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
 import { BRAND_COLORS } from "@/lib/constants";
