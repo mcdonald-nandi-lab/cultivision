@@ -3,6 +3,7 @@
 import { trackFooterLinkClick } from "@/components/footer";
 import HomeNavbar from "@/components/home-navbar";
 import {
+  AUTHOR_LINK,
   LAB_EXT_LINK,
   PRIVACY_POL_LINK,
   STATS,
@@ -11,12 +12,18 @@ import {
 } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 
 interface featureProps {
   icon: ReactNode;
   title: string;
   description: string;
+}
+
+export interface InfoModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children?: ReactNode;
 }
 
 const FEATURES: featureProps[] = [
@@ -148,10 +155,108 @@ const FEATURES: featureProps[] = [
   },
 ];
 
-const LandingPage = () => {
+export const Authors = () => {
+  return (
+    <div className='w-full flex flex-col gap-4'>
+      <div className='text-2xl text-center text-green-700 font-semibold'>
+        Authors
+      </div>
+      <div className='w-full flex flex-1 items-center justify-around gap-8'>
+        <div className='border-1 border-gray-500 rounded-lg border-solid flex flex-col items-center justify-center p-4 w-full'>
+          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold'>
+            Aunsh Bandivadekar
+          </div>
+          <div className='text-md text-gray-700'>Lead Developer</div>
+          <Link
+            href={AUTHOR_LINK}
+            target='_blank'
+            rel='noreferrer nofollow'
+            className='text-sm hover:text-green-600 text-slate-600 mt-1'
+            aria-label='Author: Aunsh Bandivadekar'
+            onClick={() => trackFooterLinkClick("Author: Aunsh Bandivadekar")}
+          >
+            {AUTHOR_LINK}
+          </Link>
+        </div>
+        <div className='border-1 border-gray-500 rounded-lg border-solid flex flex-col items-center justify-center p-4 w-full'>
+          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold'>
+            Varun Gore
+          </div>
+          <div className='text-md text-gray-700'>Phd. Candidate</div>
+          <div className='text-sm text-slate-600 mt-1'>
+            Chemical Engineering
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const InfoModal = ({ isOpen, onClose, children }: InfoModalProps) => {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen, onClose]);
+
+  const handleBackdropClick = useCallback(
+    (e: React.MouseEvent) => {
+      if (e.target === e.currentTarget) {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
+  if (!isOpen) return null;
 
   return (
-    <div className='bg-white'>      
+    <div
+      className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 animate-in fade-in duration-200 rounded-lg'
+      onClick={handleBackdropClick}
+    >
+      <div
+        className='relative bg-white rounded-lg max-w-2xl w-11/12 max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-200 p-6'
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+        <div className='w-full flex items-center justify-center mt-6'>
+          <button
+            onClick={onClose}
+            className='px-4 py-1 bg-white text-gray-700 border-1 border-gray-700 rounded-md hover:border-red-500 hover:text-red-500 cursor-pointer'
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const LandingPage = () => {
+
+  const [isAuthorModalOpen, setIsAuthorModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsAuthorModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsAuthorModalOpen(false);
+  };
+
+  return (
+    <div className='bg-white'>
       <HomeNavbar />
       <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 fade-up-animate'>
         <div className='max-w-7xl mx-auto w-full relative z-10'>
@@ -264,7 +369,7 @@ const LandingPage = () => {
       <section id='features' className='relative py-20 overflow-hidden'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='text-center'>
-            <h2 className='text-base text-brand font-semibold tracking-wide uppercase animate-fade-in-up'>
+            <h2 className='text-base text-green-600 font-semibold tracking-wide uppercase animate-fade-in-up'>
               Features
             </h2>
             <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl animate-fade-in-up animation-delay-100'>
@@ -332,7 +437,7 @@ const LandingPage = () => {
               <div className='mt-8 space-y-6'>
                 <div className='flex items-start group cursor-pointer'>
                   <div className='flex-shrink-0'>
-                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
+                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-green-600 text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
                       <svg
                         className='w-5 h-5'
                         fill='currentColor'
@@ -358,7 +463,7 @@ const LandingPage = () => {
                 </div>
                 <div className='flex items-start group cursor-pointer'>
                   <div className='flex-shrink-0'>
-                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-brand text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
+                    <div className='flex items-center justify-center h-8 w-8 rounded-md bg-green-600 text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-300'>
                       <svg
                         className='w-5 h-5'
                         fill='currentColor'
@@ -398,7 +503,7 @@ const LandingPage = () => {
                   href='https://mcdonald-nandi.ech.ucdavis.edu/'
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='group inline-flex items-center text-brand hover:text-[#357026] font-medium transition-colors'
+                  className='group inline-flex items-center text-green-600 hover:text-[#357026] font-medium transition-colors'
                 >
                   Visit Lab Website
                   <svg
@@ -491,28 +596,18 @@ const LandingPage = () => {
                 href={LAB_EXT_LINK}
                 target='_blank'
                 rel='noreferrer nofollow'
-                className='text-md font-semibold hover:text-brand text-slate-600 break-normal'
+                className='text-md font-semibold hover:text-green-600 text-slate-600 break-normal'
                 aria-label='Visit Mcdonald/Nandi Lab website'
                 onClick={() => trackFooterLinkClick("Mcdonald/Nandi Lab")}
               >
                 McDonald-Nandi Lab
               </Link>
               <Link
-                href={LAB_EXT_LINK}
-                target='_blank'
-                rel='noreferrer nofollow'
-                className='text-md hover:text-brand text-slate-600'
-                aria-label='Contact Us'
-                onClick={() => trackFooterLinkClick("Contact Us")}
-              >
-                Contact Us
-              </Link>
-              <Link
                 href={TERMS_LINK}
                 target='_blank'
                 rel='noreferrer nofollow'
-                className='text-md hover:text-brand text-slate-600'
-                aria-label='Privacy Policy'
+                className='text-md hover:text-green-600 text-slate-600'
+                aria-label='Terms of Use'
                 onClick={() => trackFooterLinkClick("Terms of Use")}
               >
                 Terms of Use
@@ -521,12 +616,18 @@ const LandingPage = () => {
                 href={PRIVACY_POL_LINK}
                 target='_blank'
                 rel='noreferrer nofollow'
-                className='text-md hover:text-brand text-slate-600'
+                className='text-md hover:text-green-600 text-slate-600'
                 aria-label='Privacy Policy'
                 onClick={() => trackFooterLinkClick("Privacy Policy")}
               >
                 Privacy Policy
               </Link>
+              <div
+                className='text-md hover:text-green-600 text-slate-600 cursor-pointer'
+                onClick={openModal}
+              >
+                Authors
+              </div>
             </div>
           </div>
           <div className='flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-2'>
@@ -547,8 +648,12 @@ const LandingPage = () => {
           </div>
         </footer>
       </div>
+      <InfoModal isOpen={isAuthorModalOpen} onClose={closeModal}>
+        <Authors />
+      </InfoModal>
     </div>
   );
 };
+
 
 export default LandingPage;
