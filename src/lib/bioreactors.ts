@@ -154,7 +154,7 @@ export function calculateExpenses(
 
   // Calculate Minimum Selling Price
   const f = (msp: number) =>
-    calculateMSP(costs, bioreactorData, cogsWithDepreciation, msp);
+    calculateMSP(costs, bioreactorData, cogsWithoutDepreciation, msp);
   const minimumSellingPrice = Math.round(minimizeScalar(f, 0, 100) * 100) / 100;
 
   const laborCostValues = generateLaborCostValues(
