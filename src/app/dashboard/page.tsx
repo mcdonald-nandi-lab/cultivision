@@ -121,7 +121,6 @@ const Dashboard = () => {
                     <ExpenseTable />
                   </Container>
                 </div>
-
                 <div className='grid grid-cols-1 gap-4'>
                   <Container className='h-full'>
                     <MetricsTable expenses={expenses} />

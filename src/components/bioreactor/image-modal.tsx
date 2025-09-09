@@ -7,8 +7,6 @@ import Image from "next/image";
 import { useCalculations } from "@/context/calculation-context";
 
 interface ImageModalProps {
-  doublingTime?: string;
-  density?: string;
   onClose: () => void;
 }
 
@@ -75,12 +73,7 @@ const ImageModal = ({
   const handleMouseLeave = () => {
     setIsZoomed(false);
   };
-              
-                console.log(
-                  "jkneg",
-                  bioreactor.reactors[doublingTime][density].image
-                );
-              
+
   return (
     <div
       className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30'

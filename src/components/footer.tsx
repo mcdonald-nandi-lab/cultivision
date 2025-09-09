@@ -36,7 +36,7 @@ const Footer = () => {
             href={LAB_EXT_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='text-sm font-semibold hover:text-green-500 text-slate-600 break-normal'
+            className='text-sm font-semibold hover:text-green-600 text-slate-600 break-normal'
             aria-label='Visit Mcdonald/Nandi Lab website'
             onClick={() => trackFooterLinkClick("Mcdonald/Nandi Lab")}
           >
@@ -56,7 +56,7 @@ const Footer = () => {
             href={TERMS_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='text-sm hover:text-green-500 text-slate-600'
+            className='text-sm hover:text-green-600 text-slate-600'
             aria-label='Privacy Policy'
             onClick={() => trackFooterLinkClick("Terms of Use")}
           >
@@ -66,7 +66,7 @@ const Footer = () => {
             href={PRIVACY_POL_LINK}
             target='_blank'
             rel='noreferrer nofollow'
-            className='text-sm hover:text-green-500 text-slate-600'
+            className='text-sm hover:text-green-600 text-slate-600'
             aria-label='Privacy Policy'
             onClick={() => trackFooterLinkClick("Privacy Policy")}
           >
