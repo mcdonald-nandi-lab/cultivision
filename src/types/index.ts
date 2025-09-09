@@ -1,3 +1,5 @@
+import { LaborCostValues } from "@/lib/labor-costs";
+
 export interface BasicObject {
   [key: string]: string;
 }
@@ -43,11 +45,15 @@ export interface Bioreactor {
 
 export interface ProductionCosts {
   mediaCost: number;
-  laborCost: number;
+  uspLaborCostPerHour: number;
+  mainLaborCostPerHour: number;
+  dspLaborCostPerHour: number;
   electricityCost: number;
   steamCost: number;
   coolingWaterCost: number;
   chilledWaterCost: number;
+  taxRate: number;
+  projectDuration: number;
 }
 
 export interface ExpenseBreakdown {
@@ -68,5 +74,7 @@ export interface CalculatedExpenses {
   operatingExpenses: number;
   cogsWithDepreciation: number;
   cogsWithoutDepreciation: number;
+  minimumSellingPrice: number;
+  laborCostValues: LaborCostValues;
   chartData: ExpenseBreakdown;
 }

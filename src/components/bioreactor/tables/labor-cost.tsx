@@ -1,42 +1,58 @@
-// components/bioreactor/labor-cost-table.tsx
 "use client";
 
 import { useCalculations } from "@/context/calculation-context";
 import cn from "classnames";
-import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
+import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import Title from "@/components/title";
+import { DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
 
 const LaborCostTable = () => {
-  const { laborCostTable } = useCalculations();
+  const { expenses } = useCalculations();
 
-  if (!laborCostTable) {
+  if (!expenses) {
     return <div>Loading labor cost data...</div>;
   }
 
-  const { laborHours, relativePercentages, currentPercentage, results } =
-    laborCostTable;
+  const headers = [
+    "Values",
+    "USP Operator ($/hr)",
+    "Operator ($/hr)",
+    "DSP Operator ($/hr)",
+    "Total Annual Cost",
+  ];
 
-    const headers = [
-      "Values",
-      // "Applied %",
-      "USP Operator ($/hr)",
-      "Operator ($/hr)",
-      "DSP Operator ($/hr)",
-      "Total Annual Cost",
-    ];
+  const DIFFERENCE = expenses.laborCostValues.differenceOfTotals;
 
-    const rows = relativePercentages.map((rel) => {
-      const r = results[rel.toString()];
-      return [
-        rel > 0 ? `+${rel}%` : `${rel}%`,
-        `${r.absolutePercentage}%`,
-        r.hourlyRates.upstream.toFixed(2),
-        r.hourlyRates.main.toFixed(2),
-        r.hourlyRates.downstream.toFixed(2),
-        `$${r.totalAnnualCost.toLocaleString()}`,
-      ];
-    });
-    
+  const rows = [
+    [
+      "Default",
+      DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour,
+      DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour,
+      DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour,
+      `${expenses.laborCostValues.baseCosts.totalCost.toLocaleString(
+        undefined,
+        { maximumFractionDigits: 1 }
+      )}`,
+    ],
+    [
+      "Updated",
+      expenses.laborCostValues.updatedCosts.uspLaborCostPerHour,
+      DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour,
+      expenses.laborCostValues.updatedCosts.dspLaborCostPerHour,
+      `${expenses.laborCostValues.updatedCosts.totalCost.toLocaleString(
+        undefined,
+        { maximumFractionDigits: 1 }
+      )}`,
+    ],
+    [
+      "Difference",
+      "", // Empty for USP
+      "", // Empty for Operator
+      "", // Empty for DSP
+      DIFFERENCE.toFixed(2),
+    ],
+  ];
+
   return (
     <div className='h-full flex flex-col pb-2'>
       <div className='flex items-center justify-start gap-x-2 mb-4'>
@@ -57,58 +73,52 @@ const LaborCostTable = () => {
             <tr>
               <th
                 scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Values
               </th>
-              {/* <th
-                scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-              >
-                Applied Percentage (%)
-              </th> */}
               <th
                 scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 USP Operator ($/hr)
                 <br />
                 <small className='font-normal'>
                   <span className='font-medium'>
-                    {laborHours.upstream.toLocaleString()}
+                    {expenses.laborCostValues.laborHours.upstream.toLocaleString()}
                   </span>{" "}
                   hours per year
                 </small>
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Operator ($/hr)
                 <br />
                 <small className='font-normal'>
                   <span className='font-medium'>
-                    {laborHours.main.toLocaleString()}
+                    {expenses.laborCostValues.laborHours.main.toLocaleString()}
                   </span>{" "}
                   hours per year
                 </small>
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 DSP Operator ($/hr)
                 <br />
                 <small className='font-normal'>
                   <span className='font-medium'>
-                    {laborHours.downstream.toLocaleString()}
+                    {expenses.laborCostValues.laborHours.downstream.toLocaleString()}
                   </span>{" "}
                   hours per year
                 </small>
               </th>
               <th
                 scope='col'
-                className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
+                className='px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
                 Total Annual Cost
                 <br />
@@ -117,54 +127,73 @@ const LaborCostTable = () => {
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200 text-sm'>
-            {relativePercentages.map((relPercentage, index) => {
-              const result = results[relPercentage.toString()];
-              const isCurrentRow = relPercentage === 0;
-              return (
-                <tr
-                  key={`percentage-${relPercentage}`}
-                  className={cn(
-                    { "bg-white": index % 2 === 0 },
-                    { "bg-gray-50": index % 2 !== 0 },
-                    { "bg-green-50": isCurrentRow } // Highlight the row with 0 relative change
-                  )}
-                >
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {relPercentage > 0 ? `+${relPercentage}` : relPercentage}%
-                    {isCurrentRow && (
-                      <span className='ml-2 text-green-600 text-xs'>
-                        (current)
-                      </span>
-                    )}
-                  </td>
-                  {/* <td className='px-6 py-4 whitespace-nowrap'>
-                    {result.absolutePercentage}%
-                  </td> */}
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {result.hourlyRates.upstream.toFixed(2)}
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {result.hourlyRates.main.toFixed(2)}
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap'>
-                    {result.hourlyRates.downstream.toFixed(2)}
-                  </td>
-                  <td className='px-6 py-4 whitespace-nowrap font-medium'>
-                    $
-                    {result.totalAnnualCost.toLocaleString(undefined, {
-                      maximumFractionDigits: 0,
-                    })}
-                  </td>
-                </tr>
-              );
-            })}
+            <tr className={cn()}>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                Default
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
+                $
+                {expenses.laborCostValues.baseCosts.totalCost.toLocaleString(
+                  undefined,
+                  {
+                    maximumFractionDigits: 1,
+                  }
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td className='px-6 py-4 whitespace-nowrap text-center text-green-600'>
+                Updated
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {expenses.laborCostValues.updatedCosts.uspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center'>
+                {expenses.laborCostValues.updatedCosts.dspLaborCostPerHour}
+              </td>
+              <td className='px-6 py-4 whitespace-nowrap text-center font-medium'>
+                $
+                {expenses.laborCostValues.updatedCosts.totalCost.toLocaleString(
+                  undefined,
+                  {
+                    maximumFractionDigits: 1,
+                  }
+                )}
+              </td>
+            </tr>
           </tbody>
           <tfoot>
             <tr className='bg-gray-100 text-sm font-semibold'>
               <td colSpan={6} className='px-6 py-4 whitespace-nowrap'>
-                <div className='flex justify-between items-center'>
-                  <span>Current labor cost setting: {currentPercentage}%</span>
-                  <span>Use the form to change the labor cost percentage</span>
+                <div className='flex justify-center gap-6'>
+                  <span>
+                    Difference in Labor Cost due to hourly rate change:
+                  </span>
+                  <span
+                    className={cn(
+                      "text-gray-500",
+                      {
+                        "text-red-500": DIFFERENCE > 0,
+                      },
+                      {
+                        "text-green-600": DIFFERENCE < 0,
+                      }
+                    )}
+                  >
+                    {DIFFERENCE.toFixed(2)}
+                  </span>
                 </div>
               </td>
             </tr>

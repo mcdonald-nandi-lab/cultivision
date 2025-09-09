@@ -21,7 +21,7 @@ import Loading from "../loading";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
-  | "cogsWithoutDepreciation"
+  | "minimumSellingPrice"
   | "facilitiesNeeded"
   | "operatingExpenses";
 
@@ -30,17 +30,17 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
     title: "COGS with depreciation",
     unit: "$/kg",
   },
-  cogsWithoutDepreciation: {
-    title: "COGS without depreciation",
-    unit: "$/kg",
+  operatingExpenses: {
+    title: "Operating Expenses",
+    unit: "million $/yr",
+  },
+  minimumSellingPrice: {
+    title: "Minimum Selling Price",
+    unit: "$",
   },
   facilitiesNeeded: {
     title: "Needed for 100M kg/yr",
     unit: "Facilities",
-  },
-  operatingExpenses: {
-    title: "Operating Expenses",
-    unit: "million $/yr",
   },
 };
 

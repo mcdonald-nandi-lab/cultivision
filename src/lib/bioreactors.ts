@@ -1,10 +1,11 @@
 import {
   Bioreactor,
-  ProductionCosts,
-  CalculatedExpenses,
   BioreactorData,
+  CalculatedExpenses,
+  ProductionCosts,
 } from "@/types";
 import { BASE_LABOR_UNIT_COST, BIOREACTORS } from "./data";
+import { generateLaborCostValues } from "./labor-costs";
 
 export function getBioreactorById(id: string): Bioreactor | undefined {
   return BIOREACTORS.find((reactor) => reactor.id === id);
@@ -37,16 +38,67 @@ export function getBioreactorData(
   return densityData;
 }
 
+// Golden-section search (bounded minimization)
+function minimizeScalar(
+  func: (x: number) => number,
+  lower: number,
+  upper: number,
+  tol: number = 1e-5
+): number {
+  const gr = (Math.sqrt(5) + 1) / 2;
+  let a = lower;
+  let b = upper;
+  let c = b - (b - a) / gr;
+  let d = a + (b - a) / gr;
+
+  while (Math.abs(c - d) > tol) {
+    if (Math.abs(func(c)) < Math.abs(func(d))) {
+      b = d;
+    } else {
+      a = c;
+    }
+    c = b - (b - a) / gr;
+    d = a + (b - a) / gr;
+  }
+  return (b + a) / 2;
+}
+
+const calculateMSP = (
+  costs: ProductionCosts,
+  bioreactorData: BioreactorData,
+  cogs: number,
+  msp: number
+): number => {
+  const opex = bioreactorData.annualProduction * cogs;
+  const taxRate = 1 - costs.taxRate / 100;
+  const depreciation = bioreactorData.otherFacilityCostsSplit.depreciation;
+  const fivePercentOfCapex = bioreactorData.capitalExpense * 0.05;
+
+  let sum1 = 0;
+  for (let t = 1; t <= Math.min(10, costs.projectDuration); t++) {
+    sum1 +=
+      (bioreactorData.annualProduction * msp - opex * taxRate + depreciation) /
+      1.0 ** t;
+  }
+
+  let sum2 = 0;
+  for (let t = 11; t <= costs.projectDuration; t++) {
+    sum2 +=
+      ((bioreactorData.annualProduction * msp - opex + depreciation) *
+        taxRate) /
+      1.0 ** t;
+  }
+
+  return sum1 + sum2 - bioreactorData.capitalExpense - fivePercentOfCapex;
+};
+
 export function calculateExpenses(
   bioreactor: Bioreactor,
   doublingTime: string,
   density: string,
-  costs: ProductionCosts
+  costs: ProductionCosts,
 ): CalculatedExpenses | null {
-  
-  
-  const bioreactorData =
-    getBioreactorData(bioreactor, doublingTime, density);
+  const bioreactorData = getBioreactorData(bioreactor, doublingTime, density);
 
   if (!bioreactorData) {
     return null;
@@ -64,7 +116,7 @@ export function calculateExpenses(
   // Calculate operating expenses
   const media = costs.mediaCost * bioreactorData.mediaVolume!;
   const otherMaterials = bioreactorData.otherMaterialsCost!;
-  
+
   // Calculate base labor cost from labor hours
   let baseLaborCost = 0;
   if (bioreactorData.laborHours) {
@@ -72,8 +124,8 @@ export function calculateExpenses(
       baseLaborCost += value * BASE_LABOR_UNIT_COST[key];
     });
   }
-  
-  const labor = (1 + costs.laborCost / 100) * baseLaborCost;
+
+  const labor = baseLaborCost;
   const waste = bioreactorData.wasteTreatmentCost!;
   const facility = bioreactorData.otherFacilityCosts!;
   const consumables = bioreactorData.consumableCosts!;
@@ -100,6 +152,17 @@ export function calculateExpenses(
 
   const otherFacilityCostsSplit = bioreactorData.otherFacilityCostsSplit;
 
+  // Calculate Minimum Selling Price
+  const f = (msp: number) =>
+    calculateMSP(costs, bioreactorData, cogsWithDepreciation, msp);
+  const minimumSellingPrice = Math.round(minimizeScalar(f, 0, 100) * 100) / 100;
+
+  const laborCostValues = generateLaborCostValues(
+    costs.uspLaborCostPerHour,
+    costs.dspLaborCostPerHour,
+    bioreactorData.laborHours
+  );
+
   return {
     annualProduction: bioreactorData.annualProduction!,
     facilitiesNeeded,
@@ -107,6 +170,8 @@ export function calculateExpenses(
     operatingExpenses: operatingExpenses / 1000000, // Convert to millions
     cogsWithDepreciation,
     cogsWithoutDepreciation,
+    minimumSellingPrice,
+    laborCostValues,
     chartData: {
       media,
       otherMaterials,

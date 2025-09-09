@@ -23,6 +23,8 @@ interface ParameterProps {
   step: string;
   default: number;
   description: string;
+  min?: number | 0;
+  max?: number | 100;
 }
 
 const costInputs: ParameterProps[] = [
@@ -35,12 +37,44 @@ const costInputs: ParameterProps[] = [
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.mediaCost}/L`,
   },
   {
-    id: "laborCost",
-    label: "Labor Cost Change",
+    id: "uspLaborCostPerHour",
+    label: "USP Operator",
+    unit: "$/h",
+    step: "0.1",
+    default: DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour,
+    description: "Upstream operator cost by hour",
+    min: 0,
+  },
+  {
+    id: "dspLaborCostPerHour",
+    label: "DSP Operator",
+    unit: "$/h",
+    step: "0.1",
+    default: DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour,
+    description: "Downstream operator cost by hour",
+    min: 0,
+  },
+];
+
+const priceInput: ParameterProps[] = [
+  {
+    id: "taxRate",
+    label: "Tax Rate",
     unit: "%",
+    step: "0.1",
+    default: DEFAULT_PRODUCTION_COSTS.taxRate,
+    description: `Default tax rate: ${DEFAULT_PRODUCTION_COSTS.taxRate}%`,
+    min: 0,
+    max: 100,
+  },
+  {
+    id: "projectDuration",
+    label: "Project Duration",
+    unit: "years",
     step: "1",
-    default: DEFAULT_PRODUCTION_COSTS.laborCost,
-    description: "Labor cost as a percent difference from base labor cost",
+    default: DEFAULT_PRODUCTION_COSTS.projectDuration,
+    description: `Default project duration: ${DEFAULT_PRODUCTION_COSTS.projectDuration} years`,
+    min: 10
   },
 ];
 
@@ -619,14 +653,66 @@ const ParameterForm = () => {
             </div>
           ))}
         </div>
-
+        <div className='flex items-center justify-center text-sm font-semibold text-slate-700 mb-[-0.5em]'>
+          &#183; Project Details &#183;
+        </div>
+        <div className='flex-1 space-y-3'>
+          {priceInput.map((param) => (
+            <div key={param.id} className='form-group'>
+              <label
+                htmlFor={param.id}
+                className='block mb-1 text-xs font-semibold text-gray-500'
+              >
+                {param.label}
+              </label>
+              <div className='grid grid-cols-1'>
+                <div
+                  className={cn(
+                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                    "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                  )}
+                >
+                  <input
+                    type='number'
+                    id={param.id}
+                    value={localCosts[param.id as keyof typeof localCosts]}
+                    onChange={handleChange}
+                    className={cn(
+                      "flex-grow w-full px-4 py-1.5 text-sm",
+                      "focus:outline-none text-gray-600 border-0"
+                    )}
+                    placeholder='0.00'
+                    step={param.step}
+                    min={param.min}
+                    max={param.max ?? undefined}
+                    aria-describedby={`${param.id}-desc`}
+                  />
+                  <div
+                    className={cn(
+                      "flex items-center justify-center px-3 text-xs",
+                      "text-gray-500 bg-gray-50 border-l border-gray-200"
+                    )}
+                  >
+                    {param.unit}
+                  </div>
+                </div>
+                <div
+                  className={cn("text-xs text-gray-400 mt-1")}
+                  id={`${param.id}-desc`}
+                >
+                  {param.description}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
         {!realTimeUpdates && (
           <div>
             <button
               type='submit'
               className={cn(
                 "w-full py-1.5 rounded-md text-sm font-medium",
-                "bg-slate-700 text-white hover:bg-slate-800 cursor-pointer"
+                "bg-slate-700 text-white hover:bg-slate-800 cursor-pointer mt-1"
               )}
             >
               Run Calculation

@@ -1650,9 +1650,13 @@ export const BIOREACTORS: Bioreactor[] = [
 
 export const DEFAULT_PRODUCTION_COSTS: ProductionCosts = {
   mediaCost: 1.4,
-  laborCost: 0,
+  uspLaborCostPerHour: 46.0,
+  mainLaborCostPerHour: 34.5,
+  dspLaborCostPerHour: 57.5,
   electricityCost: 0.1,
   steamCost: 12,
   coolingWaterCost: 0.05,
   chilledWaterCost: 0.4,
+  taxRate: 36,
+  projectDuration: 25,
 };

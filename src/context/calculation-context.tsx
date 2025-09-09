@@ -2,14 +2,13 @@
 
 import {
   calculateExpenses,
-  getBioreactorById,
-  getAvailableDoublingTimes,
   getAvailableDensities,
+  getAvailableDoublingTimes,
+  getBioreactorById,
 } from "@/lib/bioreactors";
-import { generateLaborCostTable } from "@/lib/labor-costs";
+import { BIOREACTORS, DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
 import { decodeProductionCosts } from "@/lib/url-params";
 import { CalculatedExpenses, ProductionCosts } from "@/types";
-import { LaborCostTable } from "@/lib/labor-costs";
 import {
   createContext,
   ReactNode,
@@ -17,7 +16,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { BIOREACTORS, DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
 
 interface CalculationContextType {
   activeReactorId: string;
@@ -29,7 +27,6 @@ interface CalculationContextType {
   costs: ProductionCosts;
   setCosts: (costs: ProductionCosts) => void;
   expenses: CalculatedExpenses | null;
-  laborCostTable: LaborCostTable | null;
   isUrlParamProcessed: boolean;
 }
 
@@ -45,9 +42,6 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
   const [density, setDensity] = useState("");
   const [costs, setCosts] = useState<ProductionCosts>(DEFAULT_PRODUCTION_COSTS);
   const [expenses, setExpenses] = useState<CalculatedExpenses | null>(null);
-  const [laborCostTable, setLaborCostTable] = useState<LaborCostTable | null>(
-    null
-  );
   const [isUrlParamProcessed, setIsUrlParamProcessed] = useState(false);
 
   // Initialize doubling time and density when reactor changes
@@ -104,16 +98,13 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reactor = getBioreactorById(activeReactorId);
     if (reactor && doublingTime && density) {
-      const result = calculateExpenses(reactor, doublingTime, density, costs);
-      setExpenses(result);
-
-      const laborTable = generateLaborCostTable(
-        activeReactorId,
+      const result = calculateExpenses(
+        reactor,
         doublingTime,
         density,
-        costs.laborCost
+        costs,
       );
-      setLaborCostTable(laborTable);
+      setExpenses(result);
     }
   }, [activeReactorId, doublingTime, density, costs]);
 
@@ -129,7 +120,6 @@ export function CalculationProvider({ children }: { children: ReactNode }) {
         costs,
         setCosts,
         expenses,
-        laborCostTable,
         isUrlParamProcessed,
       }}
     >
