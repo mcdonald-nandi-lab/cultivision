@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
-import { BRAND_COLORS } from "@/lib/constants";
-import { CalculatedExpenses, OtherFacilityCostsSplit } from "@/types";
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import Title from "@/components/title";
+import { useCalculations } from "@/context/calculation-context";
+import { BRAND_COLORS } from "@/lib/constants";
+import { OtherFacilityCostsSplit } from "@/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-interface ExpenseTableProps {
-  expenses: CalculatedExpenses;
-}
 interface CategoryData {
   name: string;
   value: number;
@@ -18,54 +16,86 @@ interface CategoryData {
   breakdown?: OtherFacilityCostsSplit;
 }
 
+type CategoryKeys = "labor" | "utilities" | "facilityDependentCost";
 interface CategoryInfoModalProps {
   isOpen: boolean;
   onClose: () => void;
   categoryData: CategoryData | null;
-  facilityCostsSplit?: CalculatedExpenses["chartData"]["otherFacilityCostsSplit"];
 }
+
+const formatCurrency = (value: number): string => {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+};
 
 const CategoryInfoModal = ({
   isOpen,
   onClose,
   categoryData,
-  facilityCostsSplit,
 }: CategoryInfoModalProps) => {
-  const formatCurrency = useCallback((value: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  }, []);
+  const { expenses } = useCalculations();
+  const data = expenses!.chartData
 
-  const getFacilityBreakdown = useCallback(() => {
-    if (!facilityCostsSplit) return [];
-
-    return [
+  const categoryValueDict = {
+    labor: [
+      {
+        name: "Upstream Operator",
+        value: expenses?.laborCostValues.updatedCosts.upstream,
+      },
+      {
+        name: "Operator",
+        value: expenses?.laborCostValues.updatedCosts.main,
+      },
+      {
+        name: "Downstream Operator",
+        value: expenses?.laborCostValues.updatedCosts.downstream,
+      },
+    ],
+    utilities: [
+      {
+        name: "Power",
+        value: data.utilities.power,
+      },
+      {
+        name: "Steam",
+        value: data.utilities.steam,
+      },
+      {
+        name: "Cooling Water",
+        value: data.utilities.coolingWater,
+      },
+      {
+        name: "Chilled Water",
+        value: data.utilities.chilledWater,
+      },
+    ],
+    facilityDependentCost: [
       {
         name: "Depreciation",
-        value: facilityCostsSplit.depreciation,
+        value: data.otherFacilityCostsSplit.depreciation,
       },
       {
         name: "Maintenance",
-        value: facilityCostsSplit.maintenance,
+        value: data.otherFacilityCostsSplit.maintenance,
       },
       {
         name: "Insurance",
-        value: facilityCostsSplit.insurance,
+        value: data.otherFacilityCostsSplit.insurance,
       },
       {
         name: "Local Taxes",
-        value: facilityCostsSplit.localTaxes,
+        value: data.otherFacilityCostsSplit.localTaxes,
       },
       {
         name: "Factory Expense",
-        value: facilityCostsSplit.factoryExpense,
+        value: data.otherFacilityCostsSplit.factoryExpense,
       },
-    ];
-  }, [facilityCostsSplit]);
+    ],
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -149,26 +179,28 @@ const CategoryInfoModal = ({
               {categoryData.description}
             </div>
           </div>
-          {categoryData.id === "facilityDependentCost" &&
-            facilityCostsSplit && (
+          {categoryData.id in categoryValueDict &&
+            categoryValueDict[categoryData.id as CategoryKeys] && (
               <div>
                 <h3 className='text-sm font-semibold text-gray-800 mb-4'>
                   Cost Breakdown
                 </h3>
                 <div className='space-y-2'>
-                  {getFacilityBreakdown().map(({ name, value }) => (
-                    <div
-                      key={name}
-                      className='text-sm border-l-4 border-gray-300 p-2 bg-gray-50 rounded-r-lg'
-                    >
-                      <div className='flex justify-between items-start mb-2'>
-                        <h4 className='font-medium text-gray-900'>{name}</h4>
-                        <span className='font-semibold text-gray-700'>
-                          {formatCurrency(value)}
-                        </span>
+                  {categoryValueDict[categoryData.id as CategoryKeys].map(
+                    ({ name, value }) => (
+                      <div
+                        key={name}
+                        className='text-sm border-l-4 border-gray-300 p-2 bg-gray-50 rounded-r-lg'
+                      >
+                        <div className='flex justify-between items-start mb-2'>
+                          <h4 className='font-medium text-gray-900'>{name}</h4>
+                          <span className='font-semibold text-gray-700'>
+                            {formatCurrency(value ?? 0)}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </div>
             )}
@@ -178,11 +210,12 @@ const CategoryInfoModal = ({
   );
 };
 
-const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
+const ExpenseTable = () => {
+  const { expenses } = useCalculations();
+  const chartData = expenses!.chartData;
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const chartData = expenses.chartData;
 
   const expenseItems = useMemo(
     () => [
@@ -236,7 +269,7 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
       },
       {
         name: "Utilities",
-        value: chartData.utilities,
+        value: chartData.utilities.total,
         color: BRAND_COLORS.utilities,
         id: "utilities",
         description:
@@ -399,7 +432,6 @@ const ExpenseTable = ({ expenses }: ExpenseTableProps) => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         categoryData={selectedCategoryData}
-        facilityCostsSplit={chartData.otherFacilityCostsSplit}
       />
     </>
   );

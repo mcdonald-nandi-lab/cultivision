@@ -15,7 +15,7 @@ export function exportToCsv(
       chartData.facility +
       chartData.media +
       chartData.otherMaterials +
-      chartData.utilities +
+      chartData.utilities.total +
       chartData.labor +
       chartData.waste +
       chartData.consumables
@@ -44,8 +44,8 @@ export function exportToCsv(
     ],
     [
       "Utilities",
-      chartData.utilities.toFixed(2),
-      ((chartData.utilities / totalExpense) * 100).toFixed(1),
+      chartData.utilities.total.toFixed(2),
+      ((chartData.utilities.total / totalExpense) * 100).toFixed(1),
     ],
     [
       "Labor",
