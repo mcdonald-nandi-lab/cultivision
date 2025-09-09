@@ -45,7 +45,7 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
 };
 
 const Dashboard = () => {
-  const { activeReactorId, expenses, isUrlParamProcessed } = useCalculations();
+  const { expenses, isUrlParamProcessed } = useCalculations();
   const { isLoading } =
       useAccessControl();
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -87,7 +87,6 @@ const Dashboard = () => {
                 </h3>
                 <div className='hover:opacity-90 transition-opacity'>
                   <FlowDiagram
-                    bioreactorId={activeReactorId}
                     showTitle={false}
                   />
                 </div>
@@ -119,7 +118,7 @@ const Dashboard = () => {
                     <BioreactorChart expenses={expenses} />
                   </Container>
                   <Container>
-                    <ExpenseTable expenses={expenses} />
+                    <ExpenseTable />
                   </Container>
                 </div>
 
@@ -143,7 +142,7 @@ const Dashboard = () => {
           </div>
 
           {isModalOpen && (
-            <ImageModal bioreactorId={activeReactorId} onClose={closeModal} />
+            <ImageModal onClose={closeModal} />
           )}
         </main>
       </ProtectedRoute>

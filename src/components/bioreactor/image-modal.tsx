@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useCalculations } from "@/context/calculation-context";
 
 interface ImageModalProps {
-  bioreactorId: string;
   doublingTime?: string;
   density?: string;
   onClose: () => void;
