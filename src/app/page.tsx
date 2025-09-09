@@ -155,7 +155,7 @@ const FEATURES: featureProps[] = [
   },
 ];
 
-export const Authors = () => {
+const Authors = () => {
   return (
     <div className='w-full flex flex-col gap-4'>
       <div className='text-2xl text-center text-green-700 font-semibold'>
@@ -166,7 +166,7 @@ export const Authors = () => {
           <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold'>
             Aunsh Bandivadekar
           </div>
-          <div className='text-md text-gray-700'>Lead Developer</div>
+          <div className='text-md text-gray-700'>Software Developer</div>
           <Link
             href={AUTHOR_LINK}
             target='_blank'
