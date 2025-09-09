@@ -5,6 +5,7 @@ import {
   ProductionCosts,
 } from "@/types";
 import { BASE_LABOR_UNIT_COST, BIOREACTORS } from "./data";
+import { generateLaborCostValues } from "./labor-costs";
 
 export function getBioreactorById(id: string): Bioreactor | undefined {
   return BIOREACTORS.find((reactor) => reactor.id === id);
@@ -95,7 +96,7 @@ export function calculateExpenses(
   bioreactor: Bioreactor,
   doublingTime: string,
   density: string,
-  costs: ProductionCosts
+  costs: ProductionCosts,
 ): CalculatedExpenses | null {
   const bioreactorData = getBioreactorData(bioreactor, doublingTime, density);
 
@@ -124,7 +125,7 @@ export function calculateExpenses(
     });
   }
 
-  const labor = (1 + costs.laborCost / 100) * baseLaborCost;
+  const labor = baseLaborCost;
   const waste = bioreactorData.wasteTreatmentCost!;
   const facility = bioreactorData.otherFacilityCosts!;
   const consumables = bioreactorData.consumableCosts!;
@@ -153,14 +154,14 @@ export function calculateExpenses(
 
   // Calculate Minimum Selling Price
   const f = (msp: number) =>
-    calculateMSP(
-      costs,
-      bioreactorData,
-      cogsWithDepreciation,
-      msp
-    );
-  const minimumSellingPrice =
-    Math.round(minimizeScalar(f, 0, 100) * 100) / 100;
+    calculateMSP(costs, bioreactorData, cogsWithDepreciation, msp);
+  const minimumSellingPrice = Math.round(minimizeScalar(f, 0, 100) * 100) / 100;
+
+  const laborCostValues = generateLaborCostValues(
+    costs.uspLaborCostPerHour,
+    costs.dspLaborCostPerHour,
+    bioreactorData.laborHours
+  );
 
   return {
     annualProduction: bioreactorData.annualProduction!,
@@ -170,6 +171,7 @@ export function calculateExpenses(
     cogsWithDepreciation,
     cogsWithoutDepreciation,
     minimumSellingPrice,
+    laborCostValues,
     chartData: {
       media,
       otherMaterials,

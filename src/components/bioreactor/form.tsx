@@ -37,12 +37,22 @@ const costInputs: ParameterProps[] = [
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.mediaCost}/L`,
   },
   {
-    id: "laborCost",
-    label: "Labor Cost Change",
-    unit: "%",
-    step: "1",
-    default: DEFAULT_PRODUCTION_COSTS.laborCost,
-    description: "Labor cost as a percent difference from base labor cost",
+    id: "uspLaborCostPerHour",
+    label: "USP Operator",
+    unit: "$/h",
+    step: "0.1",
+    default: DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour,
+    description: "Upstream operator cost by hour",
+    min: 0,
+  },
+  {
+    id: "dspLaborCostPerHour",
+    label: "DSP Operator",
+    unit: "$/h",
+    step: "0.1",
+    default: DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour,
+    description: "Downstream operator cost by hour",
+    min: 0,
   },
 ];
 

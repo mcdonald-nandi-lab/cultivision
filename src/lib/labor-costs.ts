@@ -1,4 +1,5 @@
 import { getBioreactorById, getBioreactorData } from "./bioreactors";
+import { DEFAULT_PRODUCTION_COSTS } from "./data";
 
 export interface LaborHours {
   upstream: number;
@@ -6,31 +7,28 @@ export interface LaborHours {
   downstream: number;
 }
 
-export interface HourlyRate {
-  upstream: number;
-  main: number;
-  downstream: number;
+export interface LaborBaseDetails extends LaborHours {
+  totalCost: number;
 }
 
-export interface LaborCostResult {
-  hourlyRates: HourlyRate;
-  totalAnnualCost: number;
-  absolutePercentage: number;
+export interface LaborUpdatedDetails extends LaborBaseDetails {
+  uspLaborCostPerHour: number;
+  dspLaborCostPerHour: number;
 }
 
-export interface LaborCostTable {
+export interface LaborCostValues {
   laborHours: LaborHours;
-  relativePercentages: number[];
-  currentPercentage: number;
-  results: Record<string, LaborCostResult>;
-  currentAnnualCost: number;
+  updatedCosts: LaborUpdatedDetails;
+  baseCosts: LaborBaseDetails;
+  differenceOfTotals: number;
+  isEqual: boolean;
 }
 
-export const baseHourlyCosts: HourlyRate = {
-  upstream: 46.0,
-  main: 34.5,
-  downstream: 57.5,
-};
+const upstreamLaborCostPerHourDefault = DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour;
+const mainLaborCostPerHourDefault = DEFAULT_PRODUCTION_COSTS.mainLaborCostPerHour;
+const downstreamLaborCostPerHourDefault =
+    DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour;
+
 
 export function getLaborHours(
   bioreactorId: string,
@@ -46,61 +44,50 @@ export function getLaborHours(
   return data.laborHours;
 }
 
-export function calculateModifiedRates(
-  percentageChange: number = 0
-): HourlyRate {
-  return {
-    upstream: baseHourlyCosts.upstream * (1 + percentageChange / 100),
-    main: baseHourlyCosts.main * (1 + percentageChange / 100),
-    downstream: baseHourlyCosts.downstream * (1 + percentageChange / 100),
+export function generateLaborCostValues(
+  uspLaborCostPerHour: number,
+  dspLaborCostPerHour: number,
+  laborHours: LaborHours
+): LaborCostValues {
+  let baseCosts = {
+    main: mainLaborCostPerHourDefault * laborHours.main,
+    upstream: upstreamLaborCostPerHourDefault * laborHours.upstream,
+    downstream: downstreamLaborCostPerHourDefault * laborHours.downstream,
+    totalCost: 0,
   };
-}
 
-export function calculateTotalAnnualCost(
-  hours: LaborHours,
-  rates: HourlyRate
-): number {
-  return (
-    hours.upstream * rates.upstream +
-    hours.main * rates.main +
-    hours.downstream * rates.downstream
+  let updatedCosts = {
+    main: mainLaborCostPerHourDefault * laborHours.main,
+    upstream: uspLaborCostPerHour * laborHours.upstream,
+    downstream: dspLaborCostPerHour * laborHours.downstream,
+    uspLaborCostPerHour,
+    dspLaborCostPerHour,
+    totalCost: 0,
+  };
+
+  const baseCostsTotal: number = Object.values(baseCosts).reduce(
+    (sum: number, value: number) => sum + value
   );
-}
 
-export function generateLaborCostTable(
-  bioreactorId: string,
-  doublingTime: string,
-  density: string,
-  currentLaborCostPercentage: number
-): LaborCostTable | null {
-  const laborHours = getLaborHours(bioreactorId, doublingTime, density);
-  if (!laborHours) return null;
+  baseCosts = { ...baseCosts, totalCost: baseCostsTotal };
 
-  const relativePercentages = [-2, -1, 0, 1, 2];
+  const updatedCostsTotal: number =
+    Object.values(updatedCosts).reduce(
+      (sum: number, value: number) => sum + value
+    ) -
+    (uspLaborCostPerHour + dspLaborCostPerHour);
 
-  const results: Record<string, LaborCostResult> = {};
+  updatedCosts = { ...updatedCosts, totalCost: updatedCostsTotal };
 
-  relativePercentages.forEach((relPercentage) => {
-    const absolutePercentage = currentLaborCostPercentage + relPercentage;
-
-    const hourlyRates = calculateModifiedRates(absolutePercentage);
-    const totalAnnualCost = calculateTotalAnnualCost(laborHours, hourlyRates);
-
-    results[relPercentage.toString()] = {
-      hourlyRates,
-      totalAnnualCost,
-      absolutePercentage,
-    };
-  });
-
-  const currentRates = calculateModifiedRates(currentLaborCostPercentage);
-  const currentAnnualCost = calculateTotalAnnualCost(laborHours, currentRates);
+  const differenceOfTotals = updatedCostsTotal - baseCostsTotal;
 
   return {
     laborHours,
-    relativePercentages,
-    currentPercentage: currentLaborCostPercentage,
-    results,
-    currentAnnualCost,
+    baseCosts,
+    updatedCosts,
+    differenceOfTotals,
+    isEqual:
+      updatedCosts.upstream === baseCosts.upstream &&
+      updatedCosts.downstream === baseCosts.downstream,
   };
 }
