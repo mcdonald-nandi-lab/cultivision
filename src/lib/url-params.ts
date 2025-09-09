@@ -4,11 +4,15 @@ import { DEFAULT_PRODUCTION_COSTS } from "./data";
 export function encodeProductionCosts(costs: ProductionCosts): string {
   const orderedKeys = [
     "mediaCost",
-    "laborCost",
+    "uspLaborCostPerHour",
+    "mainLaborCostPerHour",
+    "dspLaborCostPerHour",
     "electricityCost",
     "steamCost",
     "coolingWaterCost",
     "chilledWaterCost",
+    "taxRate",
+    "projectDuration",
   ] as const;
 
   const changedParams: Record<string, number> = {};
