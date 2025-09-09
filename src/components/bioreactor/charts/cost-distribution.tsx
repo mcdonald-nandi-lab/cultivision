@@ -35,7 +35,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       chartData.waste,
       chartData.facility,
       chartData.consumables,
-      chartData.utilities,
+      chartData.utilities.total,
     ];
 
     const total = expenseValues.reduce((sum, value) => sum + value, 0);
@@ -47,7 +47,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
       waste: (chartData.waste / total) * 100,
       facility: (chartData.facility / total) * 100,
       consumables: (chartData.consumables / total) * 100,
-      utilities: (chartData.utilities / total) * 100,
+      utilities: (chartData.utilities.total / total) * 100,
     };
   };
 
@@ -83,7 +83,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
             chartData.waste,
             chartData.facility,
             chartData.consumables,
-            chartData.utilities,
+            chartData.utilities.total,
           ],
           backgroundColor: BRAND_COLOR_ORDER,
           borderWidth: 1,

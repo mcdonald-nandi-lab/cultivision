@@ -43,6 +43,14 @@ export interface Bioreactor {
   };
 }
 
+export interface Utilities {
+  total: number;
+  power: number;
+  steam: number;
+  coolingWater: number;
+  chilledWater: number;
+}
+
 export interface ProductionCosts {
   mediaCost: number;
   uspLaborCostPerHour: number;
@@ -63,7 +71,7 @@ export interface ExpenseBreakdown {
   waste: number;
   facility: number;
   consumables: number;
-  utilities: number;
+  utilities: Utilities;
   otherFacilityCostsSplit: OtherFacilityCostsSplit;
 }
 

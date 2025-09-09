@@ -111,8 +111,14 @@ export function calculateExpenses(
     costs.coolingWaterCost * bioreactorData.coolingWaterUsage!;
   const chilledWater =
     costs.chilledWaterCost * bioreactorData.chilledWaterUsage!;
-  const utilities = power + steam + coolingWater + chilledWater;
-
+  const utilities = {
+    total: power + steam + coolingWater + chilledWater,
+    power,
+    steam,
+    coolingWater,
+    chilledWater,
+  };
+  
   // Calculate operating expenses
   const media = costs.mediaCost * bioreactorData.mediaVolume!;
   const otherMaterials = bioreactorData.otherMaterialsCost!;
@@ -130,7 +136,7 @@ export function calculateExpenses(
   const consumables = bioreactorData.consumableCosts!;
 
   const operatingExpenses =
-    media + otherMaterials + labor + waste + facility + consumables + utilities;
+    media + otherMaterials + labor + waste + facility + consumables + utilities.total;
 
   const operatingExpensesWithoutDepreciation =
     operatingExpenses - bioreactorData.otherFacilityCostsSplit.depreciation!;
