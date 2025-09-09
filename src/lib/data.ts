@@ -1,11 +1,5 @@
 import { Bioreactor, ProductionCosts } from "@/types";
 
-export const BASE_LABOR_UNIT_COST: Record<string, number> = {
-  main: 34.5,
-  upstream: 46.0,
-  downstream: 57.5,
-};
-
 export const BIOREACTORS: Bioreactor[] = [
   {
     id: "105K_STR",
