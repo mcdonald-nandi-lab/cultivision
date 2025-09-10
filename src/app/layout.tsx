@@ -11,6 +11,7 @@ import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { MaximizeProvider } from "@/context/maximize-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,7 +70,8 @@ const providers = [
   ModalProvider,
   AccessControlProvider,
   ToastProvider,
-  UserbackProvider
+  UserbackProvider,
+  MaximizeProvider,
 ];
 
 const RootLayout = ({

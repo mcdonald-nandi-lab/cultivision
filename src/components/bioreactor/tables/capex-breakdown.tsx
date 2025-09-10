@@ -2,6 +2,7 @@
 
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import { InfoModal } from "@/components/info-modal";
+import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
 import { CAPEX_COLORS } from "@/lib/constants";
@@ -263,20 +264,23 @@ const CapexBreakdownTable = () => {
   return (
     <>
       <div className='h-full flex flex-col pb-2'>
-        <div className='flex items-center justify-start gap-x-2 mb-4'>
-          <Title title='CAPEX Breakdown' />
-          <TableDownloadButton
-            filename='capex-breakdown.csv'
-            headers={["Category", "Cost", "Percentage"]}
-            rows={[
-              ...capexItems.map((item) => [
-                item.name.replace(/[├└│]/g, "").trim(),
-                formatCurrency(item.value),
-                ((item.value / total) * 100).toFixed(1) + "%",
-              ]),
-              ["Total", formatCurrency(total), "100%"],
-            ]}
-          />
+        <div className='flex items-center justify-between gap-x-4 mb-4'>
+          <div className='flex items-center justify-start gap-x-2'>
+            <Title title='CAPEX Breakdown' />
+            <TableDownloadButton
+              filename='capex-breakdown.csv'
+              headers={["Category", "Cost", "Percentage"]}
+              rows={[
+                ...capexItems.map((item) => [
+                  item.name.replace(/[├└│]/g, "").trim(),
+                  formatCurrency(item.value),
+                  ((item.value / total) * 100).toFixed(1) + "%",
+                ]),
+                ["Total", formatCurrency(total), "100%"],
+              ]}
+            />
+          </div>
+          <MaximizeButton id={"capexBreakdownTable"} title={"CAPEX Table"} />
         </div>
 
         <div className='overflow-scroll border border-gray-200 rounded-lg h-full'>
@@ -310,7 +314,10 @@ const CapexBreakdownTable = () => {
               {capexItems.map(({ id, color, name, value, isParent, level }) => (
                 <tr
                   key={id}
-                  className={cn({"hover:bg-gray-50 cursor-pointer": !isParent}, {"bg-gray-25": level > 0})}
+                  className={cn(
+                    { "hover:bg-gray-50 cursor-pointer": !isParent },
+                    { "bg-gray-25": level > 0 }
+                  )}
                   onClick={() => handleInfoClick(id, isParent)}
                 >
                   <td className='px-6 py-4 whitespace-nowrap'>

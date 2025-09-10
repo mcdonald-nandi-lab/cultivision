@@ -1,62 +1,60 @@
 "use client";
 
-import { CalculatedExpenses } from "@/types";
-import cn from "classnames";
-import TableDownloadButton from "@/components/bioreactor/tables/download-button"; 
+import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import Title from "@/components/title";
-
-interface SummaryTableProps {
-  expenses: CalculatedExpenses;
-}
+import { useCalculations } from "@/context/calculation-context";
+import cn from "classnames";
 
 export const formatNumber = (num: number, fixed=1): string => {
   return num.toLocaleString(undefined, { maximumFractionDigits: fixed });
 };
 
-const SummaryTable = ({ expenses }: SummaryTableProps) => {
+const ExecutiveSummaryTable = () => {
+  const { expenses } = useCalculations();
+  const data = expenses!;
 
   const metrics = [
     {
       name: "Annual Production",
-      value: formatNumber(expenses.annualProduction, 2),
+      value: formatNumber(data.annualProduction, 2),
       combinedValue: formatNumber(
-        expenses.annualProduction * expenses.facilitiesNeeded,
+        data.annualProduction * data.facilitiesNeeded,
         2
       ),
       unit: "kg/yr",
     },
     {
       name: "Capital Expenses",
-      value: formatNumber(expenses.capitalExpenses),
+      value: formatNumber(data.capitalExpenses),
       combinedValue: formatNumber(
-        expenses.capitalExpenses * expenses.facilitiesNeeded
+        data.capitalExpenses * data.facilitiesNeeded
       ),
       unit: "million $",
     },
     {
       name: "Operating Expenses",
-      value: formatNumber(expenses.operatingExpenses),
+      value: formatNumber(data.operatingExpenses),
       combinedValue: formatNumber(
-        expenses.operatingExpenses * expenses.facilitiesNeeded
+        data.operatingExpenses * data.facilitiesNeeded
       ),
       unit: "million $/yr",
     },
     {
       name: "COGS (with Depreciation)",
-      value: expenses.cogsWithDepreciation.toFixed(2),
-      combinedValue: expenses.cogsWithDepreciation.toFixed(2),
+      value: data.cogsWithDepreciation.toFixed(2),
+      combinedValue: data.cogsWithDepreciation.toFixed(2),
       unit: "$/kg",
     },
     {
       name: "COGS (without Depreciation)",
-      value: expenses.cogsWithoutDepreciation.toFixed(2),
-      combinedValue: expenses.cogsWithoutDepreciation.toFixed(2),
+      value: data.cogsWithoutDepreciation.toFixed(2),
+      combinedValue: data.cogsWithoutDepreciation.toFixed(2),
       unit: "$/kg",
     },
     {
       name: "Minimum Selling Price",
-      value: expenses.minimumSellingPrice.toFixed(2),
-      combinedValue: expenses.minimumSellingPrice.toFixed(2),
+      value: data.minimumSellingPrice.toFixed(2),
+      combinedValue: data.minimumSellingPrice.toFixed(2),
       unit: "$/kg",
     },
   ];
@@ -98,7 +96,7 @@ const SummaryTable = ({ expenses }: SummaryTableProps) => {
                 scope='col'
                 className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
               >
-                {expenses.facilitiesNeeded}* Facilities
+                {data.facilitiesNeeded}* Facilities
               </th>
               <th
                 scope='col'
@@ -151,4 +149,4 @@ const SummaryTable = ({ expenses }: SummaryTableProps) => {
   );
 };
 
-export default SummaryTable;
+export default ExecutiveSummaryTable;
