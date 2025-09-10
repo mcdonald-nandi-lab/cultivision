@@ -20,7 +20,8 @@ const SummaryTable = ({ expenses }: SummaryTableProps) => {
       name: "Annual Production",
       value: formatNumber(expenses.annualProduction, 2),
       combinedValue: formatNumber(
-        expenses.annualProduction * expenses.facilitiesNeeded, 2
+        expenses.annualProduction * expenses.facilitiesNeeded,
+        2
       ),
       unit: "kg/yr",
     },
@@ -52,9 +53,15 @@ const SummaryTable = ({ expenses }: SummaryTableProps) => {
       combinedValue: expenses.cogsWithoutDepreciation.toFixed(2),
       unit: "$/kg",
     },
+    {
+      name: "Minimum Selling Price",
+      value: expenses.minimumSellingPrice.toFixed(2),
+      combinedValue: expenses.minimumSellingPrice.toFixed(2),
+      unit: "$/kg",
+    },
   ];
 
-  const headers = ["Metric", "Single Value", "25 Value", "Unit"];
+  const headers = ["Metric", "Single Facility", "Ten Facilities", "Unit"];
   const rows = metrics.map((m) => [m.name, m.value, m.combinedValue, m.unit]);
 
   return (
@@ -137,7 +144,7 @@ const SummaryTable = ({ expenses }: SummaryTableProps) => {
           <li>COGS = Cost of Goods Sold</li>
           <li>*Value summary of number of facilities required to produce approximately 100M kg/yr</li>
           <li>Capital expenses are reported in millions of $</li>
-          <li>All calculations based on provided cost parameters</li>
+          <li>All calculations are based on provided cost parameters</li>
         </ul>
       </div>
     </div>

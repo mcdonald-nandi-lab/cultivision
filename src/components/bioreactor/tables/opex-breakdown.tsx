@@ -249,7 +249,7 @@ const ExpenseTable = () => {
     <>
       <div className='h-full flex flex-col pb-2'>
         <div className='flex items-center justify-start gap-x-2 mb-4'>
-          <Title title='Cost Breakdown' />
+          <Title title='OPEX Breakdown' />
           <TableDownloadButton
             filename='expense-breakdown.csv'
             headers={["Category", "Cost", "Percentage"]}

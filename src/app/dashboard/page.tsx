@@ -1,11 +1,11 @@
 "use client";
 
-import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
+import BioreactorChart from "@/components/bioreactor/charts/opex-distribution";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
 import ParameterForm from "@/components/bioreactor/form";
 import ImageModal from "@/components/bioreactor/image-modal";
 import SingleValueCard from "@/components/bioreactor/sv-card";
-import ExpenseTable from "@/components/bioreactor/tables/cost-breakdown";
+import ExpenseTable from "@/components/bioreactor/tables/opex-breakdown";
 import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
 import MetricsTable from "@/components/bioreactor/tables/summary";
 import Container from "@/components/container";
@@ -21,7 +21,7 @@ import Loading from "../loading";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
-  | "minimumSellingPrice"
+  | "capitalExpenses"
   | "facilitiesNeeded"
   | "operatingExpenses";
 
@@ -34,9 +34,9 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
     title: "Operating Expenses",
     unit: "million $/yr",
   },
-  minimumSellingPrice: {
-    title: "Minimum Selling Price",
-    unit: "$",
+  capitalExpenses: {
+    title: "Capital Expenses",
+    unit: "million $/yr",
   },
   facilitiesNeeded: {
     title: "Needed for 100M kg/yr",
