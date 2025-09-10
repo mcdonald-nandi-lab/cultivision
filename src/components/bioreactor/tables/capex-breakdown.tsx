@@ -2,6 +2,7 @@
 
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import { InfoModal } from "@/components/info-modal";
+import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
 import { CAPEX_COLORS } from "@/lib/constants";
@@ -277,6 +278,10 @@ const CapexBreakdownTable = () => {
               ["Total", formatCurrency(total), "100%"],
             ]}
           />
+          <MaximizeButton
+            id={"capexBreakdownTable"}
+            title={"CAPEX Table"}
+          />
         </div>
 
         <div className='overflow-scroll border border-gray-200 rounded-lg h-full'>
@@ -310,7 +315,10 @@ const CapexBreakdownTable = () => {
               {capexItems.map(({ id, color, name, value, isParent, level }) => (
                 <tr
                   key={id}
-                  className={cn({"hover:bg-gray-50 cursor-pointer": !isParent}, {"bg-gray-25": level > 0})}
+                  className={cn(
+                    { "hover:bg-gray-50 cursor-pointer": !isParent },
+                    { "bg-gray-25": level > 0 }
+                  )}
                   onClick={() => handleInfoClick(id, isParent)}
                 >
                   <td className='px-6 py-4 whitespace-nowrap'>
