@@ -156,9 +156,9 @@ const Authors = () => {
       <div className='text-2xl text-center text-green-700 font-semibold'>
         Authors
       </div>
-      <div className='w-full flex flex-1 items-center justify-around gap-8'>
+      <div className='w-full flex flex-col md:flex-row items-start justify-around gap-8'>
         <div className='border-1 border-gray-500 rounded-lg border-solid flex flex-col items-center justify-center p-4 w-full'>
-          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold'>
+          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold text-center'>
             Aunsh Bandivadekar
           </div>
           <div className='text-md text-gray-700'>Software Developer</div>
@@ -174,7 +174,7 @@ const Authors = () => {
           </Link>
         </div>
         <div className='border-1 border-gray-500 rounded-lg border-solid flex flex-col items-center justify-center p-4 w-full'>
-          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold'>
+          <div className='text-lg hover:text-green-600 text-slate-700 cursor-pointer font-semibold text-center'>
             Varun Gore
           </div>
           <div className='text-md text-gray-700'>Phd. Candidate</div>
