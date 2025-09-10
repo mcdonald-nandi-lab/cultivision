@@ -2,6 +2,7 @@
 
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import { InfoModal } from "@/components/info-modal";
+import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
 import { BRAND_COLORS } from "@/lib/constants";
@@ -145,7 +146,7 @@ const CategoryInfo = ({
   );
 };
 
-const ExpenseTable = () => {
+const OpexBreakdownTable = () => {
   const { expenses } = useCalculations();
   const chartData = expenses!.chartData;
 
@@ -248,22 +249,24 @@ const ExpenseTable = () => {
   return (
     <>
       <div className='h-full flex flex-col pb-2'>
-        <div className='flex items-center justify-start gap-x-2 mb-4'>
-          <Title title='OPEX Breakdown' />
-          <TableDownloadButton
-            filename='expense-breakdown.csv'
-            headers={["Category", "Cost", "Percentage"]}
-            rows={[
-              ...sortedExpenseItems.map((item) => [
-                item.name,
-                formatCurrency(item.value),
-                ((item.value / total) * 100).toFixed(1) + "%",
-              ]),
-              ["Total", formatCurrency(total), "100%"],
-            ]}
-          />
+        <div className='flex items-center justify-between gap-x-4 mb-4'>
+          <div className='flex items-center justify-start gap-x-2'>
+            <Title title='OPEX Breakdown' />
+            <TableDownloadButton
+              filename='expense-breakdown.csv'
+              headers={["Category", "Cost", "Percentage"]}
+              rows={[
+                ...sortedExpenseItems.map((item) => [
+                  item.name,
+                  formatCurrency(item.value),
+                  ((item.value / total) * 100).toFixed(1) + "%",
+                ]),
+                ["Total", formatCurrency(total), "100%"],
+              ]}
+            />
+          </div>
+          <MaximizeButton id={"opexBreakdownTable"} title={"OPEX  Table"} />
         </div>
-
         <div className='overflow-scroll border border-gray-200 rounded-lg h-full'>
           <table
             className='min-w-full divide-y divide-gray-200 h-full'
@@ -369,4 +372,4 @@ const ExpenseTable = () => {
   );
 };
 
-export default ExpenseTable;
+export default OpexBreakdownTable;

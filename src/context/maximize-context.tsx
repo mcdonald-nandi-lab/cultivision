@@ -1,7 +1,9 @@
 "use client";
 
+import CapexDistribution from "@/components/bioreactor/charts/capex-distribution";
+import OpexDistribution from "@/components/bioreactor/charts/opex-distribution";
 import CapexBreakdownTable from "@/components/bioreactor/tables/capex-breakdown";
-import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
+import OpexBreakdownTable from "@/components/bioreactor/tables/opex-breakdown";
 import { InfoModal } from "@/components/info-modal";
 import { trackButtonClick } from "@/lib/analytics";
 import { createContext, ReactNode, useContext, useState } from "react";
@@ -12,15 +14,24 @@ type MaximizeContextType = {
   closeMaxModal: () => void;
 };
 
-export type MaximizeIdTypes = "capexBreakdownTable" | "laborCostTable" | null;
+export type MaximizeIdTypes =
+  | "capexBreakdownTable"
+  | "opexBreakdownTable"
+  | "capexDistribution"
+  | "opexDistribution"
+  | null;
 
 
 const getModalComponent = (id: MaximizeIdTypes): ReactNode => {
   switch (id) {
     case "capexBreakdownTable":
       return <CapexBreakdownTable />;
-    case "laborCostTable":
-      return <LaborCostTable />;
+    case "capexDistribution":
+      return <CapexDistribution />;
+    case "opexBreakdownTable":
+      return <OpexBreakdownTable />;
+    case "opexDistribution":
+      return <OpexDistribution />;
     default:
       return null;
   }

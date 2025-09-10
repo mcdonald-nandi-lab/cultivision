@@ -1,28 +1,24 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import Title from "@/components/title";
+import { useCalculations } from "@/context/calculation-context";
+import useChartDownload from "@/hooks/use-chart-download";
 import {
+  ArcElement,
   Chart,
   ChartConfiguration,
   DoughnutController,
-  ArcElement,
-  Tooltip,
   Legend,
+  Tooltip,
 } from "chart.js";
-import { CalculatedExpenses } from "@/types";
-import useChartDownload from "@/hooks/use-chart-download";
+import { useEffect, useRef } from "react";
 import ChartDownloadButton from "./download-button";
-import Title from "@/components/title";
+import MaximizeButton from "@/components/maximize-button";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
-interface CapexNestedDoughnutChartProps {
-  expenses: CalculatedExpenses;
-}
-
-const CapexNestedDoughnutChart = ({
-  expenses,
-}: CapexNestedDoughnutChartProps) => {
+const CapexDistribution = () => {
+  const { expenses } = useCalculations();
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -226,8 +222,8 @@ const CapexNestedDoughnutChart = ({
 
   return (
     <div className='h-full flex flex-col pb-2'>
-      <div className='flex justify-between items-start w-full mb-4'>
-        <div className='flex gap-x-2'>
+      <div className='flex items-center justify-between gap-x-4 mb-4'>
+        <div className='flex items-center justify-start gap-x-2'>
           <Title title={"CAPEX Distribution"} />
           <ChartDownloadButton
             downloadChart={downloadChart}
@@ -235,8 +231,11 @@ const CapexNestedDoughnutChart = ({
             filename='capex-nested-doughnut-chart.png'
           />
         </div>
+        <MaximizeButton
+          id={"capexDistribution"}
+          title={"CAPEX Distribution Chart"}
+        />
       </div>
-
       <div className='flex-1 flex flex-col'>
         <div className='flex-1 relative' style={{ minHeight: "400px" }}>
           <canvas ref={chartRef} className='w-full h-full' />
@@ -253,4 +252,4 @@ const CapexNestedDoughnutChart = ({
   );
 };
 
-export default CapexNestedDoughnutChart;
+export default CapexDistribution;

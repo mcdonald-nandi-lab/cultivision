@@ -264,24 +264,23 @@ const CapexBreakdownTable = () => {
   return (
     <>
       <div className='h-full flex flex-col pb-2'>
-        <div className='flex items-center justify-start gap-x-2 mb-4'>
-          <Title title='CAPEX Breakdown' />
-          <TableDownloadButton
-            filename='capex-breakdown.csv'
-            headers={["Category", "Cost", "Percentage"]}
-            rows={[
-              ...capexItems.map((item) => [
-                item.name.replace(/[├└│]/g, "").trim(),
-                formatCurrency(item.value),
-                ((item.value / total) * 100).toFixed(1) + "%",
-              ]),
-              ["Total", formatCurrency(total), "100%"],
-            ]}
-          />
-          <MaximizeButton
-            id={"capexBreakdownTable"}
-            title={"CAPEX Table"}
-          />
+        <div className='flex items-center justify-between gap-x-4 mb-4'>
+          <div className='flex items-center justify-start gap-x-2'>
+            <Title title='CAPEX Breakdown' />
+            <TableDownloadButton
+              filename='capex-breakdown.csv'
+              headers={["Category", "Cost", "Percentage"]}
+              rows={[
+                ...capexItems.map((item) => [
+                  item.name.replace(/[├└│]/g, "").trim(),
+                  formatCurrency(item.value),
+                  ((item.value / total) * 100).toFixed(1) + "%",
+                ]),
+                ["Total", formatCurrency(total), "100%"],
+              ]}
+            />
+          </div>
+          <MaximizeButton id={"capexBreakdownTable"} title={"CAPEX Table"} />
         </div>
 
         <div className='overflow-scroll border border-gray-200 rounded-lg h-full'>

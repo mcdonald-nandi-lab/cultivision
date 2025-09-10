@@ -1,5 +1,5 @@
-import React from 'react'
-import { formatNumber } from './tables/summary';
+import React from "react";
+import { formatNumber } from "./tables/executive-summary";
 
 interface SingleValueCardProps {
   title: string;
@@ -19,6 +19,6 @@ const SingleValueCard = ({ title, value, unit }: SingleValueCardProps) => {
       <div className='text-sm text-center'>{title}</div>
     </div>
   );
-}
+};
 
-export default SingleValueCard
+export default SingleValueCard;

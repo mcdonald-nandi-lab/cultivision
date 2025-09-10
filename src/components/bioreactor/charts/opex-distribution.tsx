@@ -14,14 +14,14 @@ import { BRAND_COLOR_ORDER } from "@/lib/constants";
 import useChartDownload from "@/hooks/use-chart-download";
 import ChartDownloadButton from "./download-button";
 import Title from "@/components/title";
+import { useCalculations } from "@/context/calculation-context";
+import MaximizeButton from "@/components/maximize-button";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
-interface BioreactorChartProps {
-  expenses: CalculatedExpenses;
-}
-
-const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
+const OpexDistribution = () => {
+  const { expenses } = useCalculations();
+  
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -134,8 +134,8 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
 
   return (
     <div className='h-full flex flex-col pb-2'>
-      <div className='flex justify-between items-start w-full'>
-        <div className='flex gap-x-2'>
+      <div className='flex items-center justify-between gap-x-4 mb-4'>
+        <div className='flex items-center justify-start gap-x-2'>
           <Title title={"OPEX Distribution"} />
           <ChartDownloadButton
             downloadChart={downloadChart}
@@ -143,8 +143,8 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
             filename='cost-distribution-chart.png'
           />
         </div>
+        <MaximizeButton id={"opexDistribution"} title={"OPEX Distribution Chart"} />
       </div>
-
       <div
         className='flex-1 relative h-full'
         aria-label='Doughnut chart showing percentage distribution of operational expenses'
@@ -156,4 +156,4 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
   );
 };
 
-export default BioreactorChart;
+export default OpexDistribution;

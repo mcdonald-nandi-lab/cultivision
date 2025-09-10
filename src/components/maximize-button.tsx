@@ -24,7 +24,7 @@ const MaximizeButton = ({
           <RadixTooltip.Root>
             <RadixTooltip.Trigger asChild>
               <div
-                className={cn("cursor-pointer text-gray-600")}
+                className={cn("cursor-pointer text-gray-600 hover:text-green-600")}
                 onClick={() => openMaxModal(id)}
               >
                 <svg
