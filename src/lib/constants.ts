@@ -29,8 +29,6 @@ export const BRAND_COLORS = {
   utilities: "#52B5A8", // More blue-green distinction
 };
 
-
-
 export const BRAND_COLOR_ORDER = [
   BRAND_COLORS.media,
   BRAND_COLORS.rawMaterials,
@@ -40,6 +38,17 @@ export const BRAND_COLOR_ORDER = [
   BRAND_COLORS.consumables,
   BRAND_COLORS.utilities,
 ];
+
+export const CAPEX_COLORS = {
+  directFixedCapital: "#168aad",
+  plantDirectCost: "#34a0a4",
+  equipmentPurchaseCost: "#34a0a4",
+  otherDirectCost: "#52b69a",
+  plantIndirectCost: "#76c893",
+  miscellaneousCost: "#99d98c",
+  workingCapital: "#bc4749",
+  startupCapital: "#dda15e",
+};
 
 export const STATS = [
   { value: "100M+", label: "kg/yr production capacity analysis" },

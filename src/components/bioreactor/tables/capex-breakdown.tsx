@@ -4,7 +4,8 @@ import TableDownloadButton from "@/components/bioreactor/tables/download-button"
 import { InfoModal } from "@/components/info-modal";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
-import { BRAND_COLORS } from "@/lib/constants";
+import { CAPEX_COLORS } from "@/lib/constants";
+import cn from "classnames";
 import { useMemo, useState } from "react";
 
 interface CategoryData {
@@ -167,11 +168,10 @@ const CapexBreakdownTable = () => {
 
   const capexItems = useMemo(
     () => [
-      // Main categories with hierarchical display
       {
-        name: "Direct Fixed Capital",
+        name: "Direct Fixed Capital (DFC)",
         value: capex.directFixedCapital.totalCapital,
-        color: "#E5E7EB", // Gray for parent category
+        color: CAPEX_COLORS.directFixedCapital,
         id: "directFixedCapital",
         description:
           "Total direct fixed capital including plant direct costs, indirect costs, and miscellaneous project costs.",
@@ -179,19 +179,9 @@ const CapexBreakdownTable = () => {
         level: 0,
       },
       {
-        name: "├── Plant Direct Cost",
-        value: capex.directFixedCapital.plantDirectCost.total,
-        color: "#E5E7EB", // Gray for parent subcategory
-        id: "plantDirectCost",
-        description:
-          "Direct costs for plant construction including equipment and other direct construction costs.",
-        isParent: true,
-        level: 1,
-      },
-      {
-        name: "│   ├── Equipment Purchase Cost",
+        name: "Equipment Purchase Cost (DFC)",
         value: capex.directFixedCapital.plantDirectCost.equipmentPurchaseCost,
-        color: BRAND_COLORS.media,
+        color: CAPEX_COLORS.equipmentPurchaseCost,
         id: "equipmentPurchaseCost",
         description:
           "Cost of purchasing major equipment including bioreactors, pumps, heat exchangers, and other process equipment.",
@@ -199,9 +189,9 @@ const CapexBreakdownTable = () => {
         level: 2,
       },
       {
-        name: "│   └── Other Direct Cost",
+        name: "Other Direct Cost (DFC)",
         value: otherDirectCostValue,
-        color: BRAND_COLORS.rawMaterials,
+        color: CAPEX_COLORS.otherDirectCost,
         id: "otherDirectCost",
         description:
           "Installation, piping, instrumentation, electrical, buildings, and other direct construction costs.",
@@ -209,9 +199,9 @@ const CapexBreakdownTable = () => {
         level: 2,
       },
       {
-        name: "├── Plant Indirect Cost",
+        name: "Plant Indirect Cost (DFC)",
         value: capex.directFixedCapital.plantIndirectCost.total,
-        color: BRAND_COLORS.labor,
+        color: CAPEX_COLORS.plantIndirectCost,
         id: "plantIndirectCost",
         description:
           "Engineering design, project management, and construction supervision services.",
@@ -219,9 +209,9 @@ const CapexBreakdownTable = () => {
         level: 1,
       },
       {
-        name: "└── Miscellaneous Cost",
+        name: "Miscellaneous Cost (DFC)",
         value: capex.directFixedCapital.miscellaneousCost.total,
-        color: BRAND_COLORS.waste,
+        color: CAPEX_COLORS.miscellaneousCost,
         id: "miscellaneousCost",
         description:
           "Contractor fees and contingency funds for project uncertainties and scope changes.",
@@ -229,22 +219,22 @@ const CapexBreakdownTable = () => {
         level: 1,
       },
       {
-        name: "Working Capital",
-        value: capex.workingCapital,
-        color: BRAND_COLORS.facility,
-        id: "workingCapital",
+        name: "Startup Capital",
+        value: capex.startupCapital,
+        color: CAPEX_COLORS.startupCapital,
+        id: "startupCapital",
         description:
-          "Capital for day-to-day operations including inventory, accounts receivable, and operational cash needs.",
+          "Capital for commissioning, testing, training, and achieving steady-state production.",
         isParent: false,
         level: 0,
       },
       {
-        name: "Startup Capital",
-        value: capex.startupCapital,
-        color: BRAND_COLORS.consumables,
-        id: "startupCapital",
+        name: "Working Capital",
+        value: capex.workingCapital,
+        color: CAPEX_COLORS.workingCapital,
+        id: "workingCapital",
         description:
-          "Capital for commissioning, testing, training, and achieving steady-state production.",
+          "Capital for day-to-day operations including inventory, accounts receivable, and operational cash needs.",
         isParent: false,
         level: 0,
       },
@@ -280,7 +270,7 @@ const CapexBreakdownTable = () => {
             headers={["Category", "Cost", "Percentage"]}
             rows={[
               ...capexItems.map((item) => [
-                item.name.replace(/[├└│]/g, "").trim(), // Remove tree characters for CSV
+                item.name.replace(/[├└│]/g, "").trim(),
                 formatCurrency(item.value),
                 ((item.value / total) * 100).toFixed(1) + "%",
               ]),
@@ -317,90 +307,81 @@ const CapexBreakdownTable = () => {
               </tr>
             </thead>
             <tbody className='bg-white divide-y divide-gray-200'>
-              {capexItems.map(
-                ({ id, color, name, value, isParent, level }) => (
-                  <tr
-                    key={id}
-                    className={`${
-                      !isParent ? "hover:bg-gray-50 cursor-pointer" : ""
-                    } ${level > 0 ? "bg-gray-25" : ""}`}
-                    onClick={() => handleInfoClick(id, isParent)}
-                  >
-                    <td className='px-6 py-4 whitespace-nowrap'>
-                      <div className='flex items-center gap-x-2'>
-                        <div
-                          className='h-3 w-3 rounded-full'
-                          style={{ backgroundColor: color }}
-                        />
-                        <div
-                          className={`text-sm font-mono ${
-                            isParent
-                              ? "font-semibold text-gray-700"
-                              : "font-medium text-gray-900"
-                          }`}
-                        >
-                          {name}
-                        </div>
-                        {!isParent && (
-                          <button
-                            className='text-gray-400 hover:text-blue-600 cursor-pointer transition-colors'
-                            aria-label={`More information about ${name}`}
-                          >
-                            <svg
-                              width='10'
-                              height='10'
-                              viewBox='0 0 24 24'
-                              fill='currentColor'
-                              className='font-bold'
-                            >
-                              <circle
-                                cx='12'
-                                cy='12'
-                                r='10'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                              />
-                              <line
-                                x1='12'
-                                y1='16'
-                                x2='12'
-                                y2='12'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                              />
-                              <circle
-                                cx='12'
-                                cy='9'
-                                r='1'
-                                fill='currentColor'
-                              />
-                            </svg>
-                          </button>
+              {capexItems.map(({ id, color, name, value, isParent, level }) => (
+                <tr
+                  key={id}
+                  className={cn({"hover:bg-gray-50 cursor-pointer": !isParent}, {"bg-gray-25": level > 0})}
+                  onClick={() => handleInfoClick(id, isParent)}
+                >
+                  <td className='px-6 py-4 whitespace-nowrap'>
+                    <div className='flex items-center gap-x-2'>
+                      <div
+                        className='h-3 w-3 rounded-full'
+                        style={{ backgroundColor: color }}
+                      />
+                      <div
+                        className={cn(
+                          `text-sm`,
+                          { "italic text-gray-700": level > 0 },
+                          { "font-medium text-gray-900": level <= 0 }
                         )}
+                      >
+                        {name}
                       </div>
-                    </td>
-                    <td
-                      className={`px-6 py-4 whitespace-nowrap text-right text-sm ${
-                        isParent
-                          ? "font-semibold text-gray-700"
-                          : "font-medium text-gray-900"
-                      }`}
-                    >
-                      {formatCurrency(value)}
-                    </td>
-                    <td
-                      className={`px-6 py-4 whitespace-nowrap text-right text-sm ${
-                        isParent
-                          ? "font-semibold text-gray-700"
-                          : "text-gray-900"
-                      }`}
-                    >
-                      {((value / total) * 100).toFixed(1)}%
-                    </td>
-                  </tr>
-                )
-              )}
+                      {!isParent && (
+                        <button
+                          className='text-gray-400 hover:text-blue-600 cursor-pointer transition-colors'
+                          aria-label={`More information about ${name}`}
+                        >
+                          <svg
+                            width='10'
+                            height='10'
+                            viewBox='0 0 24 24'
+                            fill='currentColor'
+                            className='font-bold'
+                          >
+                            <circle
+                              cx='12'
+                              cy='12'
+                              r='10'
+                              fill='none'
+                              stroke='currentColor'
+                              strokeWidth='2'
+                            />
+                            <line
+                              x1='12'
+                              y1='16'
+                              x2='12'
+                              y2='12'
+                              stroke='currentColor'
+                              strokeWidth='2'
+                            />
+                            <circle cx='12' cy='9' r='1' fill='currentColor' />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                  <td
+                    className={cn(
+                      `px-6 py-4 whitespace-nowrap text-right text-sm`,
+                      { "italic text-gray-700": level > 0 },
+                      { "font-medium text-gray-900": level <= 0 }
+                    )}
+                  >
+                    {formatCurrency(value)}
+                  </td>
+                  <td
+                    className={cn(
+                      `px-6 py-4 whitespace-nowrap text-right text-sm`,
+                      { "italic text-gray-700": level > 0 },
+                      { "font-medium text-gray-900": level <= 0 }
+                    )}
+                  >
+                    {((value / total) * 100).toFixed(1)}%
+                  </td>
+                </tr>
+              ))}
               <tr className='bg-gray-50 max-h-12'>
                 <td className='px-6 py-2 whitespace-nowrap'>
                   <div className='text-sm font-bold text-gray-900'>Total</div>
