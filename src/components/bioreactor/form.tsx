@@ -42,7 +42,7 @@ const costInputs: ParameterProps[] = [
     unit: "$/h",
     step: "0.1",
     default: DEFAULT_PRODUCTION_COSTS.uspLaborCostPerHour,
-    description: "Upstream operator cost by hour",
+    description: "Labor Cost (upstream operator) per hour",
     min: 0,
   },
   {
@@ -51,7 +51,7 @@ const costInputs: ParameterProps[] = [
     unit: "$/h",
     step: "0.1",
     default: DEFAULT_PRODUCTION_COSTS.dspLaborCostPerHour,
-    description: "Downstream operator cost by hour",
+    description: "Labor Cost (downstream operator) per hour",
     min: 0,
   },
 ];

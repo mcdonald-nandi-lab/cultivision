@@ -1,11 +1,11 @@
 "use client";
 
-import BioreactorChart from "@/components/bioreactor/charts/cost-distribution";
+import BioreactorChart from "@/components/bioreactor/charts/opex-distribution";
 import FlowDiagram from "@/components/bioreactor/flow-diagram";
 import ParameterForm from "@/components/bioreactor/form";
 import ImageModal from "@/components/bioreactor/image-modal";
 import SingleValueCard from "@/components/bioreactor/sv-card";
-import ExpenseTable from "@/components/bioreactor/tables/cost-breakdown";
+import ExpenseTable from "@/components/bioreactor/tables/opex-breakdown";
 import LaborCostTable from "@/components/bioreactor/tables/labor-cost";
 import MetricsTable from "@/components/bioreactor/tables/summary";
 import Container from "@/components/container";
@@ -18,10 +18,12 @@ import { useToast } from "@/context/toast-context";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect } from "react";
 import Loading from "../loading";
+import CapexChart from "@/components/bioreactor/charts/capex-distribution";
+import CapexBreakdownTable from "@/components/bioreactor/tables/capex-breakdown";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
-  | "minimumSellingPrice"
+  | "capitalExpenses"
   | "facilitiesNeeded"
   | "operatingExpenses";
 
@@ -34,9 +36,9 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
     title: "Operating Expenses",
     unit: "million $/yr",
   },
-  minimumSellingPrice: {
-    title: "Minimum Selling Price",
-    unit: "$",
+  capitalExpenses: {
+    title: "Capital Expenses",
+    unit: "million $/yr",
   },
   facilitiesNeeded: {
     title: "Needed for 100M kg/yr",
@@ -86,9 +88,7 @@ const Dashboard = () => {
                   Process Flow Diagram
                 </h3>
                 <div className='hover:opacity-90 transition-opacity'>
-                  <FlowDiagram
-                    showTitle={false}
-                  />
+                  <FlowDiagram showTitle={false} />
                 </div>
 
                 <div className='text-center text-sm text-green-600 hover:text-blue-500'>
@@ -121,6 +121,14 @@ const Dashboard = () => {
                     <ExpenseTable />
                   </Container>
                 </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+                  <Container>
+                    <CapexChart expenses={expenses} />
+                  </Container>
+                  <Container>
+                    <CapexBreakdownTable />
+                  </Container>
+                </div>
                 <div className='grid grid-cols-1 gap-4'>
                   <Container className='h-full'>
                     <MetricsTable expenses={expenses} />
@@ -140,9 +148,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {isModalOpen && (
-            <ImageModal onClose={closeModal} />
-          )}
+          {isModalOpen && <ImageModal onClose={closeModal} />}
         </main>
       </ProtectedRoute>
     );

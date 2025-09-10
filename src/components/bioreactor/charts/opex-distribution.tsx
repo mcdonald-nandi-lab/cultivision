@@ -136,7 +136,7 @@ const BioreactorChart = ({ expenses }: BioreactorChartProps) => {
     <div className='h-full flex flex-col pb-2'>
       <div className='flex justify-between items-start w-full'>
         <div className='flex gap-x-2'>
-          <Title title={"Cost Distribution"} />
+          <Title title={"OPEX Distribution"} />
           <ChartDownloadButton
             downloadChart={downloadChart}
             chartInstance={chartInstance}
