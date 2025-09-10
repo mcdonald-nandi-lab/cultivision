@@ -397,7 +397,7 @@ export const BIOREACTORS: Bioreactor[] = [
           otherFacilityCosts: 144839000,
           // 5. MATERIALS COST - PROCESS SUMMARY - Annual Amount - Beefy R Enhance
           mediaVolume: 101592461,
-          // 5. MATERIALS COST - PROCESS SUMMARY - (Annual Cost ($) minus Beefy R Enhance Annual Amount)
+          // 5. MATERIALS COST - PROCESS SUMMARY - (Annual Cost ($) minus Beefy R Enhance Annual Cost ($))
           otherMaterialsCost: 43262553,
           // 6. UTILITY - Annual Amount- Std Power
           powerUsage: 5465367,
@@ -1243,6 +1243,41 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_17h_80gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 419980000,
+          capex: {
+            directFixedCapital: {
+              plantDirectCost: {
+                equipmentPurchaseCost: 57001000,
+                otherDirectCost: {
+                  installation: 23292000,
+                  processPiping: 19950000,
+                  instrumentation: 22800000,
+                  insulation: 1710000,
+                  electrical: 5700000,
+                  buildings: 34200000,
+                  yardImprovement: 8550000,
+                  auxiliaryFacilities: 22800000,
+                },
+                total: 196004000,
+              },
+              plantIndirectCost: {
+                engineering: 49001000,
+                construction: 68601000,
+                total: 117602000,
+              },
+              totalPlantCost: 313606000,
+              miscellaneousCost: {
+                contractorFee: 15680000,
+                contingency: 31361000,
+                total: 47041000,
+              },
+              totalCapital: 360647000,
+            },
+            workingCapital: 41300000,
+            startupCapital: 18032000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            totalCapexCost: 419980000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 34262000,
             maintenance: 4560000,
@@ -1252,7 +1287,7 @@ export const BIOREACTORS: Bioreactor[] = [
           },
           otherFacilityCosts: 67673000,
           mediaVolume: 316336921,
-          otherMaterialsCost: 132110348,
+          otherMaterialsCost: 6840928,
           powerUsage: 2889620,
           steamUsage: 44382,
           coolingWaterUsage: 1442092,
@@ -1269,6 +1304,41 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_17h_90gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 354670000,
+          capex: {
+            directFixedCapital: {
+              plantDirectCost: {
+                equipmentPurchaseCost: 47787000,
+                otherDirectCost: {
+                  installation: 19756000,
+                  processPiping: 16725000,
+                  instrumentation: 19115000,
+                  insulation: 1434000,
+                  electrical: 4779000,
+                  buildings: 28672000,
+                  yardImprovement: 7168000,
+                  auxiliaryFacilities: 19115000,
+                },
+                total: 164550000,
+              },
+              plantIndirectCost: {
+                engineering: 41137000,
+                construction: 57592000,
+                total: 98730000,
+              },
+              totalPlantCost: 263280000,
+              miscellaneousCost: {
+                contractorFee: 13164000,
+                contingency: 26328000,
+                total: 39492000,
+              },
+              totalCapital: 302772000,
+            },
+            workingCapital: 36760000,
+            startupCapital: 15139000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            totalCapexCost: 354670000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 28763000,
             maintenance: 3823000,
@@ -1278,7 +1348,7 @@ export const BIOREACTORS: Bioreactor[] = [
           },
           otherFacilityCosts: 56808000,
           mediaVolume: 281687968,
-          otherMaterialsCost: 117416656,
+          otherMaterialsCost: 5868221,
           powerUsage: 2583021,
           steamUsage: 38395,
           coolingWaterUsage: 1291893,
@@ -1295,8 +1365,43 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_17h_100gpl.jpg",
           annualProduction: 25000024,
           capitalExpense: 327992000,
+          capex: {
+            directFixedCapital: {
+              plantDirectCost: {
+                equipmentPurchaseCost: 44384000,
+                otherDirectCost: {
+                  installation: 18156000,
+                  processPiping: 15535000,
+                  instrumentation: 17754000,
+                  insulation: 1332000,
+                  electrical: 4438000,
+                  buildings: 26631000,
+                  yardImprovement: 6658000,
+                  auxiliaryFacilities: 17754000,
+                },
+                total: 152640000,
+              },
+              plantIndirectCost: {
+                engineering: 38160000,
+                construction: 53424000,
+                total: 91584000,
+              },
+              totalPlantCost: 244224000,
+              miscellaneousCost: {
+                contractorFee: 12211000,
+                contingency: 24422000,
+                total: 36634000,
+              },
+              totalCapital: 280858000,
+            },
+            workingCapital: 33091000,
+            startupCapital: 14043000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            totalCapexCost: 327992000,
+          },
           mediaVolume: 253319331,
-          otherMaterialsCost: 105824997,
+          otherMaterialsCost: 5510541,
           powerUsage: 2331567,
           steamUsage: 36118,
           coolingWaterUsage: 1168883,
@@ -1323,6 +1428,41 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_20h_80gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 425328000,
+          capex: {
+            directFixedCapital: {
+              plantDirectCost: {
+                equipmentPurchaseCost: 57788000,
+                otherDirectCost: {
+                  installation: 23650000,
+                  processPiping: 20226000,
+                  instrumentation: 23115000,
+                  insulation: 1734000,
+                  electrical: 5779000,
+                  buildings: 34673000,
+                  yardImprovement: 8668000,
+                  auxiliaryFacilities: 23115000,
+                },
+                total: 198748000,
+              },
+              plantIndirectCost: {
+                engineering: 49687000,
+                construction: 69562000,
+                total: 119249000,
+              },
+              totalPlantCost: 317997000,
+              miscellaneousCost: {
+                contractorFee: 15900000,
+                contingency: 31800000,
+                total: 47700000,
+              },
+              totalCapital: 365697000,
+            },
+            workingCapital: 41346000,
+            startupCapital: 18285000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            totalCapexCost: 425328000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 34741000,
             maintenance: 4623000,
@@ -1332,7 +1472,7 @@ export const BIOREACTORS: Bioreactor[] = [
           },
           otherFacilityCosts: 68620000,
           mediaVolume: 316723215,
-          otherMaterialsCost: 132083764,
+          otherMaterialsCost: 6661371,
           powerUsage: 3374845,
           steamUsage: 43702,
           coolingWaterUsage: 1491632,
@@ -1349,6 +1489,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_20h_90gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 358891000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000, // Cell - P62
+                otherDirectCost: {
+                  installation: 20795000, // Cell - P63
+                  processPiping: 17664000, // Cell - P64
+                  instrumentation: 20188000, // Cell - P65
+                  insulation: 1514000, // Cell - P66
+                  electrical: 5047000, // Cell - P67
+                  buildings: 30282000, // Cell - P68
+                  yardImprovement: 7570000, // Cell - P69
+                  auxiliaryFacilities: 20188000, // Cell - P70
+                },
+                // TPDC
+                total: 173717000, // Cell - P71
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000, // Cell - P74
+                construction: 60801000, // Cell - P75
+                // TPIC
+                total: 104230000, // Cell - P76
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000, // Cell - P79
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000, // Cell - P82
+                contingency: 27795000, // Cell - P83
+                // CFC = 12+13
+                total: 41692000, // Cell - P84
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000, // Cell - P87
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000, // Cell - M219
+            startupCapital: 15982000, // Cell - M220
+            upfrontRandDCapital: 0, // Cell - M221
+            upfrontRoyaltiesCapital: 0, // Cell - M222
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000, // Cell - M22
+          },
           otherFacilityCostsSplit: {
             depreciation: 29147000,
             maintenance: 3873000,
@@ -1358,7 +1544,7 @@ export const BIOREACTORS: Bioreactor[] = [
           },
           otherFacilityCosts: 57565000,
           mediaVolume: 281547767,
-          otherMaterialsCost: 117206798,
+          otherMaterialsCost: 117206798, // Cell O111 Minus O103
           powerUsage: 3009928,
           steamUsage: 37763,
           coolingWaterUsage: 1330862,
@@ -1375,6 +1561,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_20h_100gpl.jpg",
           annualProduction: 25000008,
           capitalExpense: 331912000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           mediaVolume: 253484625,
           otherMaterialsCost: 105744013,
           powerUsage: 2716262,
@@ -1403,6 +1635,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_23h_80gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 432919000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 35430000,
             maintenance: 4715000,
@@ -1429,6 +1707,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_23h_90gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 374954000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 30595000,
             maintenance: 4068000,
@@ -1455,6 +1779,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_23h_100gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 345079000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCosts: 59461000,
           otherFacilityCostsSplit: {
             depreciation: 28220000,
@@ -1483,6 +1853,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_26h_80gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 471611000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 38923000,
             maintenance: 5180000,
@@ -1509,6 +1925,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_26h_90gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 427189000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 35315000,
             maintenance: 4701000,
@@ -1535,8 +1997,54 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_26h_100gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 368828000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           mediaVolume: 253591939,
-          otherMaterialsCost: 105775598,
+          otherMaterialsCost: 5353190,
           powerUsage: 3473221,
           steamUsage: 35131,
           coolingWaterUsage: 1301813,
@@ -1563,6 +2071,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_29h_80gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 509710000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 42357000,
             maintenance: 5636000,
@@ -1589,6 +2143,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_29h_90gpl.jpg",
           annualProduction: 25000000,
           capitalExpense: 456715000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCostsSplit: {
             depreciation: 37977000,
             maintenance: 5052000,
@@ -1615,6 +2215,52 @@ export const BIOREACTORS: Bioreactor[] = [
           image: "/images/260K_ALR_29h_100gpl.jpg",
           annualProduction: 25000007,
           capitalExpense: 430281000,
+          capex: {
+            // 3. FIXED CAPITAL ESTIMATE SUMMARY
+            directFixedCapital: {
+              // 3A. Total Plant Direct Cost (TPDC) (physical cost) - All values to be added as in the csv for 3A.
+              plantDirectCost: {
+                equipmentPurchaseCost: 50469000,
+                otherDirectCost: {
+                  installation: 20795000,
+                  processPiping: 17664000,
+                  instrumentation: 20188000,
+                  insulation: 1514000,
+                  electrical: 5047000,
+                  buildings: 30282000,
+                  yardImprovement: 7570000,
+                  auxiliaryFacilities: 20188000,
+                },
+                // TPDC
+                total: 173717000,
+              },
+              // 3B. Total Plant Indirect Cost (TPIC)
+              plantIndirectCost: {
+                engineering: 43429000,
+                construction: 60801000,
+                // TPIC
+                total: 104230000,
+              },
+              // 3C. Total Plant Cost (TPC = TPDC+TPIC)
+              totalPlantCost: 277948000,
+              // 3D. Contractor's Fee & Contingency (CFC)
+              miscellaneousCost: {
+                contractorFee: 13897000,
+                contingency: 27795000,
+                // CFC = 12+13
+                total: 41692000,
+              },
+              // 3E. Direct Fixed Capital Cost (DFC = TPC+CFC)
+              totalCapital: 319640000,
+            },
+            // 11. PROFITABILITY ANALYSIS - Don't Add A. As that's already added above from 3E. Add the rest.
+            workingCapital: 33206000,
+            startupCapital: 15982000,
+            upfrontRandDCapital: 0,
+            upfrontRoyaltiesCapital: 0,
+            // G. Investment Charged to This Project (Ignore F. as the value is just G.). Also, this should be the same value as capitalExpense
+            totalCapexCost: 368828000,
+          },
           otherFacilityCosts: 70935000,
           otherFacilityCostsSplit: {
             depreciation: 35912000,

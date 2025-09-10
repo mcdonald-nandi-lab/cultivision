@@ -4,6 +4,52 @@ export interface BasicObject {
   [key: string]: string;
 }
 
+export interface PlantOtherDirectCost {
+  installation: number;
+  processPiping: number;
+  instrumentation: number;
+  insulation: number;
+  electrical: number;
+  buildings: number;
+  yardImprovement: number;
+  auxiliaryFacilities: number;
+};
+
+export interface PlantDirectCost {
+  equipmentPurchaseCost: number;
+  otherDirectCost: PlantOtherDirectCost;
+  total: number;
+};
+
+export interface PlantIndirectCost {
+  engineering: number;
+  construction: number;
+  total: number;
+};
+
+export interface FixedCapitalMiscellaneousCost  {
+  contractorFee: number;
+  contingency: number;
+  total: number;
+};
+
+export interface DirectFixedCapital {
+  plantDirectCost: PlantDirectCost;
+  plantIndirectCost: PlantIndirectCost;
+  totalPlantCost: number;
+  miscellaneousCost: FixedCapitalMiscellaneousCost;
+  totalCapital: number;
+};
+
+export interface Capex {
+  directFixedCapital: DirectFixedCapital;
+  workingCapital: number;
+  startupCapital: number;
+  upfrontRandDCapital: number;
+  upfrontRoyaltiesCapital: number;
+  totalCapexCost: number;
+};
+
 export interface OtherFacilityCostsSplit {
     depreciation: number;
     maintenance: number;
@@ -30,7 +76,8 @@ export interface BioreactorData {
     upstream: number;
     downstream: number;
   };
-  otherFacilityCostsSplit: OtherFacilityCostsSplit
+  otherFacilityCostsSplit: OtherFacilityCostsSplit;
+  capex?: Capex;
 }
 
 export interface Bioreactor {
