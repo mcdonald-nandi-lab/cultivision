@@ -77,7 +77,7 @@ export interface BioreactorData {
     downstream: number;
   };
   otherFacilityCostsSplit: OtherFacilityCostsSplit;
-  capex?: Capex;
+  capex: Capex;
 }
 
 export interface Bioreactor {
@@ -130,6 +130,7 @@ export interface CalculatedExpenses {
   cogsWithDepreciation: number;
   cogsWithoutDepreciation: number;
   minimumSellingPrice: number;
+  capex: Capex,
   laborCostValues: LaborCostValues;
   chartData: ExpenseBreakdown;
 }

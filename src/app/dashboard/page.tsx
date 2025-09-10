@@ -18,6 +18,8 @@ import { useToast } from "@/context/toast-context";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect } from "react";
 import Loading from "../loading";
+import CapexChart from "@/components/bioreactor/charts/capex-distribution";
+import CapexBreakdownTable from "@/components/bioreactor/tables/capex-breakdown";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
@@ -86,9 +88,7 @@ const Dashboard = () => {
                   Process Flow Diagram
                 </h3>
                 <div className='hover:opacity-90 transition-opacity'>
-                  <FlowDiagram
-                    showTitle={false}
-                  />
+                  <FlowDiagram showTitle={false} />
                 </div>
 
                 <div className='text-center text-sm text-green-600 hover:text-blue-500'>
@@ -121,6 +121,14 @@ const Dashboard = () => {
                     <ExpenseTable />
                   </Container>
                 </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+                  <Container>
+                    <CapexChart expenses={expenses} />
+                  </Container>
+                  <Container>
+                    <CapexBreakdownTable />
+                  </Container>
+                </div>
                 <div className='grid grid-cols-1 gap-4'>
                   <Container className='h-full'>
                     <MetricsTable expenses={expenses} />
@@ -140,9 +148,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {isModalOpen && (
-            <ImageModal onClose={closeModal} />
-          )}
+          {isModalOpen && <ImageModal onClose={closeModal} />}
         </main>
       </ProtectedRoute>
     );

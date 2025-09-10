@@ -118,7 +118,7 @@ export function calculateExpenses(
     coolingWater,
     chilledWater,
   };
-  
+
   // Calculate operating expenses
   const media = costs.mediaCost * bioreactorData.mediaVolume!;
   const otherMaterials = bioreactorData.otherMaterialsCost!;
@@ -136,7 +136,13 @@ export function calculateExpenses(
   const consumables = bioreactorData.consumableCosts!;
 
   const operatingExpenses =
-    media + otherMaterials + labor + waste + facility + consumables + utilities.total;
+    media +
+    otherMaterials +
+    labor +
+    waste +
+    facility +
+    consumables +
+    utilities.total;
 
   const operatingExpensesWithoutDepreciation =
     operatingExpenses - bioreactorData.otherFacilityCostsSplit.depreciation!;
@@ -162,6 +168,9 @@ export function calculateExpenses(
     calculateMSP(costs, bioreactorData, cogsWithoutDepreciation, msp);
   const minimumSellingPrice = Math.round(minimizeScalar(f, 0, 100) * 100) / 100;
 
+  // Get CAPEX
+  const capex = bioreactorData.capex;
+
   return {
     annualProduction: bioreactorData.annualProduction!,
     facilitiesNeeded,
@@ -171,6 +180,7 @@ export function calculateExpenses(
     cogsWithoutDepreciation,
     minimumSellingPrice,
     laborCostValues,
+    capex,
     chartData: {
       media,
       otherMaterials,
