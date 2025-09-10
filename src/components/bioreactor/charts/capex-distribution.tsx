@@ -243,7 +243,7 @@ const CapexDistribution = () => {
         <div className='mt-3 text-xs text-gray-600 text-center'>
           <div className='font-medium mb-1'>Chart Guide:</div>
           <div>
-            Inner ring shows main CAPEX categories • Outer ring shows Direct
+            Outer ring shows main CAPEX categories • Inner ring shows Direct
             Fixed Capital breakdown
           </div>
         </div>
