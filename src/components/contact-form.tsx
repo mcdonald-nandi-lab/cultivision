@@ -1,7 +1,7 @@
 "use client";
 
 import { useToast } from "@/context/toast-context";
-import { TERMS_LINK } from "@/lib/constants";
+import { CONTACT_FORM_API, TERMS_LINK } from "@/lib/constants";
 import cn from "classnames";
 import React, { FormEvent, useState } from "react";
 
@@ -82,7 +82,7 @@ const ContactForm = () => {
       };
 
       const response = await fetch(
-        "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/submit-access-request",
+        CONTACT_FORM_API,
         {
           method: "POST",
           headers: {
@@ -96,7 +96,6 @@ const ContactForm = () => {
 
       if (response.ok && result.success) {
         setSubmitSuccess(true);
-        activateToast("Access request submitted successfully", "success");
         setFormData({
           name: "",
           email: "",
@@ -107,8 +106,8 @@ const ContactForm = () => {
       } else {
         activateToast(result.message, "error");
       }
-    } catch (error) {
-      console.error("Form submission error:", error);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
       activateToast(
         "Network error. Please check your connection and try again.",
         "error"
@@ -162,7 +161,7 @@ const ContactForm = () => {
         </p>
         <button
           onClick={() => setSubmitSuccess(false)}
-          className='text-green-600 hover:text-green-700 font-medium transition-colors duration-200'
+          className='text-green-600 hover:text-green-700 font-medium transition-colors duration-200 cursor-pointer'
         >
           Submit Another Request
         </button>
@@ -237,6 +236,10 @@ const ContactForm = () => {
           }
           placeholder='Brief description of your research interest...'
         />
+        <div className='flex justify-between items-center text-xs text-gray-400 mt-0.5'>
+          <span>20-500 characters required</span>
+          <span>{formData.useCase.length}/500</span>
+        </div>
       </div>
       <div className='flex items-start space-x-3'>
         <input
@@ -247,7 +250,7 @@ const ContactForm = () => {
           required
           className='mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded'
         />
-        <span className='text-red-500'>*</span>
+        <span className='text-red-500 ml-[-0.35em]'>*</span>
         <label className='text-sm text-gray-600 leading-relaxed'>
           I agree to the{" "}
           <a
@@ -266,7 +269,7 @@ const ContactForm = () => {
         onClick={handleSubmit}
         disabled={isSubmitting || !isFormValid}
         className={cn(
-          "w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 transform",
+          "w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 transform mt-1",
           {
             "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:-translate-y-1 hover:shadow-lg":
               !isSubmitting && isFormValid,
@@ -280,7 +283,7 @@ const ContactForm = () => {
             <span>Submitting Request...</span>
           </div>
         ) : (
-          <div className='flex items-center justify-center space-x-2'>
+          <div className='flex items-center justify-center space-x-2 cursor-pointer'>
             <span>Request Access</span>
             <svg
               className='w-5 h-5'
