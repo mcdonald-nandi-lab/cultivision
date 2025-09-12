@@ -2,21 +2,15 @@
 
 import Image from "next/image";
 import { getBioreactorById } from "@/lib/bioreactors";
-import Title from '@/components/title'
-import { useCalculations } from "@/context/calculation-context";
+import Title from "@/components/title";
+import { useCalculations } from "@/context/calculation";
 
 interface FlowDiagramProps {
   showTitle?: boolean;
 }
 
-const FlowDiagram = ({
-  showTitle = true,
-}: FlowDiagramProps) => {
-  const {
-        activeReactorId,
-        doublingTime,
-        density,
-  } = useCalculations();
+const FlowDiagram = ({ showTitle = true }: FlowDiagramProps) => {
+  const { activeReactorId, doublingTime, density } = useCalculations();
 
   const bioreactor = getBioreactorById(activeReactorId);
 
@@ -44,6 +38,6 @@ const FlowDiagram = ({
       </div>
     </div>
   );
-}
+};
 
 export default FlowDiagram;

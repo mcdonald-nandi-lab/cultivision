@@ -1,6 +1,6 @@
 "use client";
 import ContactForm from "@/components/contact-form";
-import { useAccessControl } from "@/context/access-control-context";
+import { useAccessControl } from "@/context/access-control";
 import cn from "classnames";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -255,7 +255,7 @@ const Access = () => {
                         isActive={index === activeStep}
                       />
                     ))}
-                  </div>                  
+                  </div>
                 </div>
               </div>
               <div className='lg:col-span-3'>

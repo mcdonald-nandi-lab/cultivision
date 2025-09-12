@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import {
   getBioreactorById,
   getAvailableDoublingTimes,
@@ -35,7 +35,7 @@ const costInputs: ParameterProps[] = [
     step: "0.1",
     default: DEFAULT_PRODUCTION_COSTS.mediaCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.mediaCost}/L`,
-    min:0
+    min: 0,
   },
   {
     id: "uspLaborCostPerHour",
@@ -75,7 +75,7 @@ const priceInput: ParameterProps[] = [
     step: "1",
     default: DEFAULT_PRODUCTION_COSTS.projectDuration,
     description: `Default project duration: ${DEFAULT_PRODUCTION_COSTS.projectDuration} years`,
-    min: 10
+    min: 10,
   },
 ];
 

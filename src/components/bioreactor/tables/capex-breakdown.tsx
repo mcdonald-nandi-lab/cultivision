@@ -4,7 +4,7 @@ import TableDownloadButton from "@/components/bioreactor/tables/download-button"
 import { InfoModal } from "@/components/info-modal";
 import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import { CAPEX_COLORS } from "@/lib/constants";
 import { formatCurrency } from "@/lib/csv-export";
 import cn from "classnames";

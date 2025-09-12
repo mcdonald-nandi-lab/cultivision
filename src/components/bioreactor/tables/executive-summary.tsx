@@ -2,10 +2,10 @@
 
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import Title from "@/components/title";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import cn from "classnames";
 
-export const formatNumber = (num: number, fixed=1): string => {
+export const formatNumber = (num: number, fixed = 1): string => {
   return num.toLocaleString(undefined, { maximumFractionDigits: fixed });
 };
 
@@ -26,9 +26,7 @@ const ExecutiveSummaryTable = () => {
     {
       name: "Capital Expenses",
       value: formatNumber(data.capitalExpenses),
-      combinedValue: formatNumber(
-        data.capitalExpenses * data.facilitiesNeeded
-      ),
+      combinedValue: formatNumber(data.capitalExpenses * data.facilitiesNeeded),
       unit: "million $",
     },
     {
@@ -140,7 +138,10 @@ const ExecutiveSummaryTable = () => {
         <div className='font-medium mb-1'>Notes:</div>
         <ul className='list-disc pl-5 space-y-1'>
           <li>COGS = Cost of Goods Sold</li>
-          <li>*Value summary of number of facilities required to produce approximately 100M kg/yr</li>
+          <li>
+            *Value summary of number of facilities required to produce
+            approximately 100M kg/yr
+          </li>
           <li>Capital expenses are reported in millions of $</li>
           <li>All calculations are based on provided cost parameters</li>
         </ul>

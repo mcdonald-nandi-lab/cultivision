@@ -1,7 +1,7 @@
 "use client";
 
 import Title from "@/components/title";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import useChartDownload from "@/hooks/use-chart-download";
 import {
   ArcElement,

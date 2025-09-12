@@ -4,25 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { getBioreactorById, getBioreactorData } from "@/lib/bioreactors";
 import cn from "classnames";
 import Image from "next/image";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 
 interface ImageModalProps {
   onClose: () => void;
 }
 
-const ImageModal = ({
-  onClose,
-}: ImageModalProps) => {
+const ImageModal = ({ onClose }: ImageModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const [transformOrigin, setTransformOrigin] = useState("center center");
   const [isZoomed, setIsZoomed] = useState(false);
 
-  const {
-      activeReactorId,
-      doublingTime,
-      density,
-    } = useCalculations();
+  const { activeReactorId, doublingTime, density } = useCalculations();
 
   const bioreactor = getBioreactorById(activeReactorId);
   const bioreactorData =
@@ -139,20 +133,12 @@ const ImageModal = ({
           <div className='py-4 px-8 border-t'>
             <div className='grid grid-cols-2 md:grid-cols-4 gap-4 text-sm'>
               <div className='flex flex-col'>
-                <div className='font-medium text-slate-600'>
-                  Doubling Time:
-                </div>
-                <div className="">
-                  {doublingTime}
-                </div>
+                <div className='font-medium text-slate-600'>Doubling Time:</div>
+                <div className=''>{doublingTime}</div>
               </div>
               <div className='flex flex-col'>
-                <div className='font-medium text-slate-600'>
-                  Cell Density:
-                </div>
-                <div>
-                  {density}
-                </div>
+                <div className='font-medium text-slate-600'>Cell Density:</div>
+                <div>{density}</div>
               </div>
               <div className='flex flex-col'>
                 <div className='font-medium text-slate-600'>
@@ -163,9 +149,7 @@ const ImageModal = ({
                 </div>
               </div>
               <div className='flex flex-col'>
-                <div className='font-medium text-slate-600'>
-                  Media Volume:
-                </div>
+                <div className='font-medium text-slate-600'>Media Volume:</div>
                 <div>
                   {((bioreactorData.mediaVolume || 0) / 1_000_000).toFixed(1)}M
                   L
