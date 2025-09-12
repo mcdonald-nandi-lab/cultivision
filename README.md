@@ -20,7 +20,7 @@ Cultivision is an interactive dashboard for analyzing cultivated meat production
 - **COGS Analysis**: Cost of Goods Sold with/without depreciation ($/kg)
 - **Facility Requirements**: Number of facilities needed for 100M kg/year production
 - **Operating Expenses**: Annual operating costs in millions of dollars
-- **Comprehensive Tables**: Detailed breakdowns of expenses, labor costs, and production metrics
+- **Comprehensive Summary**: Detailed breakdowns of expenses, labor costs, and production metrics
 
 ### Interactive Features
 
