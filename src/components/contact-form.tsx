@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/context/toast-context";
+import { useToast } from "@/context/toast";
 import { CONTACT_FORM_API, TERMS_LINK } from "@/lib/constants";
 import cn from "classnames";
 import React, { FormEvent, useState } from "react";
@@ -50,10 +50,7 @@ const ContactForm = () => {
 
     const useCaseLength = useCase.length;
     if (useCaseLength > 0 && useCaseLength < 20) {
-      activateToast(
-        "Use case must be at least 20 characters long",
-        "error"
-      );
+      activateToast("Use case must be at least 20 characters long", "error");
       return;
     }
 
@@ -66,11 +63,10 @@ const ContactForm = () => {
       activateToast("Please agree to the terms and conditions", "error");
       return;
     }
-  
+
     setIsSubmitting(true);
 
     try {
-
       const requestData = {
         name: name,
         email: cleanEmail,
@@ -81,16 +77,13 @@ const ContactForm = () => {
         terms_accepted: termsAccepted,
       };
 
-      const response = await fetch(
-        CONTACT_FORM_API,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        }
-      );
+      const response = await fetch(CONTACT_FORM_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
 
       const result = await response.json();
 
@@ -106,7 +99,7 @@ const ContactForm = () => {
       } else {
         activateToast(result.message, "error");
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       activateToast(
         "Network error. Please check your connection and try again.",

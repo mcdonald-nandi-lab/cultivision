@@ -1,6 +1,6 @@
 "use client";
 
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import { trackDownload, trackUserBehavior } from "@/lib/analytics";
 import { LAB_EXT_LINK } from "@/lib/constants";
 import { exportToCsv } from "@/lib/csv-export";
@@ -12,9 +12,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Icon from "./icon";
-import { useModal } from "@/context/modal-context";
-import { useAccessControl } from "@/context/access-control-context";
-import { useToast } from "@/context/toast-context";
+import { useModal } from "@/context/modal";
+import { useAccessControl } from "@/context/access-control";
+import { useToast } from "@/context/toast";
 import { BIOREACTORS } from "@/lib/data";
 
 const URL_COPIED_EVENT = "urlCopied";
@@ -28,7 +28,7 @@ const Navbar = () => {
   const { activateToast } = useToast();
   const [includeTokenInShare, setIncludeTokenInShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
-  const {tokenInfo} = useAccessControl();
+  const { tokenInfo } = useAccessControl();
 
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -72,13 +72,7 @@ const Navbar = () => {
 
   const handleDownloadCsv = () => {
     if (expenses && activeReactor) {
-      exportToCsv(
-        expenses,
-        activeReactor,
-        doublingTime,
-        density,
-        costs
-      );
+      exportToCsv(expenses, activeReactor, doublingTime, density, costs);
       trackDownload("csv", `${activeReactor.name}-comprehensive-analysis.csv`);
     }
 
@@ -174,7 +168,6 @@ const Navbar = () => {
       }
 
       document.body.removeChild(textarea);
-
     }
   };
 
@@ -593,7 +586,7 @@ const Navbar = () => {
                 path={topRightCornerArrowLogo.path}
                 viewBox={topRightCornerArrowLogo.viewBox}
                 fill='#475569'
-                height="1em"
+                height='1em'
               />
               <span>Our Lab</span>
             </Link>

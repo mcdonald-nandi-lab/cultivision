@@ -1,17 +1,17 @@
 import ConditionalAnalytics from "@/components/analytics/conditional-analytics";
 import CookieConsent from "@/components/analytics/cookie-constent";
-import { AccessControlProvider } from "@/context/access-control-context";
-import { CalculationProvider } from "@/context/calculation-context";
+import { AccessControlProvider } from "@/context/access-control";
+import { CalculationProvider } from "@/context/calculation";
 import ComposeProviders from "@/context/compose-providers";
-import { CookieConsentProvider } from "@/context/cookie-consent-context";
-import { ModalProvider } from "@/context/modal-context";
-import { ToastProvider } from "@/context/toast-context";
+import { CookieConsentProvider } from "@/context/cookie-consent";
+import { ModalProvider } from "@/context/modal";
+import { ToastProvider } from "@/context/toast";
 import { UserbackProvider } from "@/context/userback";
 import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { MaximizeProvider } from "@/context/maximize-context";
+import { MaximizeProvider } from "@/context/maximize";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

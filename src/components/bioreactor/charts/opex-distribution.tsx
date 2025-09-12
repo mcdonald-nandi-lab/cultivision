@@ -14,14 +14,14 @@ import { BRAND_COLOR_ORDER } from "@/lib/constants";
 import useChartDownload from "@/hooks/use-chart-download";
 import ChartDownloadButton from "./download-button";
 import Title from "@/components/title";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import MaximizeButton from "@/components/maximize-button";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 const OpexDistribution = () => {
   const { expenses } = useCalculations();
-  
+
   const chartRef = useRef<HTMLCanvasElement>(null);
   const chartInstance = useRef<Chart | null>(null);
 
@@ -143,7 +143,10 @@ const OpexDistribution = () => {
             filename='cost-distribution-chart.png'
           />
         </div>
-        <MaximizeButton id={"opexDistribution"} title={"OPEX Distribution Chart"} />
+        <MaximizeButton
+          id={"opexDistribution"}
+          title={"OPEX Distribution Chart"}
+        />
       </div>
       <div
         className='flex-1 relative h-full'

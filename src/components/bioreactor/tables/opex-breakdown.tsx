@@ -4,7 +4,7 @@ import TableDownloadButton from "@/components/bioreactor/tables/download-button"
 import { InfoModal } from "@/components/info-modal";
 import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import { BRAND_COLORS } from "@/lib/constants";
 import { formatCurrency } from "@/lib/csv-export";
 import { OtherFacilityCostsSplit } from "@/types";
@@ -25,11 +25,9 @@ interface CategoryInfoProps {
   categoryData: CategoryData;
 }
 
-const CategoryInfo = ({
-  categoryData,
-}: CategoryInfoProps) => {
+const CategoryInfo = ({ categoryData }: CategoryInfoProps) => {
   const { expenses } = useCalculations();
-  const data = expenses!.chartData
+  const data = expenses!.chartData;
 
   const categoryValueDict = {
     labor: [

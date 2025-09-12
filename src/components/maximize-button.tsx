@@ -1,19 +1,15 @@
 "use client";
 
-import { MaximizeIdTypes, useMaximize } from "@/context/maximize-context";
+import { MaximizeIdTypes, useMaximize } from "@/context/maximize";
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import cn from "classnames";
-
 
 interface MaximizeButtonProps {
   id: MaximizeIdTypes;
   title: string;
 }
 
-const MaximizeButton = ({
-  id,
-  title,
-}: MaximizeButtonProps) => {
+const MaximizeButton = ({ id, title }: MaximizeButtonProps) => {
   const { isMaxModalOpen, openMaxModal } = useMaximize();
 
   const tooltipText = `Maximize ${title ?? "Screen"}`;
@@ -24,7 +20,9 @@ const MaximizeButton = ({
           <RadixTooltip.Root>
             <RadixTooltip.Trigger asChild>
               <div
-                className={cn("cursor-pointer text-gray-600 hover:text-green-600")}
+                className={cn(
+                  "cursor-pointer text-gray-600 hover:text-green-600"
+                )}
                 onClick={() => openMaxModal(id)}
               >
                 <svg

@@ -13,10 +13,10 @@ import OpexBreakdownTable from "@/components/bioreactor/tables/opex-breakdown";
 import Container from "@/components/container";
 import Footer from "@/components/footer";
 import ProtectedRoute from "@/components/protected-route";
-import { useAccessControl } from "@/context/access-control-context";
-import { useCalculations } from "@/context/calculation-context";
-import { useModal } from "@/context/modal-context";
-import { useToast } from "@/context/toast-context";
+import { useAccessControl } from "@/context/access-control";
+import { useCalculations } from "@/context/calculation";
+import { useModal } from "@/context/modal";
+import { useToast } from "@/context/toast";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect } from "react";
 import Loading from "../loading";
@@ -51,7 +51,7 @@ const Dashboard = () => {
   const { isLoading } = useAccessControl();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { activateToast } = useToast();
-  
+
   usePageViewTracking();
 
   useEffect(() => {

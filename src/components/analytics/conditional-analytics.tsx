@@ -1,7 +1,7 @@
 "use client";
 
 import { GoogleAnalytics } from "@next/third-parties/google";
-import { useCookieConsent } from "@/context/cookie-consent-context";
+import { useCookieConsent } from "@/context/cookie-consent";
 
 export default function ConditionalAnalytics() {
   const { cookieConsent, isConsentProcessed } = useCookieConsent();

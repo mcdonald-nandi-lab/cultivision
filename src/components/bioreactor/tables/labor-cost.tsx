@@ -1,6 +1,6 @@
 "use client";
 
-import { useCalculations } from "@/context/calculation-context";
+import { useCalculations } from "@/context/calculation";
 import cn from "classnames";
 import TableDownloadButton from "@/components/bioreactor/tables/download-button";
 import Title from "@/components/title";

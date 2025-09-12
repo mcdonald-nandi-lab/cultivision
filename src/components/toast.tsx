@@ -1,6 +1,6 @@
 "use client";
 
-import { useToast } from "@/context/toast-context";
+import { useToast } from "@/context/toast";
 import cn from "classnames";
 import { JSX } from "react";
 
@@ -45,7 +45,6 @@ const typeToIcon: IconMapping = {
 };
 
 const Toast = () => {
-
   const { toastMessage, toastType, showToast, deactivateToast } = useToast();
 
   return (

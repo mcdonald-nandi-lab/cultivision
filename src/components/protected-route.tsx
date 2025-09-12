@@ -1,7 +1,7 @@
 "use client";
 
 import Loading from "@/app/loading";
-import { useAccessControl } from "@/context/access-control-context";
+import { useAccessControl } from "@/context/access-control";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -15,8 +15,7 @@ export default function ProtectedRoute({
   children,
   fallback,
 }: ProtectedRouteProps) {
-  const { isValidAccess, isLoading } =
-    useAccessControl();
+  const { isValidAccess, isLoading } = useAccessControl();
   const router = useRouter();
 
   useEffect(() => {
@@ -29,9 +28,5 @@ export default function ProtectedRoute({
 
   if (!isValidAccess) return fallback || null;
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
