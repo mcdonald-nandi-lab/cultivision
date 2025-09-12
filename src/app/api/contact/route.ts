@@ -4,8 +4,8 @@ interface ContactFormData {
   name: string;
   email: string;
   affiliation: string;
-  message?: string;
-  acknowledgement: boolean;
+  use_case?: string;
+  terms_accepted: boolean;
 }
 
 interface ApiResponse {
@@ -24,9 +24,9 @@ export async function POST(
 ): Promise<NextResponse<ApiResponse>> {
   try {
     const body: ContactFormData = await request.json();
-    const { name, email, affiliation, message, acknowledgement } = body;
+    const { name, email, affiliation, use_case, terms_accepted } = body;
 
-    if (!name || !email || !affiliation || !acknowledgement) {
+    if (!name || !email || !affiliation || !terms_accepted) {
       return NextResponse.json(
         {
           success: false,
@@ -47,13 +47,14 @@ export async function POST(
       );
     }
 
-    // Send JSON data instead of FormData to match your WordPress API
     const requestData = {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       affiliation: affiliation.trim(),
-      use_case: message?.trim() || "Access request via contact form", // Map message to use_case
-      terms_accepted: acknowledgement,
+      use_case:
+        use_case?.trim() ||
+        "Access request for Cultivision dashboard - submitted via contact form",
+      terms_accepted: true,
     };
 
     console.log("Sending request to WordPress:", requestData);
@@ -75,9 +76,25 @@ export async function POST(
     if (!response.ok) {
       const errorText = await response.text();
       console.error("WordPress API error:", errorText);
-      throw new Error(
-        `WordPress API responded with status: ${response.status}`
-      );
+      try {
+        const errorData = JSON.parse(errorText);
+        return NextResponse.json(
+          {
+            success: false,
+            message: errorData.message || `Server error: ${response.status}`,
+          },
+          { status: response.status }
+        );
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (parseError) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: `${response.status}`,
+          },
+          { status: response.status }
+        );
+      }
     }
 
     const result: WordPressResponse = await response.json();
@@ -87,7 +104,7 @@ export async function POST(
       return NextResponse.json({
         success: true,
         message:
-          "Message sent successfully! Check your email for the access link.",
+          "Access request submitted successfully! Check your email for the access link.",
       });
     } else {
       return NextResponse.json(

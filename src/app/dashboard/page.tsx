@@ -81,7 +81,7 @@ const Dashboard = () => {
             </div>
             <div
               className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer w-full'
-              onClick={openModal}
+              onClick={() => openModal()}
             >
               <h3 className='text-lg font-semibold text-gray-700 text-center'>
                 Process Flow Diagram
