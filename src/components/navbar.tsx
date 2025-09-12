@@ -179,10 +179,7 @@ const Navbar = () => {
         aria-label='Main Navigation'
       >
         <div className='container mx-auto flex items-center justify-between px-4'>
-          <Link
-            href={'/'}
-            className='flex items-center justify-start gap-x-1'
-          >
+          <Link href={"/"} className='flex items-center justify-start gap-x-1'>
             <Image
               src={`${
                 process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -400,29 +397,31 @@ const Navbar = () => {
                   </div>
                 </div>
               )}
-              {!isDashboard && !isAccessPage && (
+              {!isDashboard && (
                 <Link
                   href={"/"}
-                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
                 >
                   <Icon
                     path={houseLogo.path}
                     viewBox={houseLogo.viewBox}
                     fill='#475569'
+                    height={"1em"}
                   />
-                  <span>Home</span>
+                  <span className='mt-[0.1em]'>Home</span>
                 </Link>
               )}
               <Link
                 href={LAB_EXT_LINK}
                 target='_blank'
                 rel='noreferrer nofollow'
-                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
               >
                 <Icon
                   path={topRightCornerArrowLogo.path}
                   viewBox={topRightCornerArrowLogo.viewBox}
                   fill='#475569'
+                  height='1.1em'
                 />
                 <span>Our Lab</span>
               </Link>
@@ -463,7 +462,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={cn("flex flex-col space-y-8", { "space-y-4": isDashboard })}
+            className={cn("flex flex-col space-y-8", {
+              "space-y-4": isDashboard,
+            })}
           >
             {isDashboard && !isAccessPage && (
               <button
@@ -560,30 +561,32 @@ const Navbar = () => {
                 <span>Download CSV</span>
               </button>
             )}
-            {!isDashboard && !isAccessPage && (
+            {!isDashboard && (
               <Link
                 href={"/"}
-                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
+                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
               >
                 <Icon
                   path={houseLogo.path}
                   viewBox={houseLogo.viewBox}
                   fill='#475569'
+                  height={"1em"}
                 />
-                <span>Home</span>
+                <span className='mt-[0.1em]'>Home</span>
               </Link>
             )}
             <Link
               href={LAB_EXT_LINK}
               target='_blank'
               rel='noreferrer nofollow'
-              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500 w-full justify-start'
+              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-3 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500 w-full justify-start'
               onClick={() => setIsSidebarOpen(false)}
             >
               <Icon
                 path={topRightCornerArrowLogo.path}
                 viewBox={topRightCornerArrowLogo.viewBox}
                 fill='#475569'
+                height="1.1em"
               />
               <span>Our Lab</span>
             </Link>
