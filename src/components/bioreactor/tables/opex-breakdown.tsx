@@ -6,6 +6,7 @@ import MaximizeButton from "@/components/maximize-button";
 import Title from "@/components/title";
 import { useCalculations } from "@/context/calculation-context";
 import { BRAND_COLORS } from "@/lib/constants";
+import { formatCurrency } from "@/lib/csv-export";
 import { OtherFacilityCostsSplit } from "@/types";
 import { useMemo, useState } from "react";
 
@@ -23,15 +24,6 @@ type CategoryKeys = "labor" | "utilities" | "facilityDependentCost";
 interface CategoryInfoProps {
   categoryData: CategoryData;
 }
-
-const formatCurrency = (value: number): string => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
-};
 
 const CategoryInfo = ({
   categoryData,
@@ -96,10 +88,38 @@ const CategoryInfo = ({
     ],
   };
 
+  const generateCategoryCSV = () => {
+    if (!(categoryData.id in categoryValueDict)) {
+      return {
+        headers: ["Category", "Total Cost"],
+        rows: [[categoryData.name, formatCurrency(categoryData.value)]],
+      };
+    }
+
+    const breakdown =
+      categoryValueDict[categoryData.id as keyof typeof categoryValueDict];
+    const headers = ["Item", "Cost", "Percentage"];
+    const rows = breakdown.map(({ name, value }) => [
+      name,
+      formatCurrency(value ?? 0),
+      `${(((value ?? 0) / categoryData.value) * 100).toFixed(1)}%`,
+    ]);
+
+    rows.push(["Total", formatCurrency(categoryData.value), "100.0%"]);
+
+    return { headers, rows };
+  };
+
+  const csvData = generateCategoryCSV();
+
+  const isWithValidID =
+    categoryData.id in categoryValueDict &&
+    categoryValueDict[categoryData.id as keyof typeof categoryValueDict];
+
   return (
     <>
       <div className='mb-6'>
-        <div className='flex justify-between items-center mb-4'>
+        <div className='flex flex-col md:flex-row justify-between items-center gap-2 mb-4'>
           <div className='flex items-center gap-3'>
             <div
               className='h-3 w-3 rounded-full'
@@ -108,6 +128,16 @@ const CategoryInfo = ({
             <h2 className='text-lg font-bold text-gray-900'>
               {categoryData.name}
             </h2>
+            {isWithValidID && (
+              <TableDownloadButton
+                filename={`${categoryData.name.replace(
+                  /\s+/g,
+                  "_"
+                )}_breakdown.csv`}
+                headers={csvData.headers}
+                rows={csvData.rows}
+              />
+            )}
           </div>
           <span className='text-md font-bold text-gray-900'>
             {formatCurrency(categoryData.value)}
@@ -117,31 +147,30 @@ const CategoryInfo = ({
           {categoryData.description}
         </div>
       </div>
-      {categoryData.id in categoryValueDict &&
-        categoryValueDict[categoryData.id as CategoryKeys] && (
-          <div>
-            <h3 className='text-sm font-semibold text-gray-800 mb-4'>
-              Cost Breakdown
-            </h3>
-            <div className='space-y-2'>
-              {categoryValueDict[categoryData.id as CategoryKeys].map(
-                ({ name, value }) => (
-                  <div
-                    key={name}
-                    className='text-sm border-l-4 border-gray-300 p-2 bg-gray-50 rounded-r-lg'
-                  >
-                    <div className='flex justify-between items-start mb-2'>
-                      <h4 className='font-medium text-gray-900'>{name}</h4>
-                      <span className='font-semibold text-gray-700'>
-                        {formatCurrency(value ?? 0)}
-                      </span>
-                    </div>
+      {isWithValidID && (
+        <div>
+          <h3 className='text-sm font-semibold text-gray-800 mb-4'>
+            Cost Breakdown
+          </h3>
+          <div className='space-y-2'>
+            {categoryValueDict[categoryData.id as CategoryKeys].map(
+              ({ name, value }) => (
+                <div
+                  key={name}
+                  className='text-sm border-l-4 border-gray-300 p-2 bg-gray-50 rounded-r-lg'
+                >
+                  <div className='flex justify-between items-start mb-2'>
+                    <h4 className='font-medium text-gray-900'>{name}</h4>
+                    <span className='font-semibold text-gray-700'>
+                      {formatCurrency(value ?? 0)}
+                    </span>
                   </div>
-                )
-              )}
-            </div>
+                </div>
+              )
+            )}
           </div>
-        )}
+        </div>
+      )}
     </>
   );
 };
@@ -222,15 +251,6 @@ const OpexBreakdownTable = () => {
   const total = useMemo(() => {
     return expenseItems.reduce((sum, item) => sum + item.value, 0);
   }, [expenseItems]);
-
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
 
   const handleInfoClick = (categoryId: string) => {
     setSelectedCategory(categoryId);

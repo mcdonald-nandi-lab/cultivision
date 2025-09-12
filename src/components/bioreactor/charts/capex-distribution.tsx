@@ -14,6 +14,7 @@ import {
 import { useEffect, useRef } from "react";
 import ChartDownloadButton from "./download-button";
 import MaximizeButton from "@/components/maximize-button";
+import { formatCurrency } from "@/lib/csv-export";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -23,15 +24,6 @@ const CapexDistribution = () => {
   const chartInstance = useRef<Chart | null>(null);
 
   const { downloadChart } = useChartDownload();
-
-  const formatCurrency = (value: number): string => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
 
   useEffect(() => {
     if (!chartRef.current || !expenses?.capex) return;
