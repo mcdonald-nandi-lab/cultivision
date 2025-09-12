@@ -11,6 +11,9 @@ export const UCD_EXT_LINK: string = 'https://ucdavis.edu';
 export const METADATA_IMG: string =
   "https://res.cloudinary.com/shnuab/image/upload/f_auto,q_auto,c_limit,w_1200/Cultivision/cv-metadata-preview_c0ptwh.png";
 
+export const CONTACT_FORM_API: string =
+  "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/submit-access-request";
+
 export const WORDPRESS_API_URL: string =
     "https://mcdonald-nandi.ech.ucdavis.edu/wp-json/cultivision/v1/verify-token";
 
