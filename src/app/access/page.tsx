@@ -1,28 +1,26 @@
-'use client'
+"use client";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useAccessControl } from "@/context/access-control-context";
-import { CULTIVISION_LAB_PAGE } from "@/lib/constants";
+import { useToast } from "@/context/toast-context";
 import { useRouter } from "next/navigation";
 import cn from "classnames";
-import Link from "next/link";
+import { TERMS_LINK } from "@/lib/constants";
 
-interface stepsProps {
+interface StepsProps {
   number: string;
   title: string;
   description: string;
   icon: ReactNode;
 }
 
-
-const STEPS: stepsProps[] = [
+const STEPS: StepsProps[] = [
   {
     number: "1",
-    title: "Click Below",
-    description:
-      "Visit our lab website to get started with your access request",
+    title: "Fill Details",
+    description: "Provide your professional information",
     icon: (
       <svg
-        className='w-5 h-5 text-green-500'
+        className='w-4 h-4 text-green-500'
         fill='none'
         stroke='currentColor'
         viewBox='0 0 24 24'
@@ -31,18 +29,18 @@ const STEPS: stepsProps[] = [
           strokeLinecap='round'
           strokeLinejoin='round'
           strokeWidth={2}
-          d='M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122'
+          d='M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
         />
       </svg>
     ),
   },
   {
     number: "2",
-    title: "Complete Form",
-    description: "Fill out our access request form with your professional details",
+    title: "Submit Request",
+    description: "Send your access request instantly",
     icon: (
       <svg
-        className='w-5 h-5 text-green-500'
+        className='w-4 h-4 text-green-500'
         fill='none'
         stroke='currentColor'
         viewBox='0 0 24 24'
@@ -51,19 +49,18 @@ const STEPS: stepsProps[] = [
           strokeLinecap='round'
           strokeLinejoin='round'
           strokeWidth={2}
-          d='M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+          d='M12 19l9 2-9-18-9 18 9-2zm0 0v-8'
         />
       </svg>
     ),
   },
   {
     number: "3",
-    title: "Receive Link",
-    description:
-      "Get your personalized access link instantly delivered to your email",
+    title: "Get Access",
+    description: "Receive personalized link in email inbox",
     icon: (
       <svg
-        className='w-5 h-5 text-green-500'
+        className='w-4 h-4 text-green-500'
         fill='none'
         stroke='currentColor'
         viewBox='0 0 24 24'
@@ -95,64 +92,44 @@ const ProcessStep = ({
   return (
     <div
       className={cn(
-        `relative flex items-start space-x-4 p-6 rounded-xl transition-all duration-300 border-2 cursor-pointer group`,
+        `relative flex items-center space-x-3 p-4 rounded-lg transition-all duration-300 border`,
         {
-          "border-green-500 bg-green-50 shadow-lg transform -translate-y-1":
-            isActive,
-        },
-        {
-          "border-gray-200 bg-white hover:border-green-300 hover:shadow-md hover:-translate-y-0.5":
+          "border-green-400 bg-green-50 shadow-md": isActive,
+          "border-gray-200 bg-white/80 hover:border-green-300 hover:bg-green-50/50":
             !isActive,
         }
       )}
     >
       <div
-        className={`absolute inset-0 rounded-xl bg-green-100 opacity-0 transition-opacity duration-300`}
-      />
-
-      <div
         className={cn(
-          `relative flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold text-white transition-all duration-300 transform`,
-          { "bg-green-500 scale-110 animate-pulse": isActive },
-          {
-            "bg-gray-400 group-hover:bg-green-400 group-hover:scale-105":
-              !isActive,
-          }
+          `relative flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white transition-all duration-300`,
+          { "bg-green-500 scale-110": isActive },
+          { "bg-gray-400": !isActive }
         )}
       >
         {number}
-
-        <div
-          className={cn(
-            `absolute inset-0 rounded-full border-2 border-green-500 transition-all duration-500`,
-            { "animate-ping opacity-75": isActive },
-            { "opacity-0": !isActive }
-          )}
-        />
+        {isActive && (
+          <div className='absolute inset-0 rounded-full border-2 border-green-500 animate-ping opacity-75' />
+        )}
       </div>
-
-      <div className='relative z-10 flex-1'>
-        <div className='flex items-center space-x-2 mb-2'>
+      <div className='flex-1 min-w-0'>
+        <div className='flex items-center space-x-2'>
           <h3
-            className={cn(
-              `font-semibold transition-colors duration-300`,
-              { "text-green-700": isActive },
-              { "text-gray-700 group-hover:text-green-600": !isActive }
-            )}
+            className={cn("text-sm font-semibold", {
+              "text-green-700": isActive,
+              "text-gray-700": !isActive,
+            })}
           >
             {title}
           </h3>
-
-          <div className={`transition-all duration-300 transform`}>{icon}</div>
+          <div className='transition-all duration-300'>{icon}</div>
         </div>
-
-        <p className='text-sm text-gray-600 leading-relaxed'>{description}</p>
+        <p className='text-xs text-gray-600 mt-1'>{description}</p>
       </div>
-
       {isActive && (
-        <div className='absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center animate-bounce'>
+        <div className='absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center'>
           <svg
-            className='w-3 h-3 text-white'
+            className='w-2 h-2 text-white'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -170,98 +147,360 @@ const ProcessStep = ({
   );
 };
 
-const Access = () => {
-    const { isValidAccess } = useAccessControl();
-    const router = useRouter();
+const ContactForm = () => {
+  const { activateToast } = useToast();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    affiliation: "",
+    use_case: "",
+    terms_accepted: false,
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
-    useEffect(() => {
-      if (isValidAccess) {
-        router.push("/");
+  const handleSubmit = async () => {
+    if (
+      !formData.terms_accepted ||
+      !formData.name ||
+      !formData.email ||
+      !formData.affiliation
+    )
+      return;
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitSuccess(true);
+        activateToast(
+          "Access request submitted successfully",
+          "success",
+        );
+        setFormData({
+          name: "",
+          email: "",
+          affiliation: "",
+          use_case: "",
+          terms_accepted: false,
+        });
+      } else {
+        activateToast(
+          result.message,
+          "error",
+        );
       }
-    }, [isValidAccess, router]);
+    } catch (error) {
+      console.error("Form submission error:", error);
+      activateToast(
+        "Network error. Please check your connection and try again.",
+        "error",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-    const [activeStep, setActiveStep] = useState(0);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]:
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+    }));
+  };
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setActiveStep((prev: number) => (prev + 1) % STEPS.length);
-      }, 2500);
-      return () => clearInterval(interval);
-    }, []);
+  const isFormValid =
+    formData.name &&
+    formData.email &&
+    formData.affiliation &&
+    formData.use_case &&
+    formData.terms_accepted;
+
+  if (submitSuccess) {
+    return (
+      <div className='text-center py-8'>
+        <div className='w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6'>
+          <svg
+            className='w-10 h-10 text-green-500'
+            fill='none'
+            stroke='currentColor'
+            viewBox='0 0 24 24'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M5 13l4 4L19 7'
+            />
+          </svg>
+        </div>
+        <h3 className='text-2xl font-semibold text-gray-900 mb-4'>
+          Access Request Submitted!
+        </h3>
+        <p className='text-gray-600 mb-6 max-w-md mx-auto'>
+          Access link has been sent to your inbox!
+        </p>
+        <button
+          onClick={() => setSubmitSuccess(false)}
+          className='text-green-600 hover:text-green-700 font-medium transition-colors duration-200'
+        >
+          Submit Another Request
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <main className='min-h-screen flex items-center justify-center p-4 pt-28'>
-      <div className='w-full max-w-5xl'>
+    <div className='space-y-6'>
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Name <span className='text-red-500'>*</span>
+          </label>
+          <input
+            type='text'
+            name='name'
+            value={formData.name}
+            onChange={handleInputChange}
+            required
+            className={cn("flex-grow w-full rounded-md border border-gray-400 px-4 py-1.5 text-sm focus:outline-none focus:ring-slate-700 focus:border-slate-700 focus:ring-1")}
+            placeholder='Your full name'
+          />
+        </div>
+        <div>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Email <span className='text-red-500'>*</span>
+          </label>
+          <input
+            type='email'
+            name='email'
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            className={cn("flex-grow w-full rounded-md border border-gray-400 px-4 py-1.5 text-sm focus:outline-none focus:ring-slate-700 focus:border-slate-700 focus:ring-1")}
+            placeholder='your.email@domain.com'
+          />
+        </div>
+      </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 mb-2'>
+          Affiliation <span className='text-red-500'>*</span>
+        </label>
+        <input
+          type='text'
+          name='affiliation'
+          value={formData.affiliation}
+          onChange={handleInputChange}
+          required
+          className={cn("flex-grow w-full rounded-md border border-gray-400 px-4 py-1.5 text-sm focus:outline-none focus:ring-slate-700 focus:border-slate-700 focus:ring-1")}
+          placeholder='University, Company, or Organization'
+        />
+      </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700 mb-2'>
+          Use Case <span className='text-red-500'>*</span>
+        </label>
+        <textarea
+          name='use_case'
+          value={formData.use_case}
+          onChange={handleInputChange}
+          rows={4}
+          required
+          className={"flex-grow w-full rounded-md border border-gray-400 px-4 py-1.5 text-sm focus:outline-none focus:ring-slate-700 focus:border-slate-700 focus:ring-1 resize-none"}
+          placeholder='Brief description of your research interest...'
+        />
+      </div>
+      <div className='flex items-start space-x-3'>
+        <input
+          type='checkbox'
+          name='terms_accepted'
+          checked={formData.terms_accepted}
+          onChange={handleInputChange}
+          required
+          className='mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded'
+        />
+        <span className='text-red-500'>*</span>
+        <label className='text-sm text-gray-600 leading-relaxed'>
+          I agree to the <a href={TERMS_LINK} target="_blank" rel="noreferrer nofollow" className="underline text-green-800">terms and conditions</a>.
+        </label>
+      </div>
+
+      <button
+        onClick={handleSubmit}
+        disabled={isSubmitting || !isFormValid}
+        className={cn(
+          "w-full py-4 px-6 rounded-lg font-semibold text-white transition-all duration-300 transform",
+          {
+            "bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:-translate-y-1 hover:shadow-lg":
+              !isSubmitting && isFormValid,
+            "bg-gray-400 cursor-not-allowed": isSubmitting || !isFormValid,
+          }
+        )}
+      >
+        {isSubmitting ? (
+          <div className='flex items-center justify-center space-x-2'>
+            <div className='w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin' />
+            <span>Submitting Request...</span>
+          </div>
+        ) : (
+          <div className='flex items-center justify-center space-x-2'>
+            <span>Request Access</span>
+            <svg
+              className='w-5 h-5'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M13 7l5 5m0 0l-5 5m5-5H6'
+              />
+            </svg>
+          </div>
+        )}
+      </button>
+    </div>
+  );
+};
+
+const Access = () => {
+  const { isValidAccess } = useAccessControl();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isValidAccess) {
+      router.push("/");
+    }
+  }, [isValidAccess, router]);
+
+  const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev: number) => (prev + 1) % STEPS.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <main className='min-h-screen pt-30 pb-8 px-4'>
+      <div className='container mx-auto max-w-5xl'>
         <div className='text-center mb-8'>
-          <h1 className='text-5xl md:text-6xl text-gray-800 font-bold mb-6 tracking-tight'>
+          <h1 className='text-4xl md:text-5xl text-gray-800 font-bold mb-3 tracking-tight'>
             Welcome to <span className='text-green-700'>CultiVision</span>
           </h1>
-
-          <p className='text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed'>
+          <p className='text-lg text-gray-600 max-w-xl mx-auto'>
             Your gateway to Cultivated Meat Analytics
           </p>
         </div>
-
-        <div className='bg-white rounded-2xl shadow-xl p-8 mb-8'>
-          <div className='text-center mb-10'>
-            <h2 className='text-2xl font-semibold text-gray-800 mb-4 flex items-center justify-center space-x-2'>
-              <span className='text-3xl'>🔐</span>
-              <span>Secure Access Required</span>
-            </h2>
-            <p className='text-gray-600 max-w-2xl mx-auto'>
-              To maintain security and ensure optimal performance, CultiVision
-              requires a personalized access link.
-            </p>
-          </div>
-
-          <div className='relative'>
-            <div className='hidden md:block absolute top-6 left-0 right-0 h-0.5 bg-gray-200'>
-              <div
-                className='h-full bg-green-500 transition-all duration-1000 ease-in-out'
-                style={{ width: `${((activeStep + 1) / STEPS.length) * 100}%` }}
-              />
+        <div className='bg-white/90 backdrop-blur-sm rounded-3xl shadow-2xl overflow-hidden border border-white/20'>
+          <div className='p-6 md:p-8'>
+            <div className='text-center mb-8 lg:hidden'>
+              <h2 className='text-xl font-semibold text-gray-800 mb-2 flex items-center justify-center space-x-2'>
+                <span className='text-2xl'>🔒</span>
+                <span>Secure Access Process</span>
+              </h2>
+              <p className='text-gray-600 text-sm'>
+                Get your personalized access link in three simple steps
+              </p>
             </div>
+            <div className='lg:hidden'>
+              <div className='relative mb-6'>
+                <div className='h-1 bg-gray-200 rounded-full'>
+                  <div
+                    className='h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all duration-1000 ease-out'
+                    style={{
+                      width: `${((activeStep + 1) / STEPS.length) * 100}%`,
+                    }}
+                  />
+                </div>
+              </div>
+              <div className='grid grid-cols-1 gap-4 mb-8'>
+                {STEPS.map((step, index) => (
+                  <ProcessStep
+                    key={index}
+                    number={step.number}
+                    title={step.title}
+                    description={step.description}
+                    icon={step.icon}
+                    isActive={index === activeStep}
+                  />
+                ))}
+              </div>
 
-            <div className='grid md:grid-cols-3 gap-6 relative'>
-              {STEPS.map((step, index) => (
-                <ProcessStep
-                  key={index}
-                  number={step.number}
-                  title={step.title}
-                  description={step.description}
-                  icon={step.icon}
-                  isActive={index === activeStep}
-                />
-              ))}
+              <div>
+                <div className='bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-4 text-white text-center mb-1'>
+                  <h3 className='text-xl font-semibold'>
+                    Request Your Access Link
+                  </h3>
+                </div>
+                <div className='bg-gray-50/50 rounded-2xl p-6'>
+                  <ContactForm />
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className='text-center mt-10'>
-            <Link
-              href={CULTIVISION_LAB_PAGE}
-              className='group relative inline-flex items-center space-x-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg text-lg overflow-hidden'
-            >
-              <div className='absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300 transform -skew-x-12 -translate-x-full group-hover:translate-x-full' />
-
-              <span className='relative z-10'>Request Access Link</span>
-              <svg
-                className='relative z-10 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1'
-                fill='none'
-                stroke='currentColor'
-                viewBox='0 0 24 24'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14'
-                />
-              </svg>
-            </Link>
-
-            <p className='text-sm text-gray-500 mt-4'>
-              This will open our lab website in a new tab
-            </p>
+            <div className='hidden lg:grid lg:grid-cols-5 lg:gap-8'>
+              <div className='lg:col-span-2'>
+                <div className='bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 h-full'>
+                  <div className='text-center mb-8'>
+                    <h2 className='text-xl font-semibold text-gray-800 mb-2 flex items-center justify-center space-x-2'>
+                      <span className='text-2xl'>🔒</span>
+                      <span>Secure Access Process</span>
+                    </h2>
+                    <p className='text-gray-600 text-sm'>
+                      Get your personalized access link in three simple steps
+                    </p>
+                  </div>
+                  <div className='relative mb-6'>
+                    <div className='h-1 bg-gray-200 rounded-full'>
+                      <div
+                        className='h-full bg-gradient-to-r from-green-500 to-green-600 rounded-full transition-all duration-1000 ease-out'
+                        style={{
+                          width: `${((activeStep + 1) / STEPS.length) * 100}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className='space-y-4'>
+                    {STEPS.map((step, index) => (
+                      <ProcessStep
+                        key={index}
+                        number={step.number}
+                        title={step.title}
+                        description={step.description}
+                        icon={step.icon}
+                        isActive={index === activeStep}
+                      />
+                    ))}
+                  </div>                  
+                </div>
+              </div>
+              <div className='lg:col-span-3'>
+                <div className='bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-4 text-white text-center mb-1'>
+                  <h3 className='text-xl font-semibold'>
+                    Request Your Access Link
+                  </h3>
+                </div>
+                <div className='bg-gray-50/50 rounded-2xl p-6'>
+                  <ContactForm />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

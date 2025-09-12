@@ -35,6 +35,7 @@ const costInputs: ParameterProps[] = [
     step: "0.1",
     default: DEFAULT_PRODUCTION_COSTS.mediaCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.mediaCost}/L`,
+    min:0
   },
   {
     id: "uspLaborCostPerHour",
@@ -86,6 +87,7 @@ const utilitiesInput: ParameterProps[] = [
     step: "0.01",
     default: DEFAULT_PRODUCTION_COSTS.electricityCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.electricityCost}/kW-h`,
+    min: 0,
   },
   {
     id: "steamCost",
@@ -94,6 +96,7 @@ const utilitiesInput: ParameterProps[] = [
     step: "0.1",
     default: DEFAULT_PRODUCTION_COSTS.steamCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.steamCost}/MT`,
+    min: 0,
   },
   {
     id: "coolingWaterCost",
@@ -102,6 +105,7 @@ const utilitiesInput: ParameterProps[] = [
     step: "0.01",
     default: DEFAULT_PRODUCTION_COSTS.coolingWaterCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.coolingWaterCost}/MT`,
+    min: 0,
   },
   {
     id: "chilledWaterCost",
@@ -110,6 +114,7 @@ const utilitiesInput: ParameterProps[] = [
     step: "0.01",
     default: DEFAULT_PRODUCTION_COSTS.chilledWaterCost,
     description: `Base case cost: $${DEFAULT_PRODUCTION_COSTS.chilledWaterCost}/MT`,
+    min: 0,
   },
 ];
 
@@ -210,7 +215,7 @@ const ParameterForm = () => {
     const { id, value } = e.target;
     const newCosts = {
       ...localCosts,
-      [id]: parseFloat(value) ?? 0,
+      [id]: parseFloat(value) || 0,
     };
 
     setLocalCosts(newCosts);
@@ -472,7 +477,7 @@ const ParameterForm = () => {
               htmlFor='density'
               className='block mb-1 text-xs font-semibold text-gray-500'
             >
-              Cell Density
+              Cell Harvest Density
             </label>
             <div
               className={cn("relative", {
@@ -576,7 +581,7 @@ const ParameterForm = () => {
                       "flex-grow w-full px-4 py-1.5 text-sm",
                       "focus:outline-none text-gray-600 border-0"
                     )}
-                    placeholder='0.00'
+                    placeholder='0.0'
                     step={param.step}
                     min={0}
                     aria-describedby={`${param.id}-desc`}
