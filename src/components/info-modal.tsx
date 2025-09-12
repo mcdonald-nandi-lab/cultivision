@@ -42,7 +42,7 @@ export const InfoModal = ({ isOpen, onClose, children }: InfoModalProps) => {
       onClick={handleBackdropClick}
     >
       <div
-        className='relative bg-white rounded-lg min-w-2xl max-w-11/12 max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-200 p-6'
+        className='relative bg-white rounded-lg min-w-auto max-w-11/12 max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-200 p-6'
         onClick={(e) => e.stopPropagation()}
       >
         {children}
