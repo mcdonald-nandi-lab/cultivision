@@ -150,7 +150,7 @@ const HomeNavbar = () => {
                   path={topRightCornerArrowLogo.path}
                   viewBox={topRightCornerArrowLogo.viewBox}
                   fill='#475569'
-                  height='1.2em'
+                  height='1.1em'
                 />
                 <span>Lab</span>
               </Link>
@@ -264,7 +264,7 @@ const HomeNavbar = () => {
                 path={topRightCornerArrowLogo.path}
                 viewBox={topRightCornerArrowLogo.viewBox}
                 fill='#475569'
-                height='1.2em'
+                height='1.1em'
               />
               <span>Our Lab</span>
             </Link>
