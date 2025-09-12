@@ -20,6 +20,9 @@ import { useToast } from "@/context/toast-context";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect } from "react";
 import Loading from "../loading";
+import { BIOREACTORS } from "@/lib/data";
+import { exportToCsv } from "@/lib/csv-export";
+import { trackDownload } from "@/lib/analytics";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
@@ -47,10 +50,12 @@ const svcValues: Record<ExpenseKeys, { title: string; unit: string }> = {
 };
 
 const Dashboard = () => {
-  const { expenses, isUrlParamProcessed } = useCalculations();
+  const { isUrlParamProcessed } = useCalculations();
   const { isLoading } = useAccessControl();
   const { isModalOpen, openModal, closeModal } = useModal();
   const { activateToast } = useToast();
+  const { activeReactorId, expenses, costs, doublingTime, density } =
+    useCalculations();
 
   usePageViewTracking();
 
@@ -64,6 +69,22 @@ const Dashboard = () => {
     }
   }, [isUrlParamProcessed, isLoading]);
 
+    const activeReactor = BIOREACTORS.find((r) => r.id === activeReactorId);
+
+  const handleDownloadCsv = () => {
+      if (expenses && activeReactor) {
+        exportToCsv(
+          expenses,
+          activeReactor,
+          doublingTime,
+          density,
+          costs
+        );
+        trackDownload("csv", `${activeReactor.name}-cultivision-analysis.csv`);
+      }
+  
+    };
+
   if (!expenses) {
     return <Loading />;
   }
@@ -72,6 +93,26 @@ const Dashboard = () => {
     <ProtectedRoute>
       <main className='min-h-screen'>
         <div className='flex flex-col lg:flex-row h-full pt-18 gap-2'>
+          <button
+            onClick={handleDownloadCsv}
+            disabled={!expenses}
+            className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+          >
+            <svg
+              className='h-4 w-4'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+              />
+            </svg>
+            Download CSV
+          </button>
           <div
             className='w-full lg:w-1/4 pt-6 px-0 lg:p lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-16 flex flex-col md:items-center md:justify-start gap-6 mr-2'
             aria-label='Input Form and Process Flow Diagram'

@@ -72,9 +72,16 @@ const Navbar = () => {
 
   const handleDownloadCsv = () => {
     if (expenses && activeReactor) {
-      exportToCsv(expenses, activeReactor);
-      trackDownload("csv", `${activeReactor.name}-expenses.csv`);
+      exportToCsv(
+        expenses,
+        activeReactor,
+        doublingTime,
+        density,
+        costs
+      );
+      trackDownload("csv", `${activeReactor.name}-comprehensive-analysis.csv`);
     }
+
     setIsOptionsOpen(false);
   };
 
