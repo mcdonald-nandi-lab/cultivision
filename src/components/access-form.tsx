@@ -3,9 +3,10 @@
 import { useToast } from "@/context/toast";
 import { CONTACT_FORM_API, TERMS_LINK } from "@/lib/constants";
 import cn from "classnames";
+import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 
-const ContactForm = () => {
+const AccessForm = () => {
   const { activateToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -65,8 +66,12 @@ const ContactForm = () => {
     }
 
     setIsSubmitting(true);
+    const slowToastTimeout = setTimeout(() => {
+      activateToast("Request is taking longer than expected, please be patient...", "info");
+    }, 5000);
 
     try {
+      
       const requestData = {
         name: name,
         email: cleanEmail,
@@ -107,6 +112,7 @@ const ContactForm = () => {
       );
     } finally {
       setIsSubmitting(false);
+      clearTimeout(slowToastTimeout);
     }
   };
 
@@ -246,14 +252,14 @@ const ContactForm = () => {
         <span className='text-red-500 ml-[-0.35em]'>*</span>
         <label className='text-sm text-gray-600 leading-relaxed'>
           I agree to the{" "}
-          <a
+          <Link
             href={TERMS_LINK}
             target='_blank'
             rel='noreferrer nofollow'
             className='underline text-green-800'
           >
             Terms and Conditions
-          </a>
+          </Link>
           .
         </label>
       </div>
@@ -298,4 +304,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default AccessForm;
