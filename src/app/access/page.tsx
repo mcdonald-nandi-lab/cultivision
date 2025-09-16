@@ -1,5 +1,5 @@
 "use client";
-import ContactForm from "@/components/contact-form";
+import AccessForm from "@/components/access-form";
 import { useAccessControl } from "@/context/access-control";
 import cn from "classnames";
 import { useRouter } from "next/navigation";
@@ -212,13 +212,13 @@ const Access = () => {
               </div>
 
               <div>
-                <div className='bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-4 text-white text-center mb-1'>
+                <div className='bg-gray-200 rounded-2xl p-4 text-gray-800 text-center mb-1'>
                   <h3 className='text-xl font-semibold'>
-                    Request Your Access Link
+                    Access Link Form
                   </h3>
                 </div>
                 <div className='bg-gray-50/50 rounded-2xl p-6'>
-                  <ContactForm />
+                  <AccessForm />
                 </div>
               </div>
             </div>
@@ -259,13 +259,13 @@ const Access = () => {
                 </div>
               </div>
               <div className='lg:col-span-3'>
-                <div className='bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-4 text-white text-center mb-1'>
+                <div className='bg-gray-100 rounded-2xl p-4 text-gray-800 text-center mb-1'>
                   <h3 className='text-xl font-semibold'>
-                    Request Your Access Link
+                    Access Link Form
                   </h3>
                 </div>
                 <div className='bg-gray-50/50 rounded-2xl p-6'>
-                  <ContactForm />
+                  <AccessForm />
                 </div>
               </div>
             </div>
