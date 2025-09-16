@@ -54,19 +54,16 @@ const HomeNavbar = () => {
                 process.env.NEXT_PUBLIC_BASE_PATH ?? ""
               }/images/cv-logo.png`}
               alt='Cultivision Logo'
-              width={40}
-              height={40}
+              width={35}
+              height={35}
               priority
               className='object-contain'
             />
             <div className='flex flex-col items-start justify-center'>
-              <div className='text-xl font-semibold text-slate-700 relative'>
+              <div className='text-[21px] font-semibold text-slate-700 mb-[-0.2em]'>
                 CultiVision
-                <div className='absolute top-0 right-[-27px] text-green-800 rounded-sm text-xs italic'>
-                  Beta
-                </div>
               </div>
-              <div className='text-xs font-medium italic'>
+              <div className='text-[9px] font-medium'>
                 Cultivated Meat Dashboard
               </div>
             </div>
