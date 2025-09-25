@@ -1,6 +1,7 @@
 import { CalculatedExpenses, ProductionCosts } from "@/types";
 import { Bioreactor } from "@/types";
 import { DEFAULT_PRODUCTION_COSTS } from "@/lib/data";
+import { saveAs } from "file-saver";
 
 export const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat("en-US", {
@@ -20,8 +21,9 @@ export function exportToCsv(
   bioreactor: Bioreactor,
   doublingTime: string,
   density: string,
-  costs: ProductionCosts
-): void {
+  costs: ProductionCosts,
+  triggerDownload = true
+): string | void {
   if (!expenses || !bioreactor) return;
 
   const getTotalExpense = () => {
@@ -540,19 +542,10 @@ export function exportToCsv(
     )
     .join("\n");
 
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-
-  link.setAttribute("href", url);
-  link.setAttribute(
-    "download",
-    `${bioreactor.name.replace(/\s+/g, "_")}_Comprehensive_Analysis.csv`
-  );
-  link.style.visibility = "hidden";
-
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  if (triggerDownload) {
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, `${bioreactor.name.toLowerCase().replace(/\s+/g, "-")}-comprehensive-analysis.csv`);
+  } else {
+    return csvContent;
+  }
 }

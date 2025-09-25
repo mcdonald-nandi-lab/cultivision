@@ -567,30 +567,23 @@ const ParameterForm = () => {
               </label>
               <div className='grid grid-cols-1'>
                 <div
-                  className={cn(
-                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
-                    "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
-                  )}
+                  className={
+                    "flex w-full rounded-md border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                  }
                 >
                   <input
                     type='number'
                     id={param.id}
                     value={localCosts[param.id as keyof typeof localCosts]}
                     onChange={handleChange}
-                    className={cn(
-                      "flex-grow w-full px-4 py-1.5 text-sm",
-                      "focus:outline-none text-gray-600 border-0"
-                    )}
+                    className={"flex-grow w-full px-4 py-1.5 text-sm focus:outline-none text-gray-600 border-0"}
                     placeholder='0.0'
                     step={param.step}
                     min={0}
                     aria-describedby={`${param.id}-desc`}
                   />
                   <div
-                    className={cn(
-                      "flex items-center justify-center px-3 text-xs",
-                      "text-gray-500 bg-gray-50 border-l border-gray-200"
-                    )}
+                    className={"flex items-center justify-center px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 whitespace-nowrap"}
                   >
                     {param.unit}
                   </div>
@@ -620,10 +613,9 @@ const ParameterForm = () => {
               </label>
               <div className='grid grid-cols-1'>
                 <div
-                  className={cn(
-                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
-                    "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
-                  )}
+                  className={
+                    "flex w-full rounded-md border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                  }
                 >
                   <input
                     type='number'
@@ -640,16 +632,15 @@ const ParameterForm = () => {
                     aria-describedby={`${param.id}-desc`}
                   />
                   <div
-                    className={cn(
-                      "flex items-center justify-center px-3 text-xs",
-                      "text-gray-500 bg-gray-50 border-l border-gray-200"
-                    )}
+                    className={
+                      "flex items-center justify-center px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200 whitespace-nowrap"
+                    }
                   >
                     {param.unit}
                   </div>
                 </div>
                 <div
-                  className={cn("text-xs text-gray-400 mt-1")}
+                  className={"text-xs text-gray-400 mt-1"}
                   id={`${param.id}-desc`}
                 >
                   {param.description}
@@ -693,10 +684,9 @@ const ParameterForm = () => {
                     aria-describedby={`${param.id}-desc`}
                   />
                   <div
-                    className={cn(
-                      "flex items-center justify-center px-3 text-xs",
-                      "text-gray-500 bg-gray-50 border-l border-gray-200"
-                    )}
+                    className={
+                      "flex items-center justify-center px-3 text-xs text-gray-500 bg-gray-50 border-l border-gray-200"
+                    }
                   >
                     {param.unit}
                   </div>
@@ -715,10 +705,9 @@ const ParameterForm = () => {
           <div>
             <button
               type='submit'
-              className={cn(
-                "w-full py-1.5 rounded-md text-sm font-medium",
-                "bg-slate-700 text-white hover:bg-slate-800 cursor-pointer mt-1"
-              )}
+              className={
+                "w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800 cursor-pointer mt-1"
+              }
             >
               Run Calculation
             </button>
