@@ -16,6 +16,7 @@ import { useModal } from "@/context/modal";
 import { useAccessControl } from "@/context/access-control";
 import { useToast } from "@/context/toast";
 import { BIOREACTORS } from "@/lib/data";
+import { exportToZip } from "@/lib/zip-export";
 
 const URL_COPIED_EVENT = "urlCopied";
 
@@ -33,6 +34,8 @@ const Navbar = () => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isOptionsOpen, setIsOptionsOpen] = useState<boolean>(false);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+
 
   const activeReactor = BIOREACTORS.find((r) => r.id === activeReactorId);
 
@@ -70,14 +73,31 @@ const Navbar = () => {
     }
   }, [isCopied]);
 
-  const handleDownloadCsv = () => {
-    if (expenses && activeReactor) {
-      exportToCsv(expenses, activeReactor, doublingTime, density, costs);
-      trackDownload("csv", `${activeReactor.name}-comprehensive-analysis.csv`);
+const handleDownloadCsv = async () => {
+  if (expenses && activeReactor) {
+    const csvData = exportToCsv(expenses, activeReactor, doublingTime, density, costs, false);
+    
+    if (csvData) {
+      try {
+        setIsDownloading(true);
+        const imagePath = activeReactor.reactors[doublingTime][density].image;
+        
+        await exportToZip(csvData, imagePath, activeReactor.name);
+        
+        activateToast("Analysis data and diagram downloaded successfully!", "success");
+      } catch (error) {
+        console.error("Failed to create zip file:", error);
+        activateToast("Failed to download files", "error");
+        
+        exportToCsv(expenses, activeReactor, doublingTime, density, costs);
+        trackDownload("csv", `${activeReactor.name}-comprehensive-analysis.csv`);
+      } finally {
+        setIsDownloading(false);
+      }
     }
-
-    setIsOptionsOpen(false);
-  };
+  }
+  setIsOptionsOpen(false);
+};
 
   const handleDiagramClick = () => {
     openModal();
@@ -368,23 +388,35 @@ const Navbar = () => {
                     </button>
                     <button
                       onClick={handleDownloadCsv}
-                      disabled={!expenses}
+                      disabled={!expenses || isDownloading}
                       className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
                     >
-                      <svg
-                        className='h-4 w-4'
-                        fill='none'
-                        viewBox='0 0 24 24'
-                        stroke='currentColor'
-                      >
-                        <path
-                          strokeLinecap='round'
-                          strokeLinejoin='round'
-                          strokeWidth={2}
-                          d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
-                        />
-                      </svg>
-                      Download CSV
+                      {isDownloading ? (
+                        <>
+                          <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Downloading...</span>
+                        </>
+                      ) : (
+                        <>
+                          <svg
+                            className='h-4 w-4'
+                            fill='none'
+                            viewBox='0 0 24 24'
+                            stroke='currentColor'
+                          >
+                            <path
+                              strokeLinecap='round'
+                              strokeLinejoin='round'
+                              strokeWidth={2}
+                              d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
+                            />
+                          </svg>
+                          <span>Download Report</span>
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -458,7 +490,7 @@ const Navbar = () => {
               "space-y-4": isDashboard,
             })}
           >
-            {isDashboard && !isAccessPage && (
+            {isDashboard && isAccessPage && (
               <button
                 className={cn(
                   "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
@@ -550,7 +582,7 @@ const Navbar = () => {
                     d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'
                   />
                 </svg>
-                <span>Download CSV</span>
+                <span>Download Report</span>
               </button>
             )}
             {!isDashboard && (
