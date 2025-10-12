@@ -202,70 +202,44 @@ const LandingPage = () => {
   return (
     <div className='bg-white'>
       <HomeNavbar />
-      <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 fade-up-animate'>
-        <div className='max-w-7xl mx-auto w-full relative z-10'>
-          <div className='text-center px-4 sm:px-6 lg:px-8'>
-            <div className='max-w-4xl mx-auto mb-16'>
-              <h1 className='animate-fade-in-up text-6xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
-                <span className='block'>Cultivated Meat</span>
-                <span className='block text-green-600 bg-gradient-to-r from-green-200 to-green-700 bg-clip-text'>
-                  Analytics
-                </span>
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 relative overflow-hidden bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 min-h-screen items-center flex">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(52,211,153,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(6,182,212,0.1),transparent_50%)]"></div>
+        
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h1 className="text-6xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                Cultivated Meat
+                <span className="block bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Analytics</span>
               </h1>
-              <p className='mt-6 text-lg text-gray-500 px-2 md:text-xl max-w-2xl mx-auto animate-fade-in-up animation-delay-200'>
-                Interactive dashboard for analyzing cultivated meat production
-                costs, bioreactor performance, and sustainability metrics.
+              <p className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
+                Interactive dashboard for analyzing cultivated meat production costs, bioreactor performance, 
+                and sustainability metrics.
               </p>
-              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4 items-center animate-fade-in-up animation-delay-300'>
-                <div className='rounded-md shadow w-48 md:w-64'>
-                  <Link
-                    href='/dashboard'
-                    className='group relative overflow-hidden w-full flex items-center justify-center px-4 md:px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1'
-                  >
-                    <span className='relative z-10'>Launch Dashboard</span>
-                  </Link>
-                </div>
-                <div className='w-48 md:w-64'>
-                  <button
-                    onClick={() => {
-                      const element = document.getElementById("features");
-                      if (element)
-                        element.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className='group w-full flex items-center justify-center px-8 py-4 border-2 border-green-500 text-base font-medium rounded-md text-green-500 bg-white hover:bg-green-500 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer'
-                  >
-                    Learn More
-                    <svg
-                      className='ml-2 w-4 h-4 group-hover:animate-bounce'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M19 14l-7 7m0 0l-7-7m7 7V3'
-                      />
-                    </svg>
-                  </button>
-                </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-lg text-md font-semibold hover:from-green-600 hover:to-emerald-600 transition shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/50 cursor-pointer">
+                  Launch Dashboard
+                </button>
+                <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-4 py-2 rounded-lg text-md font-semibold hover:bg-white/20 transition cursor-pointer">
+                  Learn More
+                </button>
               </div>
             </div>
-
-            <div className='max-w-5xl mx-auto mt-4 p-4 animate-fade-in-up animation-delay-500'>
-              <div className='bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500'>
-                <div className='bg-gray-800 px-4 py-3 flex items-center'>
-                  <div className='flex space-x-2'>
-                    <div className='w-3 h-3 bg-red-500 rounded-full animate-pulse'></div>
-                    <div className='w-3 h-3 bg-yellow-500 rounded-full animate-pulse animate-delay-75'></div>
-                    <div className='w-3 h-3 bg-green-500 rounded-full animate-pulse animate-delay-150'></div>
+            
+            <div className="relative">
+              <div className="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-white/10 transform hover:scale-105 transition-transform duration-500">
+                <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 flex items-center border-b border-white/10">
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   </div>
-                  <div className='ml-4 text-gray-300 text-sm'>
-                    cultivision.dashboard
-                  </div>
+                  <div className="ml-4 text-gray-300 text-sm">cultivision.dashboard</div>
                 </div>
-                <Image
+                  <Image
                   src={`${
                     process.env.NEXT_PUBLIC_BASE_PATH ?? ""
                   }/images/dashboard-preview.png`}
@@ -274,6 +248,7 @@ const LandingPage = () => {
                   height={800}
                   className='w-full h-auto object-contain'
                   priority
+                  aria-label='CultiVision Dashboard Preview'
                 />
               </div>
             </div>
