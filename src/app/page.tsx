@@ -262,11 +262,16 @@ const LandingPage = () => {
         
         <div className="w-full overflow-hidden relative mt-auto">
           <div className="w-full overflow-hidden">
-            <div className="inline-flex whitespace-nowrap animate-[ticker_30s_linear_infinite]">
-              {[...STATS, ...STATS].map((stat, index) => (
-                <div key={index} className="inline-flex items-baseline px-8">
-                  <span className="text-2xl font-bold text-gray-300">{stat.value}</span>
-                  <span className="text-sm text-gray-400 ml-2">{stat.label}</span>
+            <div className="flex whitespace-nowrap animate-[ticker_30s_linear_infinite]">
+              {/* Render ticker content twice for seamless loop, but only map over STATS */}
+              {[0, 1].map((repeatIdx) => (
+                <div key={repeatIdx} className="flex">
+                  {STATS.map((stat, index) => (
+                    <div key={repeatIdx + '-' + index} className="inline-flex items-baseline px-8">
+                      <span className="text-2xl font-bold text-gray-300">{stat.value}</span>
+                      <span className="text-sm text-gray-400 ml-2">{stat.label}</span>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
