@@ -224,7 +224,13 @@ const LandingPage = () => {
                       Launch Dashboard
                     </button>
                   </Link>
-                  <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/20 transition cursor-pointer w-full sm:w-auto">
+                  <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/20 transition cursor-pointer w-full sm:w-auto" onClick={() => {
+                      const element = document.getElementById("features");
+                      if (element)
+                        element.scrollIntoView({ behavior: "smooth" })
+                      }}
+                  aria-label="Learn more about the app"
+                  >
                     Learn More
                   </button>
                 </div>
