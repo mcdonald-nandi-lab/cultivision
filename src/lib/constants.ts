@@ -54,9 +54,14 @@ export const CAPEX_COLORS = {
 };
 
 export const STATS = [
-  { value: "100M+", label: "kg/yr production capacity analysis" },
-  { value: "Multiple", label: "Bioreactor configurations" },
-  { value: "Real-time", label: "Cost calculations" },
-  { value: "Export", label: "Ready data and visualizations" },
+  { value: "100M+", label: "kg Production" },
+  { value: "Real-time", label: "Calculations" },
+  { value: "60+", label: "Configurations" },
+  { value: "Research", label: "Grade" },
+  { value: "4", label: "Bioreactor Types" },
+  { value: "Export", label: "Ready" },
+  { value: "25M+", label: "kg/yr Per Facility" },
+  { value: "Industry", label: "Standard" },
+  { value: "7", label: "Cost Categories" },
+  { value: "17-29h", label: "Doubling Time Range" }
 ];
-

@@ -188,7 +188,6 @@ const Authors = () => {
 };
 
 const LandingPage = () => {
-
   const [isAuthorModalOpen, setIsAuthorModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -202,132 +201,108 @@ const LandingPage = () => {
   return (
     <div className='bg-white'>
       <HomeNavbar />
-      <section className='relative pt-32 md:pt-48 pb-30 flex items-center overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 fade-up-animate'>
-        <div className='max-w-7xl mx-auto w-full relative z-10'>
-          <div className='text-center px-4 sm:px-6 lg:px-8'>
-            <div className='max-w-4xl mx-auto mb-16'>
-              <h1 className='animate-fade-in-up text-6xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-8xl'>
-                <span className='block'>Cultivated Meat</span>
-                <span className='block text-green-600 bg-gradient-to-r from-green-200 to-green-700 bg-clip-text'>
-                  Analytics
-                </span>
-              </h1>
-              <p className='mt-6 text-lg text-gray-500 px-2 md:text-xl max-w-2xl mx-auto animate-fade-in-up animation-delay-200'>
-                Interactive dashboard for analyzing cultivated meat production
-                costs, bioreactor performance, and sustainability metrics.
-              </p>
-              <div className='mt-8 flex flex-col sm:flex-row sm:justify-center gap-4 items-center animate-fade-in-up animation-delay-300'>
-                <div className='rounded-md shadow w-48 md:w-64'>
-                  <Link
-                    href='/dashboard'
-                    className='group relative overflow-hidden w-full flex items-center justify-center px-4 md:px-8 py-4 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1'
-                  >
-                    <span className='relative z-10'>Launch Dashboard</span>
+      <section className="pt-20 md:pt-32 pb-20 relative overflow-hidden bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 min-h-screen flex flex-col justify-between rounded-b-3xl shadow-lg">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(52,211,153,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(6,182,212,0.1),transparent_50%)]"></div>
+        
+        <div className="flex-grow flex items-center pt-12 md:pt-16 justify-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full">
+            <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
+              <div className="text-center lg:text-left">
+                <h1 className="text-6xl lg:text-6xl font-bold text-white leading-tight mb-6 sm:mb-8">
+                  Cultivated Meat
+                  <span className="block bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Analytics</span>
+                </h1>
+                <p className="text-xl sm:text-2xl lg:text-2xl text-gray-300 mb-8 sm:mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                  Interactive dashboard for analyzing cultivated meat production costs, bioreactor performance, 
+                  and sustainability metrics.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start max-w-xs sm:max-w-none mx-auto">
+                  <Link href="/dashboard" className="sm:w-auto">
+                    <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:from-green-600 hover:to-emerald-600 transition shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/50 cursor-pointer w-full">
+                      Launch Dashboard
+                    </button>
                   </Link>
-                </div>
-                <div className='w-48 md:w-64'>
-                  <button
-                    onClick={() => {
+                  <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-white/20 transition cursor-pointer w-full sm:w-auto" onClick={() => {
                       const element = document.getElementById("features");
                       if (element)
-                        element.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className='group w-full flex items-center justify-center px-8 py-4 border-2 border-green-500 text-base font-medium rounded-md text-green-500 bg-white hover:bg-green-500 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg cursor-pointer'
+                        element.scrollIntoView({ behavior: "smooth" })
+                      }}
+                  aria-label="Learn more about the app"
                   >
                     Learn More
-                    <svg
-                      className='ml-2 w-4 h-4 group-hover:animate-bounce'
-                      fill='none'
-                      stroke='currentColor'
-                      viewBox='0 0 24 24'
-                    >
-                      <path
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        strokeWidth={2}
-                        d='M19 14l-7 7m0 0l-7-7m7 7V3'
-                      />
-                    </svg>
                   </button>
                 </div>
               </div>
-            </div>
-
-            <div className='max-w-5xl mx-auto mt-4 p-4 animate-fade-in-up animation-delay-500'>
-              <div className='bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition-transform duration-500'>
-                <div className='bg-gray-800 px-4 py-3 flex items-center'>
-                  <div className='flex space-x-2'>
-                    <div className='w-3 h-3 bg-red-500 rounded-full animate-pulse'></div>
-                    <div className='w-3 h-3 bg-yellow-500 rounded-full animate-pulse animate-delay-75'></div>
-                    <div className='w-3 h-3 bg-green-500 rounded-full animate-pulse animate-delay-150'></div>
+              
+              <div className="relative mt-10 lg:mt-0">
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-white/10 transform hover:scale-105 transition-transform duration-500 max-w-2xl mx-auto">
+                  <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 flex items-center border-b border-white/10">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <div className="ml-4 text-gray-300 text-sm">cultivision.dashboard</div>
                   </div>
-                  <div className='ml-4 text-gray-300 text-sm'>
-                    cultivision.dashboard
-                  </div>
+                  <Image
+                    src={`${
+                      process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+                    }/images/dashboard-preview.png`}
+                    alt='CultiVision Dashboard Preview'
+                    width={1400}
+                    height={900}
+                    className='w-full h-full object-contain scale-105'
+                    priority
+                    
+                  />
                 </div>
-                <Image
-                  src={`${
-                    process.env.NEXT_PUBLIC_BASE_PATH ?? ""
-                  }/images/dashboard-preview.png`}
-                  alt='CultiVision Dashboard Preview'
-                  width={1200}
-                  height={800}
-                  className='w-full h-auto object-contain'
-                  priority
-                />
               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="flex-grow"></div>
+        <div className="mt-16 md:mt-24"></div>
+        
+        <div className="w-full overflow-hidden relative mt-auto">
+          <div className="w-full overflow-hidden">
+            <div className="flex whitespace-nowrap animate-[ticker_30s_linear_infinite]">
+              {/* Render ticker content twice for seamless loop, but only map over STATS */}
+              {[0, 1].map((repeatIdx) => (
+                <div key={repeatIdx} className="flex">
+                  {STATS.map((stat, index) => (
+                    <div key={repeatIdx + '-' + index} className="inline-flex items-baseline px-8">
+                      <span className="text-2xl font-bold text-gray-300">{stat.value}</span>
+                      <span className="text-sm text-gray-400 ml-2">{stat.label}</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className='relative bg-gradient-to-r from-green-100 to-green-200 overflow-hidden rounded-b-4xl shadow-lg'>
-        <div className='max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl animate-fade-in-left'>
-              Comprehensive Production Analysis
-            </h2>
-            <p className='mt-4 text-xl text-slate-700 animate-fade-in-up animation-delay-100'>
-              Everything you need to understand cultivated meat economics
-            </p>
-          </div>
-          <dl className='mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-            {STATS.map((stat, index) => (
-              <div
-                key={index}
-                className='text-center group cursor-pointer animate-fade-in-up'
-                style={{ animationDelay: `${(index + 2) * 100}ms` }}
-              >
-                <dd className='order-1 text-2xl lg:text-5xl font-extrabold text-gray-800 group-hover:text-green-600 transition-colors duration-300 group-hover:scale-110 transform'>
-                  {stat.value}
-                </dd>
-                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-slate-700 group-hover:text-slate-800 transition-colors duration-300'>
-                  {stat.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      <section id='features' className='relative py-20 overflow-hidden'>
+      <section id='features' className='relative py-16 md:py-20 overflow-hidden'>
         <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
           <div className='text-center'>
             <h2 className='text-base text-green-600 font-semibold tracking-wide uppercase animate-fade-in-up'>
               Features
             </h2>
-            <p className='mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl animate-fade-in-up animation-delay-100'>
+            <p className='mt-2 text-2xl sm:text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl animate-fade-in-up animation-delay-100'>
               Powerful Analytics for Cultivated Meat
             </p>
-            <p className='mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto animate-fade-in-up animation-delay-200'>
+            <p className='mt-4 max-w-2xl text-lg sm:text-xl text-gray-500 mx-auto animate-fade-in-up animation-delay-200'>
               Comprehensive tools for analyzing production costs, comparing
               bioreactor configurations, and understanding the economics of
               cellular agriculture.
             </p>
           </div>
 
-          <div className='mt-20'>
-            <div className='grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3'>
+          <div className='mt-16 md:mt-20'>
+            <div className='grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-2 lg:grid-cols-3'>
               {FEATURES.map((feature, index) => (
                 <div
                   key={index}
@@ -367,13 +342,13 @@ const LandingPage = () => {
         id='about'
         className='relative py-4 bg-gradient-to-r from-green-100 to-blue-100 overflow-hidden rounded-4xl shadow-lg'
       >
-        <div className='w-full mx-auto p-8 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center'>
+        <div className='w-full mx-auto p-6 sm:p-8 sm:px-6 lg:px-8 relative z-10 flex items-center justify-center'>
           <div className='lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center max-w-5xl'>
-            <div className='animate-fade-in-left'>
-              <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl text-center md:text-left'>
+            <div className='animate-fade-in-left text-center lg:text-left'>
+              <h2 className='text-2xl sm:text-3xl font-extrabold text-gray-800 sm:text-4xl'>
                 Research-Grade Insights
               </h2>
-              <p className='mt-4 text-lg text-slate-700 text-center md:text-left'>
+              <p className='mt-4 text-lg text-slate-700'>
                 CultiVision is developed by the McDonald-Nandi Lab at UC Davis,
                 bringing together cutting-edge research in cellular agriculture
                 with practical industry applications.
@@ -470,9 +445,9 @@ const LandingPage = () => {
         </div>
       </section>
 
-      <section className='relative overflow-hidden p-4 mt-16'>
-        <div className='max-w-4xl mx-auto text-center py-8 px-4 sm:py-12 sm:px-6 lg:px-8 relative z-10'>
-          <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl'>
+      <section className='relative overflow-hidden p-4 mt-12 md:mt-16'>
+        <div className='max-w-4xl mx-auto text-center py-6 sm:py-8 px-4 sm:px-6 lg:px-8 relative z-10'>
+          <h2 className='text-2xl sm:text-3xl font-extrabold text-gray-800 sm:text-4xl'>
             Ready to analyze your production costs?
           </h2>
           <p className='mt-4 text-lg leading-6 text-gray-700'>
@@ -481,7 +456,7 @@ const LandingPage = () => {
           </p>
           <Link
             href='/dashboard'
-            className='group mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg overflow-hidden'
+            className='group mt-8 inline-flex items-center justify-center px-6 sm:px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg overflow-hidden'
           >
             <div className='absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300 transform -skew-x-12 -translate-x-full group-hover:translate-x-full' />
             <span className='relative z-10'>Access Dashboard</span>
@@ -490,13 +465,13 @@ const LandingPage = () => {
       </section>
 
       <div
-        className='w-full flex items-center justify-center rounded-3xl bg-white mt-24'
+        className='w-full flex items-center justify-center rounded-3xl bg-white mt-16 md:mt-24'
         style={{
           boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         }}
       >
-        <footer className='flex flex-col gap-6 w-6xl p-8' role='contentinfo'>
-          <div className='grid md:grid-cols-2 gap-8 items-start justify-center w-full'>
+        <footer className='flex flex-col gap-6 w-full p-6 sm:p-8' role='contentinfo'>
+          <div className='grid md:grid-cols-2 gap-8 items-center justify-center w-full'>
             <div className='flex flex-col items-start justify-center gap-8'>
               <Link
                 href={UCD_EXT_LINK}
@@ -598,6 +573,5 @@ const LandingPage = () => {
     </div>
   );
 };
-
 
 export default LandingPage;
