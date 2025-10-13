@@ -249,7 +249,7 @@ const LandingPage = () => {
                     height={900}
                     className='w-full h-full object-contain scale-105'
                     priority
-                    aria-label='CultiVision Dashboard Preview'
+                    
                   />
                 </div>
               </div>
