@@ -188,7 +188,6 @@ const Authors = () => {
 };
 
 const LandingPage = () => {
-
   const [isAuthorModalOpen, setIsAuthorModalOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -202,43 +201,43 @@ const LandingPage = () => {
   return (
     <div className='bg-white'>
       <HomeNavbar />
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 relative overflow-hidden bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 min-h-screen items-center flex">
+      <section className="pt-32 pb-20 relative overflow-hidden bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 min-h-screen flex flex-col justify-between rounded-b-3xl shadow-lg">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(16,185,129,0.1),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(52,211,153,0.15),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(6,182,212,0.1),transparent_50%)]"></div>
         
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-6xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Cultivated Meat
-                <span className="block bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Analytics</span>
-              </h1>
-              <p className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
-                Interactive dashboard for analyzing cultivated meat production costs, bioreactor performance, 
-                and sustainability metrics.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-lg text-md font-semibold hover:from-green-600 hover:to-emerald-600 transition shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/50 cursor-pointer">
-                  Launch Dashboard
-                </button>
-                <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-4 py-2 rounded-lg text-md font-semibold hover:bg-white/20 transition cursor-pointer">
-                  Learn More
-                </button>
-              </div>
-            </div>
-            
-            <div className="relative">
-              <div className="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-white/10 transform hover:scale-105 transition-transform duration-500">
-                <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 flex items-center border-b border-white/10">
-                  <div className="flex space-x-2">
-                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  </div>
-                  <div className="ml-4 text-gray-300 text-sm">cultivision.dashboard</div>
+        <div className="flex-grow flex items-center pt-16 justify-center">
+          <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+                  Cultivated Meat
+                  <span className="block bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Analytics</span>
+                </h1>
+                <p className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
+                  Interactive dashboard for analyzing cultivated meat production costs, bioreactor performance, 
+                  and sustainability metrics.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-lg text-md font-semibold hover:from-green-600 hover:to-emerald-600 transition shadow-lg shadow-green-500/50 hover:shadow-xl hover:shadow-green-500/50 cursor-pointer">
+                    Launch Dashboard
+                  </button>
+                  <button className="bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-4 py-2 rounded-lg text-md font-semibold hover:bg-white/20 transition cursor-pointer">
+                    Learn More
+                  </button>
                 </div>
+              </div>
+              
+              <div className="relative">
+                <div className="relative bg-white/5 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden border border-white/10 transform hover:scale-105 transition-transform duration-500">
+                  <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3 flex items-center border-b border-white/10">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                    </div>
+                    <div className="ml-4 text-gray-300 text-sm">cultivision.dashboard</div>
+                  </div>
                   <Image
                   src={`${
                     process.env.NEXT_PUBLIC_BASE_PATH ?? ""
@@ -249,39 +248,27 @@ const LandingPage = () => {
                   className='w-full h-auto object-contain'
                   priority
                   aria-label='CultiVision Dashboard Preview'
-                />
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      <section className='relative bg-gradient-to-r from-green-100 to-green-200 overflow-hidden rounded-b-4xl shadow-lg'>
-        <div className='max-w-7xl mx-auto py-16 px-4 sm:py-20 sm:px-6 lg:px-8 relative z-10'>
-          <div className='max-w-4xl mx-auto text-center'>
-            <h2 className='text-3xl font-extrabold text-gray-800 sm:text-4xl animate-fade-in-left'>
-              Comprehensive Production Analysis
-            </h2>
-            <p className='mt-4 text-xl text-slate-700 animate-fade-in-up animation-delay-100'>
-              Everything you need to understand cultivated meat economics
-            </p>
+        
+        <div className="flex-grow"></div>
+        <div className="flex-grow"></div>
+        
+        <div className="w-full overflow-hidden relative mt-auto">
+          <div className="w-full overflow-hidden">
+            <div className="inline-flex whitespace-nowrap animate-[ticker_30s_linear_infinite]">
+              {[...STATS, ...STATS].map((stat, index) => (
+                <div key={index} className="inline-flex items-baseline px-8">
+                  <span className="text-2xl font-bold text-gray-300">{stat.value}</span>
+                  <span className="text-sm text-gray-400 ml-2">{stat.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <dl className='mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
-            {STATS.map((stat, index) => (
-              <div
-                key={index}
-                className='text-center group cursor-pointer animate-fade-in-up'
-                style={{ animationDelay: `${(index + 2) * 100}ms` }}
-              >
-                <dd className='order-1 text-2xl lg:text-5xl font-extrabold text-gray-800 group-hover:text-green-600 transition-colors duration-300 group-hover:scale-110 transform'>
-                  {stat.value}
-                </dd>
-                <dt className='order-2 mt-2 text-lg leading-6 font-medium text-slate-700 group-hover:text-slate-800 transition-colors duration-300'>
-                  {stat.label}
-                </dt>
-              </div>
-            ))}
-          </dl>
         </div>
       </section>
 
@@ -573,6 +560,7 @@ const LandingPage = () => {
     </div>
   );
 };
+
 
 
 export default LandingPage;
