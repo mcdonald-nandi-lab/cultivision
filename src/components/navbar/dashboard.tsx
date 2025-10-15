@@ -1,31 +1,28 @@
 "use client";
 
+import { useAccessControl } from "@/context/access-control";
 import { useCalculations } from "@/context/calculation";
+import { useChatbot } from "@/context/chatbot-context";
+import { useModal } from "@/context/modal";
+import { useToast } from "@/context/toast";
 import { trackDownload, trackUserBehavior } from "@/lib/analytics";
-import { LAB_EXT_LINK } from "@/lib/constants";
 import { exportToCsv } from "@/lib/csv-export";
-import { houseLogo, topRightCornerArrowLogo } from "@/lib/icons";
+import { BIOREACTORS } from "@/lib/data";
 import { createShareableUrl } from "@/lib/url-params";
+import { exportToZip } from "@/lib/zip-export";
 import cn from "classnames";
+import { Bot } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Icon from "./icon";
-import { useModal } from "@/context/modal";
-import { useAccessControl } from "@/context/access-control";
-import { useToast } from "@/context/toast";
-import { BIOREACTORS } from "@/lib/data";
-import { exportToZip } from "@/lib/zip-export";
 
 const URL_COPIED_EVENT = "urlCopied";
 
 const Navbar = () => {
-  const pathname = usePathname();
-  const { isValidAccess } = useAccessControl();
   const { openModal } = useModal();
   const { activeReactorId, expenses, costs, doublingTime, density } =
     useCalculations();
+  const { openChatbot } = useChatbot();
   const { activateToast } = useToast();
   const [includeTokenInShare, setIncludeTokenInShare] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
@@ -38,9 +35,6 @@ const Navbar = () => {
 
 
   const activeReactor = BIOREACTORS.find((r) => r.id === activeReactorId);
-
-  const isDashboard = pathname === "/dashboard";
-  const isAccessPage = pathname === "/access";
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -210,7 +204,7 @@ const handleDownloadCsv = async () => {
               priority
               className='object-contain'
             />
-            <div className='flex flex-col items-start justify-center'>
+            <div className='flex flex-col items-start justify-center hidden sm:inline'>
               <div className='text-[21px] font-semibold text-slate-700 mb-[-0.2em]'>
                 CultiVision
               </div>
@@ -220,8 +214,7 @@ const handleDownloadCsv = async () => {
             </div>
           </Link>
 
-          {isDashboard && isValidAccess && (
-            <div className='relative dropdown-container'>
+<div className='relative dropdown-container'>
               <button
                 className='dropdown-button flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-700'
                 aria-controls='reactor-configuration'
@@ -235,7 +228,6 @@ const handleDownloadCsv = async () => {
                 </span>
               </button>
             </div>
-          )}
 
           <div className='flex items-center justify-around gap-4'>
             <button
@@ -257,12 +249,19 @@ const handleDownloadCsv = async () => {
               </svg>
             </button>
             <div
-              className={cn("hidden xl:flex items-center gap-4", {
-                "gap-8": !isDashboard,
-              })}
+              className={cn("hidden xl:flex items-center gap-4")}
             >
-              {isDashboard && isValidAccess && (
-                <div className='relative options-dropdown'>
+              <button
+                onClick={openChatbot}
+                className="flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
+                aria-label="Open AI Assistant"
+              >
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full p-1 text-white">
+                  <Bot className="w-3 h-3" />
+                </div>
+                <span>Viz</span>
+              </button>
+              <div className='relative options-dropdown'>
                   <button
                     onClick={toggleOptions}
                     className='options-button flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
@@ -420,35 +419,6 @@ const handleDownloadCsv = async () => {
                     </button>
                   </div>
                 </div>
-              )}
-              {!isDashboard && (
-                <Link
-                  href={"/"}
-                  className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
-                >
-                  <Icon
-                    path={houseLogo.path}
-                    viewBox={houseLogo.viewBox}
-                    fill='#475569'
-                    height={"1em"}
-                  />
-                  <span className='mt-[0.1em]'>Home</span>
-                </Link>
-              )}
-              <Link
-                href={LAB_EXT_LINK}
-                target='_blank'
-                rel='noreferrer nofollow'
-                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500'
-              >
-                <Icon
-                  path={topRightCornerArrowLogo.path}
-                  viewBox={topRightCornerArrowLogo.viewBox}
-                  fill='#475569'
-                  height='1em'
-                />
-                <span>Our Lab</span>
-              </Link>
             </div>
           </div>
         </div>
@@ -486,12 +456,19 @@ const handleDownloadCsv = async () => {
           </div>
 
           <div
-            className={cn("flex flex-col space-y-8", {
-              "space-y-4": isDashboard,
-            })}
+            className={cn("flex flex-col space-y-4")}
           >
-            {isDashboard && isAccessPage && (
-              <button
+                          <button
+                onClick={openChatbot}
+                className="flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
+                aria-label="Open AI Assistant"
+              >
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full p-1 text-white">
+                  <Bot className="w-3 h-3" />
+                </div>
+                <span>Viz</span>
+              </button>
+                          <button
                 className={cn(
                   "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
                 )}
@@ -518,9 +495,7 @@ const handleDownloadCsv = async () => {
                 </svg>
                 Diagram
               </button>
-            )}
-            {isDashboard && (
-              <button
+                          <button
                 onClick={handleSaveSettings}
                 className={cn(
                   "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start"
@@ -562,9 +537,7 @@ const handleDownloadCsv = async () => {
                   </>
                 )}
               </button>
-            )}
-            {isDashboard && (
-              <button
+            <button
                 onClick={handleDownloadCsv}
                 disabled={!expenses}
                 className='flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer w-full justify-start disabled:opacity-50 disabled:cursor-not-allowed'
@@ -584,36 +557,6 @@ const handleDownloadCsv = async () => {
                 </svg>
                 <span>Download Report</span>
               </button>
-            )}
-            {!isDashboard && (
-              <Link
-                href={"/"}
-                className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800'
-              >
-                <Icon
-                  path={houseLogo.path}
-                  viewBox={houseLogo.viewBox}
-                  fill='#475569'
-                  height={"1em"}
-                />
-                <span className='mt-[0.1em]'>Home</span>
-              </Link>
-            )}
-            <Link
-              href={LAB_EXT_LINK}
-              target='_blank'
-              rel='noreferrer nofollow'
-              className='flex items-center gap-x-2 rounded-md border border-slate-300 py-[0.5em] px-3 text-sm transition-all hover:shadow-md text-slate-600 hover:bg-green-50 hover:border-green-500 w-full justify-start'
-              onClick={() => setIsSidebarOpen(false)}
-            >
-              <Icon
-                path={topRightCornerArrowLogo.path}
-                viewBox={topRightCornerArrowLogo.viewBox}
-                fill='#475569'
-                height='1em'
-              />
-              <span>Our Lab</span>
-            </Link>
           </div>
         </div>
       </div>

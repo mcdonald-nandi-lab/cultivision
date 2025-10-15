@@ -20,6 +20,7 @@ import { useToast } from "@/context/toast";
 import { usePageViewTracking } from "@/hooks/use-page-view-tracking";
 import { useEffect } from "react";
 import Loading from "../loading";
+import CultivisionChatbot from "@/components/chat-bot/chatbot";
 
 type ExpenseKeys =
   | "cogsWithDepreciation"
@@ -148,6 +149,7 @@ const Dashboard = () => {
         </div>
 
         {isModalOpen && <ImageModal onClose={closeModal} />}
+        <CultivisionChatbot />
       </main>
     </ProtectedRoute>
   );

@@ -7,7 +7,7 @@ import cn from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Icon from "./icon";
+import Icon from "../icon";
 
 const HomeNavbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -59,7 +59,7 @@ const HomeNavbar = () => {
               priority
               className='object-contain'
             />
-            <div className='flex flex-col items-start justify-center'>
+            <div className='flex flex-col items-start justify-center hidden sm:inline'>
               <div className='text-[21px] font-semibold text-slate-700 mb-[-0.2em]'>
                 CultiVision
               </div>

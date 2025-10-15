@@ -7,11 +7,13 @@ import { CookieConsentProvider } from "@/context/cookie-consent";
 import { ModalProvider } from "@/context/modal";
 import { ToastProvider } from "@/context/toast";
 import { UserbackProvider } from "@/context/userback";
+import { ChatbotProvider } from "@/context/chatbot-context";
 import { AUTHOR_LINK, METADATA_IMG } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MaximizeProvider } from "@/context/maximize";
+import CultivisionChatbot from "@/components/chat-bot/chatbot";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,7 +87,10 @@ const RootLayout = ({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ComposeProviders providers={providers}>
-          {children}
+          <ChatbotProvider>
+            {children}
+            <CultivisionChatbot />
+          </ChatbotProvider>
           <CookieConsent />
           <ConditionalAnalytics />
         </ComposeProviders>

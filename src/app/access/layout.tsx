@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import GeneralNavbar from "@/components/navbar/general";
 
 const RootLayout = ({
   children,
@@ -7,7 +7,7 @@ const RootLayout = ({
 }>) => {
   return (
     <>
-      <Navbar />
+      <GeneralNavbar />
       {children}
     </>
   );

@@ -18,15 +18,15 @@ export default function ProtectedRoute({
   const { isValidAccess, isLoading } = useAccessControl();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isLoading && !isValidAccess) {
-      router.push("/access");
-    }
-  }, [isValidAccess, isLoading, router]);
+  // useEffect(() => {
+  //   if (!isLoading && !isValidAccess) {
+  //     router.push("/access");
+  //   }
+  // }, [isValidAccess, isLoading, router]);
 
   if (isLoading) return <Loading />;
 
-  if (!isValidAccess) return fallback || null;
+  // if (!isValidAccess) return fallback || null;
 
   return <>{children}</>;
 }
