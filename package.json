@@ -2,6 +2,7 @@
   "name": "cultivision",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "engines": {
     "node": ">=20.0.0"
   },
@@ -10,10 +11,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-sitemap"
-  },
+    "postbuild": "next-sitemap",
+    "index-kb": "tsx scripts/index-knowledge.ts"
+},
   "dependencies": {
     "@next/third-parties": "^15.3.2",
+    "@pinecone-database/pinecone": "^6.1.2",
     "@radix-ui/react-tooltip": "^1.2.6",
     "@userback/widget": "^0.3.11",
     "chart.js": "^4.4.9",
@@ -23,6 +26,7 @@
     "lucide-react": "^0.545.0",
     "next": "15.3.1",
     "next-sitemap": "^4.2.3",
+    "openai": "^6.3.0",
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0"
@@ -34,9 +38,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^16.3.1",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }

@@ -1,0 +1,219 @@
+[
+    {
+        "id": "cogs-definition",
+        "title": "COGS (Cost of Goods Sold) Definition",
+        "content": "COGS in cultivated meat production represents the total cost to produce one kilogram of product. It includes: media costs (typically 50%+ of total), facility depreciation, labor expenses for USP (Upstream Processing), Main operators, and DSP (Downstream Processing) operators, utilities including power, steam, cooling water and chilled water, raw materials and consumables, and waste treatment costs. Cultivision calculates COGS both with and without depreciation for comprehensive economic analysis. The COGS with depreciation typically ranges from $50-80/kg depending on configuration.",
+        "category": "costs",
+        "tags": [
+            "cogs",
+            "costs",
+            "economics",
+            "pricing"
+        ]
+    },
+    {
+        "id": "bioreactor-105k-str",
+        "title": "105K Stirred Tank Bioreactor",
+        "content": "The 105,000 liter stirred tank bioreactor (105K_STR) is one of four configurations in Cultivision. It uses mechanical agitation for cell culture mixing. Key specifications: volume 105,000L, stirred tank design with mechanical agitation. This reactor supports multiple doubling times (17h, 20h, 23h, 26h, 29h) and cell densities (80gpl, 90gpl, 100gpl). Annual production capacity ranges from approximately 10M kg per facility. Capital expenses range from $677M to $863M depending on configuration. Operating expenses and facility costs vary based on doubling time and cell density settings.",
+        "category": "bioreactors",
+        "tags": [
+            "bioreactor",
+            "105K_STR",
+            "stirred-tank",
+            "equipment"
+        ]
+    },
+    {
+        "id": "bioreactor-150k-str",
+        "title": "150K Stirred Tank Bioreactor",
+        "content": "The 150,000 liter stirred tank bioreactor (150K_STR) is a larger capacity stirred tank configuration. It provides increased production volume compared to the 105K model while maintaining stirred tank technology. This reactor supports multiple doubling times and cell densities, offering flexibility in production parameters. The larger volume typically provides better economies of scale, reducing per-kilogram costs. Capital investment is higher than 105K but offers greater production capacity per facility.",
+        "category": "bioreactors",
+        "tags": [
+            "bioreactor",
+            "150K_STR",
+            "stirred-tank",
+            "equipment"
+        ]
+    },
+    {
+        "id": "bioreactor-210k-str",
+        "title": "210K Stirred Tank Bioreactor",
+        "content": "The 210,000 liter stirred tank bioreactor (210K_STR) represents the largest stirred tank configuration in Cultivision. With 210,000L capacity, it offers maximum production volume using stirred tank technology. Benefits include excellent economies of scale, lower per-kg costs at high volumes, and established stirred tank reliability. This configuration is suitable for large-scale commercial production. Like other stirred tank reactors, it uses mechanical agitation and supports various doubling times and cell densities.",
+        "category": "bioreactors",
+        "tags": [
+            "bioreactor",
+            "210K_STR",
+            "stirred-tank",
+            "large-scale"
+        ]
+    },
+    {
+        "id": "bioreactor-262k-alf",
+        "title": "262K Airlift Bioreactor",
+        "content": "The 262,000 liter airlift bioreactor (262K_ALF) uses gas sparging instead of mechanical agitation for mixing. Key differences from stirred tanks: uses compressed air for circulation instead of impellers, potentially lower energy consumption, different mixing characteristics. Volume: 262,000L making it the largest capacity option. Airlift technology can be advantageous for shear-sensitive cell cultures. This configuration offers an alternative to traditional stirred tank designs with its own unique benefits and operational characteristics.",
+        "category": "bioreactors",
+        "tags": [
+            "bioreactor",
+            "262K_ALF",
+            "airlift",
+            "alternative-technology"
+        ]
+    },
+    {
+        "id": "doubling-time-impact",
+        "title": "Cell Doubling Time and Its Impact",
+        "content": "Doubling time is the period required for cell culture population to double, typically ranging from 17-29 hours in Cultivision. Impact on production: faster doubling (17h) means more production cycles per year, higher annual output, and reduced facility requirements for target production volume. Slower doubling (29h) means fewer cycles, lower output per facility, and more facilities needed for the same target. For example, 17h doubling produces approximately 25-30% more batches annually compared to 29h. Doubling time affects COGS, capital requirements, and facility count. It's influenced by cell line characteristics, media composition, and culture conditions.",
+        "category": "parameters",
+        "tags": [
+            "doubling-time",
+            "cell-growth",
+            "parameters",
+            "production"
+        ]
+    },
+    {
+        "id": "cell-density-explained",
+        "title": "Cell Density Optimization",
+        "content": "Cell density, measured in grams per liter (g/L or gpl), represents the concentration of cells in the bioreactor. Standard densities in Cultivision: 80gpl, 90gpl, and 100gpl. Higher cell density means more product per batch (100gpl produces 25% more per batch than 80gpl), improved bioreactor efficiency, and potentially lower costs per kilogram. However, higher density requires: optimized media formulation, enhanced oxygen delivery, careful pH and nutrient management. Trade-offs exist between density and cell health. The optimal density balances productivity with cell viability and product quality.",
+        "category": "parameters",
+        "tags": [
+            "cell-density",
+            "parameters",
+            "optimization",
+            "gpl"
+        ]
+    },
+    {
+        "id": "capex-breakdown",
+        "title": "Capital Expenses (CAPEX) Breakdown",
+        "content": "Capital expenses encompass all upfront investments needed to build production facilities. Components include: Direct Fixed Capital (largest portion) covering equipment purchase cost, installation, process piping, instrumentation, insulation, electrical systems, buildings, yard improvements, and auxiliary facilities. Plant Indirect Costs including engineering and construction. Miscellaneous costs including contractor's fee (5% of TPC) and contingency (10% of TPC). Working Capital for inventory, materials, and initial operations. Startup Capital for commissioning, training, and initial production runs. In Cultivision, CAPEX for 105K_STR ranges from $677M to $863M depending on configuration. CAPEX is amortized over facility lifetime (typically 10-15 years) contributing to depreciation in COGS calculations.",
+        "category": "costs",
+        "tags": [
+            "capex",
+            "capital",
+            "investment",
+            "facility-costs"
+        ]
+    },
+    {
+        "id": "opex-breakdown",
+        "title": "Operating Expenses (OPEX) Components",
+        "content": "Operating expenses are ongoing costs to run production facilities. Major components: Media costs (largest at 50%+ typically) including growth media and production media. Labor costs for USP operators (upstream processing), Main operators (bioreactor management), and DSP operators (downstream processing). Utilities including power (major consumer), steam for sterilization, cooling water for temperature control, and chilled water for precise cooling. Raw materials and consumables. Maintenance costs (typically 1.3% of DFC annually). Waste treatment and disposal. Factory expenses including administrative overhead. In Cultivision, annual OPEX ranges from $118M to $151M for 105K_STR depending on configuration. OPEX directly affects COGS without depreciation calculations.",
+        "category": "costs",
+        "tags": [
+            "opex",
+            "operating-costs",
+            "annual-costs",
+            "expenses"
+        ]
+    },
+    {
+        "id": "facility-requirements",
+        "title": "Facility Requirements for Scale",
+        "content": "To achieve target production volumes (typically 100 million kg/year), multiple facilities are required. Number depends on: bioreactor capacity (larger reactors = fewer facilities), doubling time (faster = fewer facilities), and cell density (higher = fewer facilities). For 105K_STR with 17h doubling and 100gpl: approximately 10M kg/year per facility, requiring 10 facilities for 100M kg/year target. With 29h doubling: approximately 6-7M kg/year per facility, requiring 14-15 facilities. Each additional facility adds proportional CAPEX and OPEX. Facility count directly impacts total capital investment and economies of scale. Cultivision calculates this automatically based on your parameter selections.",
+        "category": "production",
+        "tags": [
+            "facilities",
+            "scale",
+            "capacity",
+            "production-volume"
+        ]
+    },
+    {
+        "id": "media-costs-optimization",
+        "title": "Cell Culture Media Costs and Optimization",
+        "content": "Media costs are the single largest operating expense, often exceeding 50% of total COGS. Components include: basal media providing basic nutrients, growth factors (expensive recombinant proteins), amino acids, vitamins, and supplements. Cost drivers: growth factor costs can be $100-500/L, specialized formulations increase cost, and media volume scales with production. Optimization strategies: develop cheaper media formulations, produce growth factors in-house, implement media recycling and reuse, optimize media exchange schedules, and use computational models to minimize waste. Even 10-20% reduction in media cost can decrease COGS by 5-10%. In Cultivision, media volume for 105K_STR ranges from 98-127 million liters annually depending on configuration.",
+        "category": "costs",
+        "tags": [
+            "media",
+            "costs",
+            "optimization",
+            "biggest-cost-driver"
+        ]
+    },
+    {
+        "id": "labor-structure",
+        "title": "Labor Cost Structure and Requirements",
+        "content": "Labor costs include three main operational categories: USP (Upstream Processing) operators manage cell culture preparation, media preparation, inoculation, and early-stage culture. Typical hours: 19,000-20,000 annually for 105K_STR. Main operators oversee bioreactor operations, monitoring, parameter adjustments, sampling, and quality control. Typical hours: 1,400-1,500 annually. DSP (Downstream Processing) operators handle harvesting, initial processing, and purification. Typical hours: 250-280 annually. Labor costs scale with facility count and automation level. Hourly rates vary by region and skill level. In Cultivision, you can set custom hourly rates for each role. Total annual labor costs for 105K_STR typically range from $2-4M depending on rates and configuration. Automation can reduce labor requirements by 30-50%.",
+        "category": "costs",
+        "tags": [
+            "labor",
+            "operations",
+            "workforce",
+            "staffing"
+        ]
+    },
+    {
+        "id": "utilities-management",
+        "title": "Utility Requirements and Management",
+        "content": "Utilities are essential for bioreactor operations and facility maintenance. Power: largest utility cost, consumed by mixing equipment (stirred tanks use more than airlift), HVAC systems, control systems, and auxiliary equipment. For 105K_STR: 3.2-5.5 million kWh annually depending on configuration. Steam: used for sterilization of equipment, media heating, and cleaning-in-place (CIP). Usage: 14,000-18,000 kg annually for 105K_STR. Cooling water: manages heat generated during fermentation, typically 800,000-1,200,000 m³ annually. Chilled water: for precise temperature control, approximately 44,000 m³ annually. Utility cost optimization strategies include implementing heat recovery, scheduling operations during off-peak electricity hours, optimizing cooling tower efficiency, and monitoring for leaks and waste. Utility costs typically represent 5-10% of total OPEX.",
+        "category": "operations",
+        "tags": [
+            "utilities",
+            "power",
+            "steam",
+            "cooling",
+            "operations"
+        ]
+    },
+    {
+        "id": "how-to-use-cultivision",
+        "title": "How to Use Cultivision Dashboard",
+        "content": "Cultivision is an interactive analytics tool for cultivated meat economics. To use: 1) Select a bioreactor configuration from the dropdown (105K_STR, 150K_STR, 210K_STR, or 262K_ALF). 2) Choose doubling time based on your cell line characteristics (17h to 29h available). 3) Select cell density (80gpl, 90gpl, or 100gpl). 4) Adjust cost parameters including media costs (growth and production), raw materials, consumables, waste disposal, utilities (power, steam, cooling water, chilled water), and labor rates (USP, Main, DSP operators). All calculations update in real-time. View results in: COGS cards (with/without depreciation), cost distribution charts (OPEX and CAPEX), detailed breakdown tables, facility requirements, and labor cost tables. You can export all data and share your configuration via URL parameters. The dashboard helps optimize production economics by showing immediate impact of parameter changes.",
+        "category": "usage",
+        "tags": [
+            "how-to",
+            "dashboard",
+            "guide",
+            "tutorial"
+        ]
+    },
+    {
+        "id": "cogs-calculation-method",
+        "title": "How COGS is Calculated in Cultivision",
+        "content": "COGS calculation methodology: COGS = (Total Annual Costs) / (Annual Production Volume). Total Annual Costs include: Media costs (volume × cost per liter for both growth and production media), Other materials costs (raw materials + consumables), Utility costs (power × rate + steam × rate + cooling water × rate + chilled water × rate), Labor costs (USP hours × USP rate + Main hours × Main rate + DSP hours × DSP rate), Waste treatment costs, Other facility costs (maintenance, insurance, local taxes, factory expenses), and Depreciation (Direct Fixed Capital ÷ facility lifetime, typically 10 years). COGS with depreciation includes all above. COGS without depreciation excludes the depreciation component. For 105K_STR with 17h/100gpl: typical COGS with depreciation is $60-65/kg, without depreciation is $50-55/kg. Production volume for this configuration is approximately 10M kg/year. The formula automatically accounts for your specific bioreactor selection and parameter settings.",
+        "category": "calculations",
+        "tags": [
+            "cogs",
+            "calculation",
+            "formula",
+            "methodology"
+        ]
+    },
+    {
+        "id": "facility-count-calculation",
+        "title": "How Facility Count is Calculated",
+        "content": "Facility requirements calculation: Target Production (typically 100M kg/year) ÷ Single Facility Annual Production = Number of Facilities Needed. Single facility production depends on: Bioreactor volume (larger = more production), Number of batches per year (affected by doubling time: faster doubling = more batches), Cell density (higher density = more kg per batch), and Batch yield factors. Example for 105K_STR: With 17h doubling time and 100gpl density: ~10.0M kg/year per facility, so 100M ÷ 10M = 10 facilities needed. With 29h doubling time and 80gpl density: ~6.5M kg/year per facility, so 100M ÷ 6.5M = 15.4 facilities needed. Each facility requires the full capital investment, so more facilities = proportionally higher total CAPEX. The facility count directly impacts feasibility and investment requirements for scaling to commercial production levels.",
+        "category": "calculations",
+        "tags": [
+            "facilities",
+            "calculation",
+            "scaling",
+            "production"
+        ]
+    },
+    {
+        "id": "cost-optimization-strategies",
+        "title": "Strategies to Reduce Production Costs",
+        "content": "Key cost reduction strategies for cultivated meat production: 1) Media optimization (biggest impact): develop cheaper formulations, negotiate bulk purchasing, produce growth factors in-house, implement media recycling where possible. Potential savings: 20-40% of media costs = 10-20% reduction in total COGS. 2) Increase cell density: moving from 80gpl to 100gpl increases yield by 25% per batch without proportional cost increase. 3) Optimize doubling time: faster growth = more batches per year = better asset utilization. 4) Scale up: larger bioreactors (262K vs 105K) generally have better economies of scale. 5) Automation: reduce labor costs by 30-50%. 6) Utility efficiency: implement heat recovery, optimize schedules, monitor waste. 7) Facility design: efficient layouts reduce CAPEX by 10-15%. 8) Process optimization: reduce waste, improve yields, minimize contamination. The dashboard lets you model these scenarios in real-time to see actual impact on your COGS.",
+        "category": "optimization",
+        "tags": [
+            "optimization",
+            "cost-reduction",
+            "efficiency",
+            "strategies"
+        ]
+    },
+    {
+        "id": "comparing-configurations",
+        "title": "Comparing Bioreactor Configurations",
+        "content": "When comparing bioreactor configurations in Cultivision, consider: 1) Capital Investment: larger reactors have higher individual CAPEX but may need fewer facilities. 105K_STR: ~$677-863M per facility. 262K_ALF: higher per facility but produces more. 2) Operating Costs: evaluate annual OPEX per facility and per kg produced. 3) Production Capacity: larger volume = potentially fewer facilities for 100M kg/year target. 4) Technology differences: Stirred tanks (105K, 150K, 210K) use mechanical agitation - proven technology, good for many cell types. Airlift (262K) uses gas sparging - potentially lower shear stress, different power consumption profile. 5) Flexibility: smaller reactors offer more flexibility for multiple products. 6) Risk: fewer large facilities vs more smaller facilities affects business continuity. 7) COGS impact: typically larger scales reduce per-kg costs. Use Cultivision to model each configuration with your specific parameters and compare the results side-by-side.",
+        "category": "comparison",
+        "tags": [
+            "comparison",
+            "bioreactors",
+            "decision-making",
+            "analysis"
+        ]
+    }
+]

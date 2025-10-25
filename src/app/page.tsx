@@ -640,16 +640,20 @@ const LandingPage = () => {
         </div>
       </div>
     </div>
-    <div className='flex flex-col lg:flex-row items-center justify-between gap-4 pt-8 border-t border-gray-200'>
-      <div className='text-sm text-gray-500 text-center'>
+    <div className='flex flex-col lg:flex-row items-center justify-between gap-4 pt-8 border-t border-gray-200 text-sm text-gray-500'>
+      {/* <div className='text-sm text-gray-500 text-center'>
         <span>© 2025 </span>
         <Link href={UCD_EXT_LINK} className='hover:text-green-600 transition cursor-pointer'>
           The Regents of the University of California.
         </Link>
         <span> All Rights Reserved.</span>
+      </div> */}
+      <div className=''>
+        Made with ❤️ for sustainable food production
       </div>
-      <div className='text-sm text-gray-500'>
-        Made with ❤️ for sustainable food production.
+      <div>
+        <a href="https://aun.sh" target="_blank" rel="noreferrer noopener" className="hover:text-green-500">@aunsh </a>  
+        <span>and</span> <a href="https://twitter.com/vgore" target="_blank" rel="noreferrer noopener"  className="hover:text-green-500">@vgore</a>
       </div>
     </div>
   </div>

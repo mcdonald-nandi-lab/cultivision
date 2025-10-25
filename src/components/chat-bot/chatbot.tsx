@@ -32,125 +32,67 @@ const CultivisionChatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(value);
-  };
-
-  const formatNumber = (value: number, decimals: number = 2) => {
-    return value.toFixed(decimals);
-  };
-
-  const getContextualResponse = (question: string) => {
-    const lowerQuestion = question.toLowerCase();
-
-    // Current configuration questions
-    if (lowerQuestion.includes('current') || lowerQuestion.includes('my') || lowerQuestion.includes('this')) {
-      if (lowerQuestion.includes('cogs') || lowerQuestion.includes('cost')) {
-        if (expenses?.cogsWithDepreciation) {
-          return `Your current COGS with depreciation is **${formatCurrency(expenses.cogsWithDepreciation)}/kg**.\n\nThis is based on:\n• Bioreactor: ${activeReactorId}\n• Doubling Time: ${doublingTime} hours\n• Cell Density: ${density} g/L\n\nThe main cost drivers are media costs, facility depreciation, and operating expenses.`;
-        }
-      }
-      
-      if (lowerQuestion.includes('bioreactor') || lowerQuestion.includes('reactor')) {
-        return `You're currently using the **${activeReactorId}** bioreactor configuration with:\n• Doubling Time: ${doublingTime} hours\n• Cell Density: ${density} g/L\n\nWould you like to know how this compares to other configurations?`;
-      }
-
-      if (lowerQuestion.includes('facilities') || lowerQuestion.includes('facility')) {
-        if (expenses?.facilitiesNeeded) {
-          return `Based on your current configuration, you need **${formatNumber(expenses.facilitiesNeeded, 1)} facilities** to produce 100M kg/year.\n\nThis calculation factors in your:\n• Bioreactor capacity\n• Doubling time (${doublingTime}h)\n• Cell density (${density} g/L)`;
-        }
-      }
-
-      if (lowerQuestion.includes('capex') || lowerQuestion.includes('capital')) {
-        if (expenses?.capitalExpenses) {
-          return `Your current Capital Expenses are **$${formatNumber(expenses.capitalExpenses, 2)}M/year**.\n\nThis includes:\n• Direct fixed capital\n• Working capital\n• Startup capital\n\nThese are amortized over the facility lifetime.`;
-        }
-      }
-
-      if (lowerQuestion.includes('opex') || lowerQuestion.includes('operating')) {
-        if (expenses?.operatingExpenses) {
-          return `Your current Operating Expenses are **$${formatNumber(expenses.operatingExpenses, 2)}M/year**.\n\nMajor components:\n• Media costs (~50%+)\n• Labor\n• Utilities\n• Raw materials\n• Waste treatment`;
-        }
-      }
-
-      // General current status
-      if (expenses) {
-        return `**Current Configuration Summary:**\n\n📊 **Key Metrics:**\n• COGS: ${formatCurrency(expenses.cogsWithDepreciation)}/kg\n• OPEX: $${formatNumber(expenses.operatingExpenses, 2)}M/yr\n• CAPEX: $${formatNumber(expenses.capitalExpenses, 2)}M/yr\n• Facilities Needed: ${formatNumber(expenses.facilitiesNeeded, 1)}\n\n⚙️ **Settings:**\n• Bioreactor: ${activeReactorId}\n• Doubling Time: ${doublingTime}h\n• Cell Density: ${density} g/L\n\nWhat would you like to explore?`;
-      }
-    }
-
-    // Comparison questions
-    if (lowerQuestion.includes('compare') || lowerQuestion.includes('difference') || lowerQuestion.includes('better')) {
-      return `To compare different configurations, try adjusting the parameters in the form:\n\n• Switch between bioreactor types (105kL, 150kL, 210kL, 262kL)\n• Modify doubling time (17-29 hours)\n• Change cell density\n• Adjust cost parameters\n\nYou can see real-time updates in all the charts and tables. Would you like specific guidance on what to compare?`;
-    }
-
-    // What if scenarios
-    if (lowerQuestion.includes('what if') || lowerQuestion.includes('if i')) {
-      return `Great question! You can explore "what-if" scenarios by:\n\n1. **Adjusting Parameters** in the left panel\n2. **Changing Bioreactor Type** to see capacity impacts\n3. **Modifying Costs** (media, labor, utilities)\n4. **Cell Growth Parameters** (doubling time, density)\n\nAll calculations update in real-time. What scenario would you like to explore?`;
-    }
-
-    // Optimization questions
-    if (lowerQuestion.includes('optimize') || lowerQuestion.includes('improve') || lowerQuestion.includes('reduce cost')) {
-      if (expenses) {
-        return `To optimize your costs (currently ${formatCurrency(expenses.cogsWithDepreciation)}/kg), consider:\n\n1. **Media Costs** - Often 50%+ of total, negotiate better rates\n2. **Cell Density** - Higher density = more production per batch\n3. **Doubling Time** - Faster growth = more batches/year\n4. **Bioreactor Selection** - Larger reactors may have better economies of scale\n5. **Facility Utilization** - Currently need ${formatNumber(expenses.facilitiesNeeded, 1)} facilities\n\nWhich area interests you most?`;
-      }
-    }
-
-    // General knowledge questions
-    if (lowerQuestion.includes('bioreactor') && !calculationContext) {
-      return 'Cultivision supports 4 bioreactor configurations:\n\n1. **105kL Stirred Tank**\n2. **150kL Stirred Tank**\n3. **210kL Stirred Tank**\n4. **262kL Airlift**\n\nEach has different efficiency characteristics, capital costs, and operating parameters. Select one in the parameter form to see detailed analysis.';
-    }
-
-    if (lowerQuestion.includes('doubling time')) {
-      return `Doubling time is how long it takes for your cell culture to double in size, typically ranging from **17-29 hours**.\n\n**Impact:**\n• Faster doubling = more production cycles\n• Faster doubling = higher annual output\n• Affects facility requirements\n• Influences overall COGS\n\n${doublingTime ? `You're currently set to ${doublingTime} hours.` : 'Set this in the parameter form to see impacts.'}`;
-    }
-
-    if (lowerQuestion.includes('cell density')) {
-      return `Cell density (g/L) represents the concentration of cells in your bioreactor.\n\n**Key Points:**\n• Standard: 100 g/L\n• Higher density = more product per batch\n• Affects bioreactor efficiency\n• Impacts media requirements\n\n${density ? `Your current setting: ${density} g/L` : 'Adjust this parameter to optimize production.'}`;
-    }
-
-    if (lowerQuestion.includes('cogs') && !calculationContext) {
-      return 'COGS (Cost of Goods Sold) includes:\n\n• **Media costs** (typically 50%+)\n• **Facility depreciation**\n• **Labor expenses**\n• **Utilities** (power, steam, cooling)\n• **Raw materials**\n• **Waste treatment**\n• **Consumables**\n\nCultivision calculates both with and without depreciation for comprehensive analysis.';
-    }
-
-    // Export and sharing
-    if (lowerQuestion.includes('export') || lowerQuestion.includes('save') || lowerQuestion.includes('share')) {
-      return `You can export and share your analysis:\n\n📊 **Export Options:**\n• All tables have export buttons\n• Save as CSV or Excel\n• Charts can be downloaded as images\n\n🔗 **Share Configuration:**\n• Your current settings are in the URL\n• Copy the URL to share your exact configuration\n• Anyone with the link sees the same analysis\n\nWant help with a specific export?`;
-    }
-
-    // Default helpful response
-    return `I can help you with:\n\n📊 **Current Analysis:**\n• "What's my current COGS?"\n• "Show my configuration summary"\n• "How many facilities do I need?"\n\n🔧 **Optimization:**\n• "How can I reduce costs?"\n• "What if I change the doubling time?"\n• "Compare bioreactor types"\n\n📖 **Understanding:**\n• "Explain COGS breakdown"\n• "What affects production capacity?"\n• "How do bioreactors differ?"\n\nWhat would you like to explore?`;
-  };
 
   const handleSendMessage = async () => {
-    if (!inputMessage.trim() || isLoading) return;
+  if (!inputMessage.trim() || isLoading) return;
 
-    const userMessage = {
-      role: 'user',
-      content: inputMessage,
-      timestamp: new Date()
+  const userMessage = {
+    role: 'user',
+    content: inputMessage,
+    timestamp: new Date()
+  };
+
+  setMessages(prev => [...prev, userMessage]);
+  setInputMessage('');
+  setIsLoading(true);
+
+  try {
+    // Prepare context payload
+    const contextPayload = calculationContext ? {
+      activeReactorId: activeReactorId,
+      doublingTime: doublingTime,
+      density: density,
+      costs: costs,
+      expenses: expenses,
+    } : undefined;
+
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: inputMessage,
+        context: contextPayload,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to get response');
+    }
+
+    const data = await response.json();
+
+    const aiResponse = {
+      role: 'assistant',
+      content: data.response,
+      timestamp: new Date(),
+      sources: data.sources,
     };
 
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage('');
-    setIsLoading(true);
-
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const aiResponse = {
-        role: 'assistant',
-        content: getContextualResponse(inputMessage),
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsLoading(false);
-    }, 800);
-  };
+    setMessages(prev => [...prev, aiResponse]);
+  } catch (error) {
+    console.error('Chat error:', error);
+    const errorMessage = {
+      role: 'assistant',
+      content: 'Sorry, I encountered an error. Please try again.',
+      timestamp: new Date(),
+    };
+    setMessages(prev => [...prev, errorMessage]);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   const quickQuestions = calculationContext?.expenses 
     ? [
