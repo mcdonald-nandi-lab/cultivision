@@ -5,11 +5,13 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 interface ChatbotContextType {
   isOpen: boolean;
   isMinimized: boolean;
+  isLoading: boolean;
   openChatbot: () => void;
   closeChatbot: () => void;
   toggleChatbot: () => void;
   minimizeChatbot: () => void;
   maximizeChatbot: () => void;
+  toggleLoading: (val: boolean) => void;
 }
 
 const ChatbotContext = createContext<ChatbotContextType | undefined>(undefined);
@@ -17,6 +19,8 @@ const ChatbotContext = createContext<ChatbotContextType | undefined>(undefined);
 export function ChatbotProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const openChatbot = () => {
     setIsOpen(true);
@@ -40,15 +44,21 @@ export function ChatbotProvider({ children }: { children: ReactNode }) {
     setIsMinimized(false);
   };
 
+  const toggleLoading = (val: boolean) => {
+    setIsLoading(val);
+  }
+
   return (
     <ChatbotContext.Provider value={{
       isOpen,
       isMinimized,
+      isLoading,
       openChatbot,
       closeChatbot,
       toggleChatbot,
       minimizeChatbot,
-      maximizeChatbot
+      maximizeChatbot,
+      toggleLoading
     }}>
       {children}
     </ChatbotContext.Provider>

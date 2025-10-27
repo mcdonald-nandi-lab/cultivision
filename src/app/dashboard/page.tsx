@@ -77,11 +77,11 @@ const Dashboard = () => {
             className='w-full lg:w-1/4 pt-6 px-0 lg:p lg:pb-24 lg:h-full lg:overflow-y-auto lg:fixed lg:left-4 lg:top-16 flex flex-col md:items-center md:justify-start gap-6 mr-2'
             aria-label='Input Form and Process Flow Diagram'
           >
-            <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 lg:w-full'>
+            <div className='bg-white rounded-4xl py-4 px-6 border border-gray-100 shadow-sm lg:w-full'>
               <ParameterForm />
             </div>
             <div
-              className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 flex flex-col gap-y-2 cursor-pointer w-full'
+              className='bg-white rounded-4xl py-4 px-6 shadow-sm flex flex-col gap-y-2 cursor-pointer w-full'
               onClick={() => openModal()}
             >
               <h3 className='text-lg font-semibold text-gray-700 text-center'>
@@ -95,7 +95,7 @@ const Dashboard = () => {
                 Click to enlarge
               </div>
             </div>
-            <div className='bg-white rounded-lg shadow-md p-4 border border-solid border-gray-100 hidden lg:block lg:w-full'>
+            <div className='bg-white rounded-4xl py-4 px-6 shadow-sm hidden lg:block lg:w-full'>
               <Footer />
             </div>
           </div>

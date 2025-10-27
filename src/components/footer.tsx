@@ -74,7 +74,7 @@ const Footer = () => {
           </Link>
         </div>
       </div>
-      <div
+      {/* <div
         className='text-xs text-gray-400 text-center px-2 md:px-4'
         aria-describedby='info'
         aria-label='Copyright of the The Regents of the University of California'
@@ -84,6 +84,9 @@ const Footer = () => {
           The Regents of the University of California
         </Link>
         .<div>All Rights Reserved.</div>
+      </div> */}
+      <div className='text-xs text-gray-400'>
+          Made with ❤️ for sustainable food production
       </div>
     </footer>
   );

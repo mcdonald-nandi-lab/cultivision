@@ -13,7 +13,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { MaximizeProvider } from "@/context/maximize";
-import CultivisionChatbot from "@/components/chat-bot/chatbot";
+import { DashboardActionsProvider } from "@/context/dashboard-actions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,6 +74,7 @@ const providers = [
   ToastProvider,
   UserbackProvider,
   MaximizeProvider,
+  DashboardActionsProvider
 ];
 
 const RootLayout = ({
@@ -89,7 +90,6 @@ const RootLayout = ({
         <ComposeProviders providers={providers}>
           <ChatbotProvider>
             {children}
-            <CultivisionChatbot />
           </ChatbotProvider>
           <CookieConsent />
           <ConditionalAnalytics />

@@ -104,7 +104,7 @@ const HomeNavbar = () => {
               </button>
               <Link
                 href='/dashboard'
-                className='group inline-flex items-center gap-x-2 rounded-md py-2 px-4 text-sm text-white font-medium bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transition-all duration-300'
+                className='group inline-flex items-center gap-x-2 rounded-md py-2 px-4 text-sm text-white font-medium bg-gradient-to-br from-green-800 to-emerald-500 hover:from-green-600 hover:to-green-700 transition-all duration-300'
               >
                 <div className='relative h-4 w-4'>
                   <svg

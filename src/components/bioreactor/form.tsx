@@ -289,7 +289,7 @@ const ParameterForm = () => {
             </button>
             <div
               className={cn(
-                "flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-md text-slate-600"
+                "flex items-center gap-x-1 bg-gray-100 px-2 py-1 rounded-xl text-slate-600"
               )}
             >
               <span className='text-xs font-medium'>
@@ -331,7 +331,7 @@ const ParameterForm = () => {
                 type='button'
                 onClick={() => setIsReactorOpen(!isReactorOpen)}
                 className={cn(
-                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "flex w-full rounded-xl border border-gray-300 overflow-hidden",
                   "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
                   "hover:border-gray-400 cursor-pointer"
                 )}
@@ -362,7 +362,7 @@ const ParameterForm = () => {
 
               <div
                 className={cn(
-                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-xl shadow-lg z-20 transition-all duration-200",
                   {
                     "opacity-100 visible translate-y-0": isReactorOpen,
                     "opacity-0 invisible -translate-y-2": !isReactorOpen,
@@ -413,7 +413,7 @@ const ParameterForm = () => {
                 }
                 disabled={availableDoublingTimes.length === 0}
                 className={cn(
-                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "flex w-full rounded-xl border border-gray-300 overflow-hidden",
                   "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
                   "hover:border-gray-400 cursor-pointer",
                   { "cursor-not-allowed": availableDoublingTimes.length === 0 }
@@ -444,7 +444,7 @@ const ParameterForm = () => {
 
               <div
                 className={cn(
-                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-xl shadow-lg z-20 transition-all duration-200",
                   {
                     "opacity-100 visible translate-y-0": isDoublingOpen,
                     "opacity-0 invisible -translate-y-2": !isDoublingOpen,
@@ -492,7 +492,7 @@ const ParameterForm = () => {
                 }
                 disabled={availableDensities.length === 0}
                 className={cn(
-                  "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                  "flex w-full rounded-xl border border-gray-300 overflow-hidden",
                   "focus:ring-1 focus:ring-slate-700 focus:border-slate-700 transition-all",
                   "hover:border-gray-400 cursor-pointer",
                   { "cursor-not-allowed": availableDensities.length === 0 }
@@ -523,7 +523,7 @@ const ParameterForm = () => {
 
               <div
                 className={cn(
-                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-md shadow-lg z-20 transition-all duration-200",
+                  "absolute top-full left-0 right-0 mt-1 py-1 bg-white border border-gray-300 rounded-xl shadow-lg z-20 transition-all duration-200",
                   {
                     "opacity-100 visible translate-y-0": isDensityOpen,
                     "opacity-0 invisible -translate-y-2": !isDensityOpen,
@@ -568,7 +568,7 @@ const ParameterForm = () => {
               <div className='grid grid-cols-1'>
                 <div
                   className={
-                    "flex w-full rounded-md border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                    "flex w-full rounded-xl border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
                   }
                 >
                   <input
@@ -614,7 +614,7 @@ const ParameterForm = () => {
               <div className='grid grid-cols-1'>
                 <div
                   className={
-                    "flex w-full rounded-md border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
+                    "flex w-full rounded-xl border border-gray-300 overflow-hidden focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
                   }
                 >
                   <input
@@ -664,7 +664,7 @@ const ParameterForm = () => {
               <div className='grid grid-cols-1'>
                 <div
                   className={cn(
-                    "flex w-full rounded-md border border-gray-300 overflow-hidden",
+                    "flex w-full rounded-xl border border-gray-300 overflow-hidden",
                     "focus-within:ring-1 focus-within:ring-slate-700 focus-within:border-slate-700"
                   )}
                 >
@@ -706,7 +706,7 @@ const ParameterForm = () => {
             <button
               type='submit'
               className={
-                "w-full py-1.5 rounded-md text-sm font-medium bg-slate-700 text-white hover:bg-slate-800 cursor-pointer mt-1"
+                "w-full py-1.5 rounded-xl text-sm font-medium bg-slate-700 text-white hover:bg-slate-800 cursor-pointer mt-1"
               }
             >
               Run Calculation

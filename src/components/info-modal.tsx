@@ -38,11 +38,11 @@ export const InfoModal = ({ isOpen, onClose, children }: InfoModalProps) => {
 
   return (
     <div
-      className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 animate-in fade-in duration-200 rounded-lg'
+      className='fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/30 animate-in fade-in duration-200'
       onClick={handleBackdropClick}
     >
       <div
-        className='relative bg-white rounded-lg min-w-auto max-w-11/12 max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-200 p-6'
+        className='relative bg-white rounded-4xl min-w-auto max-w-11/12 max-h-[90vh] overflow-y-auto shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-200 p-6'
         onClick={(e) => e.stopPropagation()}
       >
         {children}

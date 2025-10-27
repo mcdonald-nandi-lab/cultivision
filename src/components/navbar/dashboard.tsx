@@ -18,6 +18,19 @@ import { useEffect, useState } from "react";
 
 const URL_COPIED_EVENT = "urlCopied";
 
+const VizButton = ({onClick}: {onClick: () => void}) => (
+    <button
+    onClick={onClick}
+    className="bg-gradient-to-br from-green-800 to-emerald-500 hover:from-green-600 hover:to-green-700 flex items-center gap-x-2 rounded-2xl py-2 px-3 text-sm transition-all hover:shadow-md hover:scale-105 cursor-pointer"
+    aria-label="Open AI Assistant"
+  >
+    <div className=" rounded-full text-white">
+      <Bot className="w-4 h-4 group-hover:scale-110 transition-transform" />
+    </div>
+    <span className="text-white">viz.ai</span>
+  </button>
+)
+
 const Navbar = () => {
   const { openModal } = useModal();
   const { activeReactorId, expenses, costs, doublingTime, density } =
@@ -216,7 +229,7 @@ const handleDownloadCsv = async () => {
 
 <div className='relative dropdown-container'>
               <button
-                className='dropdown-button flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-md px-2 md:px-4 py-2 text-sm transition-all text-slate-700'
+                className='dropdown-button flex items-center space-x-1 md:space-x-2 bg-white border border-gray-300 rounded-2xl px-2 md:px-4 py-2 text-sm transition-all text-slate-700'
                 aria-controls='reactor-configuration'
                 aria-haspopup='listbox'
               >
@@ -251,20 +264,11 @@ const handleDownloadCsv = async () => {
             <div
               className={cn("hidden xl:flex items-center gap-4")}
             >
-              <button
-                onClick={openChatbot}
-                className="flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
-                aria-label="Open AI Assistant"
-              >
-                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full p-1 text-white">
-                  <Bot className="w-3 h-3" />
-                </div>
-                <span>Viz</span>
-              </button>
+              <VizButton onClick={openChatbot} />
               <div className='relative options-dropdown'>
                   <button
                     onClick={toggleOptions}
-                    className='options-button flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
+                    className='options-button flex items-center gap-x-2 rounded-2xl border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer'
                     aria-expanded={isOptionsOpen}
                     aria-controls='options-dropdown'
                     aria-haspopup='menu'
@@ -311,7 +315,7 @@ const handleDownloadCsv = async () => {
                   </button>
                   <div
                     className={cn(
-                      `absolute top-full right-0 mt-2 py-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg z-10 transition-all duration-200 ease-in-out flex flex-col gap-y-1`,
+                      `absolute top-full right-0 mt-2 p-3 w-48 bg-white border border-gray-300 rounded-4xl shadow-lg z-10 transition-all duration-200 ease-in-out flex flex-col gap-y-1`,
                       {
                         "opacity-100 visible translate-y-0": isOptionsOpen,
                       },
@@ -322,7 +326,7 @@ const handleDownloadCsv = async () => {
                   >
                     <button
                       onClick={handleDiagramClick}
-                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer'
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer rounded-2xl'
                     >
                       <svg
                         className='h-4 w-4'
@@ -347,7 +351,7 @@ const handleDownloadCsv = async () => {
                     </button>
                     <button
                       onClick={handleSaveSettings}
-                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer'
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer rounded-2xl'
                     >
                       {isCopied ? (
                         <>
@@ -388,7 +392,7 @@ const handleDownloadCsv = async () => {
                     <button
                       onClick={handleDownloadCsv}
                       disabled={!expenses || isDownloading}
-                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+                      className='w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed rounded-2xl'
                     >
                       {isDownloading ? (
                         <>
@@ -458,19 +462,10 @@ const handleDownloadCsv = async () => {
           <div
             className={cn("flex flex-col space-y-4")}
           >
-                          <button
-                onClick={openChatbot}
-                className="flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-3 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
-                aria-label="Open AI Assistant"
-              >
-                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full p-1 text-white">
-                  <Bot className="w-3 h-3" />
-                </div>
-                <span>Viz</span>
-              </button>
-                          <button
+            <VizButton onClick={openChatbot} />
+              <button
                 className={cn(
-                  "flex items-center gap-x-2 rounded-md border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
+                  "flex items-center gap-x-2 rounded-2xl border border-slate-300 py-2 px-2 text-sm transition-all hover:shadow-md text-slate-700 hover:bg-gray-100 hover:border-slate-800 cursor-pointer"
                 )}
                 onClick={openModal}
               >
