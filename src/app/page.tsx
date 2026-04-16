@@ -635,32 +635,25 @@ const LandingPage = () => {
         <Link href={PRIVACY_POL_LINK} target='_blank' rel='noreferrer nofollow' className='text-base hover:text-green-600 text-gray-600 transition cursor-pointer' onClick={() => trackFooterLinkClick("Privacy Policy")}>
           Privacy Policy
         </Link>
-        <div className='text-base hover:text-green-600 text-gray-600 cursor-pointer transition' onClick={openModal}>
+        {/* <div className='text-base hover:text-green-600 text-gray-600 cursor-pointer transition' onClick={openModal}>
           Authors
-        </div>
+        </div> */}
       </div>
     </div>
     <div className='flex flex-col lg:flex-row items-center justify-between gap-4 pt-8 border-t border-gray-200 text-sm text-gray-500'>
-      {/* <div className='text-sm text-gray-500 text-center'>
-        <span>© 2025 </span>
-        <Link href={UCD_EXT_LINK} className='hover:text-green-600 transition cursor-pointer'>
-          The Regents of the University of California.
-        </Link>
-        <span> All Rights Reserved.</span>
-      </div> */}
       <div className=''>
         Made with ❤️ for sustainable food production
       </div>
-      <div>
+      {/* <div>
         <a href="https://aun.sh" target="_blank" rel="noreferrer noopener" className="hover:text-green-500">@aunsh </a>  
         <span>and</span> <a href="https://twitter.com/vgore" target="_blank" rel="noreferrer noopener"  className="hover:text-green-500">@vgore</a>
-      </div>
+      </div> */}
     </div>
   </div>
 </footer>
-      <InfoModal isOpen={isAuthorModalOpen} onClose={closeModal}>
+      {/* <InfoModal isOpen={isAuthorModalOpen} onClose={closeModal}>
         <Authors />
-      </InfoModal>
+      </InfoModal> */}
     </div>
   );
 };

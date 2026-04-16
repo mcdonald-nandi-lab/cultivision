@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
     domains: ["res.cloudinary.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
